@@ -54,7 +54,7 @@ DISABLE_AUTO_TITLE="true"
 plugins=(git tmuxinator)
 
 source $ZSH/oh-my-zsh.sh
-source .tmux/tmuxinator.zsh
+source ~/.tmux/tmuxinator.zsh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
