@@ -77,7 +77,9 @@ augroup myfiletypes
   autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
 
   "markdown
-  autocmd FileType md setlocal ai sw=2 sts=2 et
+  autocmd FileType markdown setlocal ai sw=2 sts=2 et
+	autocmd FileType markdown setlocal colorcolumn=80
+	autocmd FileType markdown setlocal textwidth=80
 augroup end
 	
 colorscheme molokai	
@@ -95,6 +97,9 @@ set laststatus=2        "Always show status bar
 set shiftwidth=2        "Set indent to 2 spaces
 set tabstop=2           "Set indent to 2 spaces
 set relativenumber
+set cursorline
+set cursorcolumn
+hi cursorline cterm=underline gui=underline ctermbg=none
 "hi StatusLine ctermfg=17  ctermbg=yellow
 " Don't use Ex mode, use Q for formatting
 map Q gq
