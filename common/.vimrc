@@ -52,7 +52,7 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 let g:airline_symbols.space = "\ua0"
-let g:molokai_original = 1
+" let g:molokai_original = 1
 let g:rehash256 = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -80,6 +80,9 @@ augroup myfiletypes
   autocmd FileType markdown setlocal ai sw=2 sts=2 et
 	autocmd FileType markdown setlocal colorcolumn=80
 	autocmd FileType markdown setlocal textwidth=80
+	autocmd Filetype markdown setlocal spell
+	autocmd Filetype markdown setlocal spelllang=en_ca
+
 augroup end
 	
 colorscheme molokai	

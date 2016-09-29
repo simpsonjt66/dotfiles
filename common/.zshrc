@@ -89,5 +89,7 @@ alias journal='vim ~/Dropbox/Notes/JOURNAL.md'
 alias todo='vim ~/Dropbox/Notes/TODO.md'
 alias til='vim ~/Dropbox/Notes/TIL.md'
 alias mux='tmuxinator'
+
+export NOTES="$HOME/Dropbox/Notes" # Set notes folder
 export DEFAULT_CHEAT_DIR=$HOME"/Dropbox/Notes/cheats"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
