@@ -85,7 +85,7 @@ augroup myfiletypes
 
 augroup end
 	
-colorscheme molokai	
+colorscheme molokai
 set t_Co=256
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set backspace=indent,eol,start
@@ -102,6 +102,8 @@ set tabstop=2           "Set indent to 2 spaces
 set relativenumber
 set cursorline
 set cursorcolumn
+set list
+set listchars=tab:‣\ ,eol:¬
 hi cursorline cterm=underline gui=underline ctermbg=none
 "hi StatusLine ctermfg=17  ctermbg=yellow
 " Don't use Ex mode, use Q for formatting
