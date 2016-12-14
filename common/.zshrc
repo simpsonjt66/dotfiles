@@ -89,7 +89,11 @@ alias journal='vim ~/Dropbox/Notes/JOURNAL.md'
 alias todo='vim ~/Dropbox/Notes/TODO.md'
 alias til='vim ~/Dropbox/Notes/TIL.md'
 alias mux='tmuxinator'
+alias rct='spring rails console test --sandbox'
+alias rc='spring rails console --sandbox'
 
 export NOTES="$HOME/Dropbox/Notes" # Set notes folder
 export DEFAULT_CHEAT_DIR=$HOME"/Dropbox/Notes/cheats"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PUBLISHABLE_KEY="pk_test_4BcC6hjmpzeXJaBwEfmRGFte"
+export SECRET_KEY="sk_test_athgo7JVqyAbPmkZVTHrdJSo"

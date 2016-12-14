@@ -41,9 +41,9 @@ let g:UltiSnipsEditSplit="horizontal"
 " Settings for vim-markdown-preview
 let vim_markdown_preview_browser='Safari'
 let vim_markdown_preview_github=1
-let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_hotkey='<leader>m'
 " Outputs rspec test in other tmux pane
-let g:rspec_command = 'call Send_to_Tmux("zeus rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("spring rspec {spec}\n")'
 
 " airline-vim options
 let g:airline#extensions#tabline#enabled = 1
@@ -85,7 +85,7 @@ augroup myfiletypes
 
 augroup end
 	
-colorscheme molokai
+colorscheme distinguished
 set t_Co=256
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set backspace=indent,eol,start
@@ -119,10 +119,26 @@ au BufWritePre *.rb :%s/\s\+$//e
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
+set mouse+=a
+if &term =~ '^screen'
+" Allow extended mouse options to be run in tmux
+	set ttymouse=xterm2
+endif
+" The Silver Searcher
+if executable('ag')
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
+
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
 endif
 
 " Switch syntax highlighting on, when the terminal has colors
