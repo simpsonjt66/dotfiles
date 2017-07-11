@@ -1,6 +1,5 @@
 set nocompatible
 filetype off
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -9,49 +8,86 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Plugins
-Plugin 'scrooloose/nerdtree'
+Plugin 'jgdavey/tslime.vim'
 Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'SirVer/ultisnips'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'ngmy/vim-rubocop'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'jgdavey/tslime.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'pangloss/vim-javascript'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
-
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'valloric/youcompleteme'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'viniciusban/vim-github-colorscheme'
 " All plugins must be loaded before this line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call vundle#end()           
 
-"Trigger configuration for ultisnip
-let g:UltiSnipExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBacwardTrigger="<c-k>"
+filetype plugin indent on    
+syntax on
+colorscheme jellybeans
+
+"Default Trigger configuration for ultisnip before adding YCM
+" let g:UltiSnipExpandTrigger="<tab>"
+" let g:UltiSnipsListSnippets="<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBacwardTrigger="<c-k>"
+
+" NEW Ultisnips configuration after adding YCM
+" (via http://stackoverflow.com/a/22253548/1626737)
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+let g:UltiSnipsExpandTrigger           = '<tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+let g:ycm_key_list_select_completion   = ['<C-n>', '<Down>']
+" let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 " Split the window for ultisnips edit
 let g:UltiSnipsEditSplit="horizontal"
+" Added as a workaround for UltiSnips Edit in qrong directory
+let g:UltiSnipsSnippetDirectories= ['my-snippets']
+" set runtimepath+=~/.vim/UltiSnips
+let g:UltiSnipsSnippetsDir='~/.vim/my-snippets'
+
 " Settings for vim-markdown-preview
 let vim_markdown_preview_browser='Safari'
 let vim_markdown_preview_github=1
-let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_hotkey='<Leader>m'
 " Outputs rspec test in other tmux pane
-let g:rspec_command = 'call Send_to_Tmux("zeus rspec {spec}\n")'
+" Command for use in Spring enabled project
+" let g:rspec_command = 'call Send_to_Tmux("spring rspec {spec}\n")'
+" Command for use in non spring enabled projects
 
+" Now using tpope/vim-dispatch
+" let g:rspec_command = "Dispatch bin/rspec {spec}"
+let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+
+" Settings for syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = [ 'eslint' ]
+let g:syntastic_scss_checkers = [ 'sass-lint' ]
+let g:syntastic_sass_sass_args     = '-I ' . getcwd()
 " airline-vim options
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline_powerline_fonts = 1
+" if !exists('g:airline_symbols')
+" 	let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.space = "\ua0"
 " let g:molokai_original = 1
 let g:rehash256 = 1
 let g:airline_left_sep=''
@@ -64,46 +100,47 @@ let g:airline#extensions#tabline#show_splits = 0
 "=====================================================================
 " Ruby Stuff
 " ====================================================================
-syntax on
-
 augroup myfiletypes
-  "clear old autocmds in group
-  autocmd!
-  "autoindent with two spaces, always indent tabs
-  autocmd FileType ruby,eruby,yaml setlocal ai sw=2 sts=2 et
-  autocmd FileType ruby,eruby,yaml setlocal path+=lib
-  autocmd Filetype ruby,eruby,yaml setlocal colorcolumn=80
-  " make ?s part of the word
-  autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
+	"clear old autocmds in group
+	autocmd!
+	"autoindent with two spaces, always indent tabs
+	autocmd FileType ruby,eruby,yaml setlocal ai sw=2 sts=2 et
+	autocmd FileType ruby,eruby,yaml setlocal path+=lib
+	autocmd Filetype ruby,eruby,yaml setlocal colorcolumn=80
+	" make ?s part of the word
+	autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
 
-  "markdown
-  autocmd FileType markdown setlocal ai sw=2 sts=2 et
+	"markdown
+	autocmd FileType markdown setlocal ai sw=2 sts=2 et
 	autocmd FileType markdown setlocal colorcolumn=80
 	autocmd FileType markdown setlocal textwidth=80
 	autocmd Filetype markdown setlocal spell
 	autocmd Filetype markdown setlocal spelllang=en_ca
 
+	" Javascript
+	autocmd FileType javascript setlocal ai sw=2 sts=2 et
+
 augroup end
-	
-colorscheme molokai
-set t_Co=256
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
 set backspace=indent,eol,start
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
 set backupdir=~/.tmp
-set directory=~/.tmp    "Keeps all the temp files out of the directory
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-set number
-set laststatus=2        "Always show status bar
-set shiftwidth=2        "Set indent to 2 spaces
-set tabstop=2           "Set indent to 2 spaces
-set relativenumber
-set cursorline
 set cursorcolumn
+set cursorline
+set directory=~/.tmp    "Keeps all the temp files out of the directory
+set history=50		" keep 50 lines of command line history
+set incsearch		" do incremental searching
+set laststatus=2        "Always show status bar
 set list
 set listchars=tab:‣\ ,eol:¬
+set number
+set relativenumber
+set ruler		" show the cursor position all the time
+set shiftwidth=2        "Set indent to 2 spaces
+set showcmd		" display incomplete commands
+set splitright
+set t_Co=256
+set tabstop=2           "Set indent to 2 spaces
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 hi cursorline cterm=underline gui=underline ctermbg=none
 "hi StatusLine ctermfg=17  ctermbg=yellow
 " Don't use Ex mode, use Q for formatting
@@ -119,12 +156,20 @@ au BufWritePre *.rb :%s/\s\+$//e
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
+" if has('mouse')
+" set mouse=a
+" endif
+set mouse+=a
+if &term =~ '^screen'
+	" tmux knows the extended mouse mode
+	set ttymouse=xterm2
 endif
-
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 "if &t_Co > 2 || has("gui_running")
@@ -135,32 +180,26 @@ endif
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+	" Put these in an autocmd group, so that we can delete them easily.
+	augroup vimrcEx
+		au!
 
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
+		" For all text files set 'textwidth' to 78 characters.
+		autocmd FileType text setlocal textwidth=78
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+		" When editing a file, always jump to the last known cursor position.
+		" Don't do it when the position is invalid or when inside an event handler
+		" (happens when dropping a file on gvim).
+		autocmd BufReadPost *
+					\ if line("'\"") >= 1 && line("'\"") <= line("$") |
+					\   exe "normal! g`\"" |
+					\ endif
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
-  augroup END
+	augroup END
 
 else
-set smartindent
-  set autoindent		" always set autoindenting on
+	set smartindent
+	set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
 
@@ -168,18 +207,31 @@ endif " has("autocmd")
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+	command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+				\ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
-  " Prevent that the langmap option applies to characters that result from a
-  " mapping.  If unset (default), this may break plugins (but it's backward
-  " compatible).
-  set langnoremap
+	" Prevent that the langmap option applies to characters that result from a
+	" mapping.  If unset (default), this may break plugins (but it's backward
+	" compatible).
+	set langnoremap
 endif
 
+" The Silver Searcher
+if executable('ag')
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
 
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under the cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Add optional packages.
 "
 " The matchit plugin makes the % command work better, but it is not backwards
