@@ -1,5 +1,9 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle Stuff
+" """""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
 filetype off
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -51,26 +55,21 @@ let g:UltiSnipsExpandTrigger           = '<tab>'
 let g:UltiSnipsJumpForwardTrigger      = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
 let g:ycm_key_list_select_completion   = ['<C-n>', '<Down>']
-" let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
 " Split the window for ultisnips edit
 let g:UltiSnipsEditSplit="horizontal"
-" Added as a workaround for UltiSnips Edit in qrong directory
+"
+" Added as a workaround for UltiSnips Edit in wrong directory
 let g:UltiSnipsSnippetDirectories= ['my-snippets']
-" set runtimepath+=~/.vim/UltiSnips
 let g:UltiSnipsSnippetsDir='~/.vim/my-snippets'
 
 " Settings for vim-markdown-preview
 let vim_markdown_preview_browser='Safari'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<Leader>m'
+"
 " Outputs rspec test in other tmux pane
-" Command for use in Spring enabled project
-" let g:rspec_command = 'call Send_to_Tmux("spring rspec {spec}\n")'
-" Command for use in non spring enabled projects
-
-" Now using tpope/vim-dispatch
-" let g:rspec_command = "Dispatch bin/rspec {spec}"
 let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
 
 " Settings for syntastic
@@ -81,14 +80,17 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = [ 'eslint' ]
 let g:syntastic_scss_checkers = [ 'sass-lint' ]
 let g:syntastic_sass_sass_args     = '-I ' . getcwd()
+
 " airline-vim options
 " let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
-" if !exists('g:airline_symbols')
-" 	let g:airline_symbols = {}
-" endif
-" let g:airline_symbols.space = "\ua0"
-" let g:molokai_original = 1
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.space = "\ua0"
+
 let g:rehash256 = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -161,21 +163,19 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-" if has('mouse')
-" set mouse=a
-" endif
 set mouse+=a
+
 if &term =~ '^screen'
 	" tmux knows the extended mouse mode
 	set ttymouse=xterm2
 endif
+
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-"if &t_Co > 2 || has("gui_running")
-"  syntax on
-"  set hlsearch
-"endif
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
