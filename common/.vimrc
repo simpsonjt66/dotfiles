@@ -12,6 +12,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Plugins
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'jgdavey/tslime.vim'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'SirVer/ultisnips'
@@ -19,6 +20,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'honza/vim-snippets'
+Plugin 'godlygeek/tabular'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'ngmy/vim-rubocop'
 Plugin 'pangloss/vim-javascript'
@@ -38,51 +40,70 @@ Plugin 'viniciusban/vim-github-colorscheme'
 call vundle#end()           
 
 filetype plugin indent on    
-syntax on
-colorscheme jellybeans
 
-"Default Trigger configuration for ultisnip before adding YCM
-" let g:UltiSnipExpandTrigger="<tab>"
-" let g:UltiSnipsListSnippets="<c-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBacwardTrigger="<c-k>"
+"-------------------------------------------------------------               
+"               Colorscheme
+"------------------------------------------------------------
+ let g:solarized_termcolors = 16
+"  g:solarized_termtrans    = 0 | 1
+"  g:solarized_degrade      = 0 | 1
+"  g:solarized_bold         = 1 | 0
+"  g:solarized_underline    = 1 | 0
+"  g:solarized_italic       = 1 | 0
+let g:solarized_contrast    = "high"
+let g:solarized_visibility  = "normal"
 
-" NEW Ultisnips configuration after adding YCM
-" (via http://stackoverflow.com/a/22253548/1626737)
-let g:SuperTabDefaultCompletionType    = '<C-n>'
-let g:SuperTabCrMapping                = 0
-let g:UltiSnipsExpandTrigger           = '<tab>'
-let g:UltiSnipsJumpForwardTrigger      = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+set t_Co=256
+syntax enable
+set background=dark
+colorscheme solarized
+
+"--------------------------------------------------
+"     Experimenting with netrw
+"--------------------------------------------------
+let g:netrw_winsize       = -28
+let g:netrw_liststye      = 3
+let g:netrw_sort_sequence = '[\/]$,*'
+let g:netrw_brower        = 3
+
+"--------------------------------------------------
+"     Ultisnips, YouCompleteMe & SuperTab
+"--------------------------------------------------
 let g:ycm_key_list_select_completion   = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
-" Split the window for ultisnips edit
-let g:UltiSnipsEditSplit="horizontal"
-"
-" Added as a workaround for UltiSnips Edit in wrong directory
-let g:UltiSnipsSnippetDirectories= ['my-snippets']
-let g:UltiSnipsSnippetsDir='~/.vim/my-snippets'
+let g:SuperTabDefaultCompletionType    = '<C-n>'
 
-" Settings for vim-markdown-preview
-let vim_markdown_preview_browser='Safari'
-let vim_markdown_preview_github=1
-let vim_markdown_preview_hotkey='<Leader>m'
-"
-" Outputs rspec test in other tmux pane
-let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+let g:UltiSnipsExpandTrigger           = '<tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
 
-" Settings for syntastic
+let g:UltiSnipsEditSplit               = "horizontal"
+"
+let g:UltiSnipsSnippetDirectories      = ['my-snippets']
+let g:UltiSnipsSnippetsDir             = '~/.vim/my-snippets'
+
+"--------------------------------------------------
+"     Markdown
+"--------------------------------------------------
+let vim_markdown_preview_browser = 'Safari'
+let vim_markdown_preview_github  = 1
+let vim_markdown_preview_hotkey  = '<Leader>m'
+
+"--------------------------------------------------
+"     Syntastic
+"--------------------------------------------------
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = [ 'eslint' ]
-let g:syntastic_scss_checkers = [ 'sass-lint' ]
-let g:syntastic_sass_sass_args     = '-I ' . getcwd()
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+let g:syntastic_javascript_checkers      = [ 'eslint' ]
+let g:syntastic_scss_checkers            = [ 'sass-lint' ]
+let g:syntastic_sass_sass_args           = '-I ' . getcwd()
 
-" airline-vim options
-" let g:airline#extensions#tabline#enabled = 1
+"--------------------------------------------------
+"     Airline
+"--------------------------------------------------
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
@@ -99,9 +120,9 @@ let g:airline#extensions#tabline#tab_min_count = 2 "only show tabline if tabs ar
 let g:airline#extensions#tabline#show_buffers = 0 "do not show open buffers
 let g:airline#extensions#tabline#show_splits = 0
 
-"=====================================================================
+"--------------------------------------------------
 " Ruby Stuff
-" ====================================================================
+"--------------------------------------------------
 augroup myfiletypes
 	"clear old autocmds in group
 	autocmd!
@@ -124,33 +145,56 @@ augroup myfiletypes
 
 augroup end
 
+set autoread
+set autoindent
 set backspace=indent,eol,start
 set backupdir=~/.tmp
 set cursorcolumn
 set cursorline
 set directory=~/.tmp    "Keeps all the temp files out of the directory
-set history=50		" keep 50 lines of command line history
-set incsearch		" do incremental searching
+set et
+set hlsearch
+set history=500 " keep 50 lines of command line history
+set incsearch " do incremental searching
 set laststatus=2        "Always show status bar
 set list
 set listchars=tab:‣\ ,eol:¬
+set nowrap
 set number
 set relativenumber
-set ruler		" show the cursor position all the time
+set ruler    " show the cursor position all the time
 set shiftwidth=2        "Set indent to 2 spaces
-set showcmd		" display incomplete commands
+set showcmd    " display incomplete commands
+set showmatch  " jumps to matching bracket
+set smarttab
 set splitright
-set t_Co=256
+set sw=2
 set tabstop=2           "Set indent to 2 spaces
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set viminfo+=!
+
 hi cursorline cterm=underline gui=underline ctermbg=none
-"hi StatusLine ctermfg=17  ctermbg=yellow
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
+
+"     vim-rspec settings
+"---------------------------------------------------------------------------
+
+" Outputs rspec test in other tmux pane
+let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
+map <Leader>f :call RunFailingSpecs()<CR>
+
+function! RunFailingSpecs()
+	let s:rspec_command = substitute(g:rspec_command, "{spec}", "--only-failures", "g")
+	execute s:rspec_command
+endfunction
+
 
 " Remove trailing whitespace on save for ruby files.
 au BufWritePre *.rb :%s/\s\+$//e
@@ -168,13 +212,6 @@ set mouse+=a
 if &term =~ '^screen'
 	" tmux knows the extended mouse mode
 	set ttymouse=xterm2
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -199,7 +236,7 @@ if has("autocmd")
 
 else
 	set smartindent
-	set autoindent		" always set autoindenting on
+	set autoindent    " always set autoindenting on
 
 endif " has("autocmd")
 
@@ -231,9 +268,14 @@ if executable('ag')
 endif
 
 " bind K to grep word under the cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :silent grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Add optional packages.
 "
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
 "packadd matchit.
+
+"    Mappings
+"---------------------------------------------------------
+map <Leader>vi :tabe ~/.vimrc<CR>
+map <Leader>gw :!git add . && git commit -m 'WIP' && git push <cr>
