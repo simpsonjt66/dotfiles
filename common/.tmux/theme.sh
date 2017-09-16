@@ -1,8 +1,8 @@
 #### COLOUR
 
-tm_icon="🙊"
+tm_icon=""
 tm_color_active=colour51
-tm_color_inactive=colour241
+tm_color_inactive=colour239
 tm_color_feature=colour198
 tm_active_border_color=colour51
 
@@ -35,7 +35,7 @@ set-window-option -g  window-status-current-format "#[bold]#I #W"
 
 # pane border
 set-option -g pane-border-fg $tm_color_inactive
-set-option -g pane-active-border-fg $tm_active_border_color
+set-option -g pane-active-border-fg $tm_color_inactive
 
 # message text
 set-option -g message-bg default
