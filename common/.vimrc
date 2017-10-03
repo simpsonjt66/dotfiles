@@ -1,8 +1,6 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle Stuff
-" """""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible
-filetype off
+"-----------------------------------------------------
+"  Plugins
+"-----------------------------------------------------
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -44,7 +42,7 @@ filetype plugin indent on
 "-------------------------------------------------------------               
 "               Colorscheme
 "------------------------------------------------------------
- let g:solarized_termcolors = 16
+let g:solarized_termcolors = 16
 "  g:solarized_termtrans    = 0 | 1
 "  g:solarized_degrade      = 0 | 1
 "  g:solarized_bold         = 1 | 0
@@ -95,7 +93,7 @@ let vim_markdown_preview_hotkey  = '<Leader>m'
 "--------------------------------------------------
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list            = 1
-let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_open            = 0
 let g:syntastic_check_on_wq              = 0
 let g:syntastic_javascript_checkers      = [ 'eslint' ]
 let g:syntastic_scss_checkers            = [ 'sass-lint' ]
@@ -107,7 +105,7 @@ let g:syntastic_sass_sass_args           = '-I ' . getcwd()
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 
 let g:airline_symbols.space = "\ua0"
@@ -124,24 +122,40 @@ let g:airline#extensions#tabline#show_splits = 0
 " Ruby Stuff
 "--------------------------------------------------
 augroup myfiletypes
-	"clear old autocmds in group
-	autocmd!
-	"autoindent with two spaces, always indent tabs
-	autocmd FileType ruby,eruby,yaml setlocal ai sw=2 sts=2 et
-	autocmd FileType ruby,eruby,yaml setlocal path+=lib
-	autocmd Filetype ruby,eruby,yaml setlocal colorcolumn=80
-	" make ?s part of the word
-	autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
+  autocmd!  
+  " clear old autocmds in group
+  "autoindent with two spaces, always indent tabs
+  autocmd FileType ruby,eruby,yaml setlocal autoindent shiftwidth=2 softtabstop=2 expandtab
+  autocmd FileType ruby,eruby,yaml setlocal path+=lib
+  autocmd Filetype ruby,eruby,yaml setlocal colorcolumn=80
+  " make ?s part of the word
+  autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
+  " Remove trailing whitespace on save for ruby files.
+  autocmd BufWritePre *.rb :%s/\s\+$//e
 
-	"markdown
-	autocmd FileType markdown setlocal ai sw=2 sts=2 et
-	autocmd FileType markdown setlocal colorcolumn=80
-	autocmd FileType markdown setlocal textwidth=80
-	autocmd Filetype markdown setlocal spell
-	autocmd Filetype markdown setlocal spelllang=en_ca
+  " Text
+  autocmd FileType text setlocal textwidth=78
 
-	" Javascript
-	autocmd FileType javascript setlocal ai sw=2 sts=2 et
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+        \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+
+  " Markdown
+  autocmd FileType markdown setlocal ai sw=2 sts=2 et
+  autocmd FileType markdown setlocal colorcolumn=80
+  autocmd FileType markdown setlocal textwidth=80
+  autocmd Filetype markdown setlocal spell
+  autocmd Filetype markdown setlocal spelllang=en_ca
+
+  " Javascript
+  autocmd FileType javascript setlocal ai sw=2 sts=2 et
+
+  " Git commit messages
+  autocmd FileType gitcommit setlocal spell
 
 augroup end
 
@@ -152,7 +166,7 @@ set backupdir=~/.tmp
 set cursorcolumn
 set cursorline
 set directory=~/.tmp    "Keeps all the temp files out of the directory
-set et
+set expandtab
 set hlsearch
 set history=500 " keep 50 lines of command line history
 set incsearch " do incremental searching
@@ -167,9 +181,8 @@ set shiftwidth=2        "Set indent to 2 spaces
 set showcmd    " display incomplete commands
 set showmatch  " jumps to matching bracket
 set smarttab
+set softtabstop=2
 set splitright
-set sw=2
-set tabstop=2           "Set indent to 2 spaces
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set viminfo+=!
 
@@ -189,15 +202,17 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 map <Leader>f :call RunFailingSpecs()<CR>
+map <Leader>ff :call RunFastFailingSpecs()<CR>
 
-function! RunFailingSpecs()
-	let s:rspec_command = substitute(g:rspec_command, "{spec}", "--only-failures", "g")
-	execute s:rspec_command
+function! RunFailingSpecs() abort
+  let s:rspec_command = substitute(g:rspec_command, "{spec}", "--only-failures", "g")
+  execute s:rspec_command
 endfunction
 
-
-" Remove trailing whitespace on save for ruby files.
-au BufWritePre *.rb :%s/\s\+$//e
+function! RunFastFailingSpecs() abort
+  let s:rspec_command = substitute(g:rspec_command, "{spec}", "--only-failures --fail-fast", "g")
+  execute s:rspec_command
+endfunction
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -210,67 +225,40 @@ nnoremap <C-H> <C-W><C-H>
 set mouse+=a
 
 if &term =~ '^screen'
-	" tmux knows the extended mouse mode
-	set ttymouse=xterm2
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
 endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-	" Put these in an autocmd group, so that we can delete them easily.
-	augroup vimrcEx
-		au!
-
-		" For all text files set 'textwidth' to 78 characters.
-		autocmd FileType text setlocal textwidth=78
-
-		" When editing a file, always jump to the last known cursor position.
-		" Don't do it when the position is invalid or when inside an event handler
-		" (happens when dropping a file on gvim).
-		autocmd BufReadPost *
-					\ if line("'\"") >= 1 && line("'\"") <= line("$") |
-					\   exe "normal! g`\"" |
-					\ endif
-
-	augroup END
-
-else
-	set smartindent
-	set autoindent    " always set autoindenting on
-
-endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-				\ | wincmd p | diffthis
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+        \ | wincmd p | diffthis
 endif
 
 if has('langmap') && exists('+langnoremap')
-	" Prevent that the langmap option applies to characters that result from a
-	" mapping.  If unset (default), this may break plugins (but it's backward
-	" compatible).
-	set langnoremap
+  " Prevent that the langmap option applies to characters that result from a
+  " mapping.  If unset (default), this may break plugins (but it's backward
+  " compatible).
+  set langnoremap
 endif
 
 " The Silver Searcher
 if executable('ag')
-	" Use ag over grep
-	set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 " bind K to grep word under the cursor
 nnoremap K :silent grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-" Add optional packages.
-"
+
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
 "packadd matchit.
@@ -279,3 +267,5 @@ nnoremap K :silent grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 "---------------------------------------------------------
 map <Leader>vi :tabe ~/.vimrc<CR>
 map <Leader>gw :!git add . && git commit -m 'WIP' && git push <cr>
+map <Leader>i mmgg=G'm
+map <Leader>bp obinding.pry<esc>:w<cr>
