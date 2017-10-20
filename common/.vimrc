@@ -10,16 +10,13 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Plugins
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'jgdavey/tslime.vim'
-Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'SirVer/ultisnips'
-Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'honza/vim-snippets'
 Plugin 'godlygeek/tabular'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'ngmy/vim-rubocop'
 Plugin 'pangloss/vim-javascript'
 Plugin 'thoughtbot/vim-rspec'
@@ -27,13 +24,12 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'valloric/youcompleteme'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'viniciusban/vim-github-colorscheme'
+
 " All plugins must be loaded before this line
 call vundle#end()           
 
@@ -42,27 +38,10 @@ filetype plugin indent on
 "-------------------------------------------------------------               
 "               Colorscheme
 "------------------------------------------------------------
-let g:solarized_termcolors = 16
-"  g:solarized_termtrans    = 0 | 1
-"  g:solarized_degrade      = 0 | 1
-"  g:solarized_bold         = 1 | 0
-"  g:solarized_underline    = 1 | 0
-"  g:solarized_italic       = 1 | 0
-let g:solarized_contrast    = "high"
-let g:solarized_visibility  = "normal"
-
 set t_Co=256
 syntax enable
 set background=dark
-colorscheme solarized
-
-"--------------------------------------------------
-"     Experimenting with netrw
-"--------------------------------------------------
-let g:netrw_winsize       = -28
-let g:netrw_liststye      = 3
-let g:netrw_sort_sequence = '[\/]$,*'
-let g:netrw_brower        = 3
+colorscheme jellybeans
 
 "--------------------------------------------------
 "     Ultisnips, YouCompleteMe & SuperTab
@@ -82,13 +61,6 @@ let g:UltiSnipsSnippetDirectories      = ['my-snippets']
 let g:UltiSnipsSnippetsDir             = '~/.vim/my-snippets'
 
 "--------------------------------------------------
-"     Markdown
-"--------------------------------------------------
-let vim_markdown_preview_browser = 'Safari'
-let vim_markdown_preview_github  = 1
-let vim_markdown_preview_hotkey  = '<Leader>m'
-
-"--------------------------------------------------
 "     Syntastic
 "--------------------------------------------------
 let g:syntastic_always_populate_loc_list = 1
@@ -102,21 +74,21 @@ let g:syntastic_sass_sass_args           = '-I ' . getcwd()
 "--------------------------------------------------
 "     Airline
 "--------------------------------------------------
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
 
-let g:airline_symbols.space = "\ua0"
+" let g:airline_symbols.space = "\ua0"
 
-let g:rehash256 = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-let g:airline#extensions#tabline#enabled = 1 "enable airline tabline
-let g:airline#extensions#tabline#tab_min_count = 2 "only show tabline if tabs are being used
-let g:airline#extensions#tabline#show_buffers = 0 "do not show open buffers
-let g:airline#extensions#tabline#show_splits = 0
+" let g:rehash256 = 1
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" let g:airline#extensions#tabline#enabled = 1 "enable airline tabline
+" let g:airline#extensions#tabline#tab_min_count = 2 "only show tabline if tabs are being used
+" let g:airline#extensions#tabline#show_buffers = 0 "do not show open buffers
+" let g:airline#extensions#tabline#show_splits = 0
 
 "--------------------------------------------------
 " Ruby Stuff
@@ -163,8 +135,6 @@ set autoread
 set autoindent
 set backspace=indent,eol,start
 set backupdir=~/.tmp
-set cursorcolumn
-set cursorline
 set directory=~/.tmp    "Keeps all the temp files out of the directory
 set expandtab
 set hlsearch
@@ -183,6 +153,7 @@ set showmatch  " jumps to matching bracket
 set smarttab
 set softtabstop=2
 set splitright
+set wildmenu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set viminfo+=!
 
@@ -257,7 +228,7 @@ if executable('ag')
 endif
 
 " bind K to grep word under the cursor
-nnoremap K :silent grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
