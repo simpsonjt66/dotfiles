@@ -1,0 +1,22 @@
+Xterm*termName: xterm-256color
+URxvt*termName: rxvt-256color
+
+URxvt*scrollBar: false
+
+Xft.dpi:         96
+Xft.antialias:   true
+Xft.rgba:        rgb
+Xft.hinting:     true
+Xft.hintstyle:   hintslight
+
+URxvt.geometry: 90x30
+URxvt.loginShell: true
+
+URxvt*iso14755: false
+URxvt*iso14755_52: false
+
+URxvt.font: xft:Hack-Regular:size=9
+
+URxvt*background: black
+URxvt.foreground: white
+

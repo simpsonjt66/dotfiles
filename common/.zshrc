@@ -95,3 +95,7 @@ alias con='bin/rails c'
 export NOTES="$HOME/Dropbox/Notes" # Set notes folder
 export DEFAULT_CHEAT_DIR=$HOME"/Dropbox/Notes/cheats"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'

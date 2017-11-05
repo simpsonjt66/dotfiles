@@ -12,8 +12,9 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugins
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'jgdavey/tslime.vim'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'honza/vim-snippets'
 Plugin 'godlygeek/tabular'
@@ -219,12 +220,6 @@ endif
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
 " bind K to grep word under the cursor
@@ -240,3 +235,4 @@ map <Leader>vi :tabe ~/.vimrc<CR>
 map <Leader>gw :!git add . && git commit -m 'WIP' && git push <cr>
 map <Leader>i mmgg=G'm
 map <Leader>bp obinding.pry<esc>:w<cr>
+map <C-p> :Files<CR>
