@@ -217,9 +217,10 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+if executable('rg')
+  " Use rg over grep
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
 " bind K to grep word under the cursor
