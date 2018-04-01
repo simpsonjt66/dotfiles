@@ -91,6 +91,7 @@ alias todo='vim ~/Dropbox/Notes/TODO.md'
 alias til='vim ~/Dropbox/Notes/TIL.md'
 alias mux='tmuxinator'
 alias con='bin/rails c'
+alias typeless='history | tail -n 20000 | sed "s/.* //" | sort | uniq -c | sort -g | tail -n 100'
 
 export NOTES="$HOME/Dropbox/Notes" # Set notes folder
 export DEFAULT_CHEAT_DIR=$HOME"/Dropbox/Notes/cheats"

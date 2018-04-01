@@ -30,13 +30,16 @@ Plugin 'nanotech/jellybeans.vim'
 Plugin 'valloric/youcompleteme'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'mtscout6/syntastic-local-eslint.vim'
+Plugin 'gcorne/vim-sass-lint'
+Plugin 'majutsushi/tagbar'
 
 " All plugins must be loaded before this line
-call vundle#end()           
+call vundle#end()
 
-filetype plugin indent on    
+filetype plugin indent on
 
-"-------------------------------------------------------------               
+"-------------------------------------------------------------
 "               Colorscheme
 "------------------------------------------------------------
 set t_Co=256
@@ -69,7 +72,8 @@ let g:syntastic_auto_loc_list            = 1
 let g:syntastic_check_on_open            = 0
 let g:syntastic_check_on_wq              = 0
 let g:syntastic_javascript_checkers      = [ 'eslint' ]
-let g:syntastic_scss_checkers            = [ 'sass-lint' ]
+let g:syntastic_scss_checkers            = [ 'sasslint' ]
+let g:syntastic_sass_checkers            = [ 'sasslint' ]
 let g:syntastic_sass_sass_args           = '-I ' . getcwd()
 
 "--------------------------------------------------
@@ -95,7 +99,7 @@ let g:syntastic_sass_sass_args           = '-I ' . getcwd()
 " Ruby Stuff
 "--------------------------------------------------
 augroup myfiletypes
-  autocmd!  
+  autocmd!
   " clear old autocmds in group
   "autoindent with two spaces, always indent tabs
   autocmd FileType ruby,eruby,yaml setlocal autoindent shiftwidth=2 softtabstop=2 expandtab
@@ -104,7 +108,7 @@ augroup myfiletypes
   " make ?s part of the word
   autocmd FileType ruby,eruby,yaml setlocal iskeyword+=?
   " Remove trailing whitespace on save for ruby files.
-  autocmd BufWritePre *.rb :%s/\s\+$//e
+  autocmd BufWritePre  * %s/\s\+$//e
 
   " Text
   autocmd FileType text setlocal textwidth=78
@@ -235,5 +239,8 @@ nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 map <Leader>vi :tabe ~/.vimrc<CR>
 map <Leader>gw :!git add . && git commit -m 'WIP' && git push <cr>
 map <Leader>i mmgg=G'm
+map <Leader>bpr obinding.remote_pry<esc>:w<cr>
 map <Leader>bp obinding.pry<esc>:w<cr>
 map <C-p> :Files<CR>
+nmap <F8> :TagbarToggle<CR>
+nmap <C-e> :UltiSnipsEdit<CR>

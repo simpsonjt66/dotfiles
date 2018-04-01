@@ -50,7 +50,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # Rofi
-bindsym $mod+space exec rofi -show run 
+bindsym $mod+space exec rofi -show run
 
 # change focus
 bindsym $mod+h focus left
@@ -77,7 +77,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+" split h
+bindsym $mod+Shift+v split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -171,7 +171,7 @@ client.placeholder      #1e222b  #252933  #8e9299  #000000  #0c0c0c
 
 client.background       #1e222b
 # Assign Chrome to workspace 2
-assign [class="^chrome$"] 2
+assign [class="google-chrome"] 2
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -179,4 +179,7 @@ bar {
         status_command i3status
 }
 
+exec --no-startup-id xsetroot -solid "#002244"
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
+exec --no-startup-id nm-applet
+
