@@ -51,6 +51,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # Rofi
 bindsym $mod+space exec rofi -show run
+bindsym Mod1+Tab  exec rofi -show window
 
 # change focus
 bindsym $mod+h focus left
@@ -182,4 +183,6 @@ bar {
 exec --no-startup-id xsetroot -solid "#002244"
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
 exec --no-startup-id nm-applet
+
+bindsym $mod+p exec lock
 
