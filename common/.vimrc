@@ -142,6 +142,7 @@ set backspace=indent,eol,start
 set backupdir=~/.tmp
 set directory=~/.tmp    "Keeps all the temp files out of the directory
 set expandtab
+set fillchars+=vert:│
 set hlsearch
 set history=500 " keep 50 lines of command line history
 set incsearch " do incremental searching
