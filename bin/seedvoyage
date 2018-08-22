@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+google-chrome -new-instance -new-window &
+
+PID=$!
+
+while [ "$WID" = "" ]
+do
+  WID=$(wmctrl -lp | grep $PID | cut "-d " -f1)
+done
+
+wmctrl -i -r $WID -e 2,0,0,716,999
+
+urxvt &
+
+PID=$!
+DEV_WID=""
+while [ "$DEV_WID" = "" ]
+do
+  DEV_WID=$(wmctrl -lp | grep $PID | cut "-d " -f1)
+done
+
+wmctrl -i -r $DEV_WID -e 2,1280,224,1280,800
+wmctrl -i -r $DEV_WID -b add,fullscreen
+
+urxvt &
+
+PID=$!
+TEST_WID=""
+while [ "$TEST_WID" = "" ]
+do
+  TEST_WID=$(wmctrl -lp | grep $PID | cut "-d " -f1)
+done
+
+wmctrl -i -r $TEST_WID -e 2,719,622,562,427
+

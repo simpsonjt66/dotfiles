@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+~/qutebrowser/.venv/bin/python3 -m qutebrowser "$@"
