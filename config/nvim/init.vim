@@ -2,13 +2,16 @@ call plug#begin('~/.nvim/bundle')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/base16-vim'
+Plug 'honza/vim-snippets'
 Plug 'jgdavey/tslime.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf.vim'
 Plug 'ngmy/vim-rubocop'
 Plug 'roxma/nvim-yarp'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'SirVer/ultisnips'
 Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
@@ -135,3 +138,10 @@ function! RunUnitTests() abort
   let s:rspec_command = substitute(g:rspec_command, "{spec}", "--tag ~@js", "g")
   execute s:rspec_command
 endfunction
+
+" The Silver Searcher
+if executable('rg')
+  " Use rg over grep
+  set grepprg=rg\ --vimgrep\ --no-heading
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
