@@ -103,5 +103,9 @@ BASE16_SHELL=$HOME/.config/base16-shell/
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/home/jsimpson/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+alias rct='spring rails console test --sandbox'
+alias rc='spring rails console --sandbox'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PUBLISHABLE_KEY="pk_test_4BcC6hjmpzeXJaBwEfmRGFte"
+export SECRET_KEY="sk_test_athgo7JVqyAbPmkZVTHrdJSo"

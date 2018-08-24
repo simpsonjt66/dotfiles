@@ -72,13 +72,14 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 highlight VertSplit none
 
 "--------------------------------------------------
-" Ruby Stuff
+" File type specific settings
 "--------------------------------------------------
 syntax on  " Enable syntax highlighting
 
 augroup myfiletypes
   " clear old autocmds in group
   autocmd!
+  " Ruby
   " Autoindent with two spaces, always expand tabs
   autocmd FileType ruby,eruby,yaml setlocal ai sw=2 sts=2 et
   autocmd FileType ruby,eruby,yaml setlocal path+=lib
@@ -88,6 +89,16 @@ augroup myfiletypes
 
   " Remove trailing whitespace on save for ruby files.
   autocmd BufWritePre  * %s/\s\+$//e
+
+  " Markdown
+  autocmd FileType markdown setlocal ai sw=2 sts=2 et
+  autocmd FileType markdown setlocal colorcolumn=80
+  autocmd FileType markdown setlocal textwidth=80
+  autocmd Filetype markdown setlocal spell
+  autocmd Filetype markdown setlocal spelllang=en_ca
+
+  " Git commit messages
+  autocmd FileType gitcommit setlocal spell
 augroup end
 
 " ----------------------------------------------------
