@@ -129,7 +129,7 @@ nnoremap <C-H> <C-W><C-H>
 
 map <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
 map <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
-map <Leader>i mmgg=G'm
+noremap! <Leader>i gg=G<C-o><C-o>zz
 map <Leader>bpr obinding.remote_pry<esc>:w<cr>
 map <Leader>bp obinding.pry<esc>:w<cr>
 map <C-p> :Files<CR>
