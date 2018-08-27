@@ -1,3 +1,8 @@
+" Automatic, language-dependant indentation, syntax coloring and other
+" functionality
+filetype indent plugin on
+syntax on
+
 call plug#begin('~/.nvim/bundle')
 
 Plug 'airblade/vim-gitgutter'
@@ -44,7 +49,6 @@ let g:airline#extensions#tabline#show_splits = 0
 "--------------------------------------------------
 " File type specific settings
 "--------------------------------------------------
-syntax on  " Enable syntax highlighting
 
 augroup myfiletypes
   " clear old autocmds in group
@@ -154,7 +158,10 @@ endif
 
 nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
+source $HOME/.nvim/plugin/settings.vim
+
 "--------------------------------------------------
 "     fzf
 "--------------------------------------------------
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case  --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
