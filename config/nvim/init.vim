@@ -7,6 +7,7 @@ call plug#begin('~/.config/nvim/bundle')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/base16-vim'
+Plug 'godlygeek/tabular'
 Plug 'honza/vim-snippets'
 Plug 'jgdavey/tslime.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -45,6 +46,7 @@ let g:airline#extensions#tabline#enabled = 1 "enable airline tabline
 let g:airline#extensions#tabline#tab_min_count = 2 "only show tabline if tabs are being used
 let g:airline#extensions#tabline#show_buffers = 0 "do not show open buffers
 let g:airline#extensions#tabline#show_splits = 0
+let g:airline_inactive_collapse=1
 
 "--------------------------------------------------
 " File type specific settings
@@ -157,9 +159,3 @@ if executable('rg')
 endif
 
 nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-"--------------------------------------------------
-"     fzf
-"--------------------------------------------------
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case  --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
