@@ -3,7 +3,7 @@
 filetype indent plugin on
 syntax on
 
-call plug#begin('~/.nvim/bundle')
+call plug#begin('~/.config/nvim/bundle')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/base16-vim'
@@ -157,8 +157,6 @@ if executable('rg')
 endif
 
 nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-source $HOME/.nvim/plugin/settings.vim
 
 "--------------------------------------------------
 "     fzf
