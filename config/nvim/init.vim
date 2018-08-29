@@ -1,3 +1,6 @@
+let mapleader="\<Space>"
+let maplocalleader="\\"
+"
 " Automatic, language-dependant indentation, syntax coloring and other
 " functionality
 filetype indent plugin on
@@ -6,7 +9,6 @@ syntax on
 call plug#begin('~/.config/nvim/bundle')
 
 Plug 'airblade/vim-gitgutter'
-Plug 'chriskempson/base16-vim'
 Plug 'godlygeek/tabular'
 Plug 'honza/vim-snippets'
 Plug 'jgdavey/tslime.vim'
@@ -24,8 +26,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'chriskempson/base16-vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'wincent/ferret'
 
@@ -33,20 +34,13 @@ call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 
-"--------------------------------------------------
-"     Airline
-"--------------------------------------------------
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+"-------------------------------------------------------------
+"               Colorscheme
+"------------------------------------------------------------
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
 endif
-
-let g:airline#extensions#tabline#enabled = 1 "enable airline tabline
-let g:airline#extensions#tabline#tab_min_count = 2 "only show tabline if tabs are being used
-let g:airline#extensions#tabline#show_buffers = 0 "do not show open buffers
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline_inactive_collapse=1
 
 "--------------------------------------------------
 " File type specific settings
@@ -82,18 +76,10 @@ augroup end
 " ----------------------------------------------------
 set mouse+=a
 
-if &term =~ '^screen'
-  " tmux knows the extended mouse mode
-  set ttymouse=xterm2
-endif
-
-"-------------------------------------------------------------
-"               Colorscheme
-"------------------------------------------------------------
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
+" if &term =~ '^screen'
+"   " tmux knows the extended mouse mode
+"   set ttymouse=xterm2
+" endif
 
 " ----------------------------------------------------
 "                Mappings
@@ -108,7 +94,11 @@ map <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
 noremap! <Leader>i gg=G<C-o><C-o>zz
 map <Leader>bpr obinding.remote_pry<esc>:w<cr>
 map <Leader>bp obinding.pry<esc>:w<cr>
-map <C-p> :Files<CR>
+
+nmap <Leader>p :Files<CR>
+nmap <Leader>h :Helptags<CR>
+nmap <Leader>c :History:<CR>
+nmap <Leader>t :Tags<CR>:w
 
 nmap <C-e> :UltiSnipsEdit<CR>
 
@@ -119,13 +109,13 @@ nmap <C-e> :UltiSnipsEdit<CR>
 " Outputs rspec test in other tmux pane
 let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
 
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
-map <Leader>f :call RunFailingSpecs()<CR>
-map <Leader>ff :call RunFastFailingSpecs()<CR>
-map <Leader>u :call RunUnitTests()<CR>
+map <LocalLeader>t :call RunCurrentSpecFile()<CR>
+map <LocalLeader>s :call RunNearestSpec()<CR>
+map <LocalLeader>l :call RunLastSpec()<CR>
+map <LocalLeader>a :call RunAllSpecs()<CR>
+map <LocalLeader>f :call RunFailingSpecs()<CR>
+map <LocalLeader>ff :call RunFastFailingSpecs()<CR>
+map <LocalLeader>u :call RunUnitTests()<CR>
 
 function! RunFailingSpecs() abort
   let s:rspec_command = substitute(g:rspec_command, "{spec}", "--only-failures", "g")
@@ -158,4 +148,3 @@ if executable('rg')
   set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-nnoremap K :silent! grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
