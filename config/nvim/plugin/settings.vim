@@ -27,6 +27,7 @@ if has('folding')
   endif
   set foldmethod=indent                   " faster than syntax
   set foldlevelstart=99                   " start unfolded
+  set foldtext=folding#foldtext()
 endif
 
 if has('termguicolors')
