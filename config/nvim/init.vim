@@ -138,7 +138,10 @@ endfunction
 let g:UltiSnipsExpandTrigger           = '<tab>'
 let g:UltiSnipsJumpForwardTrigger      = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+let g:UltiSnipsEditSplit               = 'horizontal'
 
+let g:UltiSnipsSnippetDirectories      = ['private-snippets']
+let g:UltiSnipsSnippetsDir             = '~/dotfiles/config/nvim/private-snippets'
 "--------------------------------------------------
 " The Silver Searcher
 "--------------------------------------------------
