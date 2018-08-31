@@ -89,11 +89,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-map <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
-map <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
-noremap! <Leader>i gg=G<C-o><C-o>zz
-map <Leader>bpr obinding.remote_pry<esc>:w<cr>
-map <Leader>bp obinding.pry<esc>:w<cr>
+nmap <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
+nmap <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
+nmap <Leader>i gg=G<C-o><C-o>zz
+nmap <Leader>bpr obinding.remote_pry<esc>:w<cr>
+nmap <Leader>bp obinding.pry<esc>:w<cr>
 
 nmap <Leader>p :Files<CR>
 nmap <Leader>h :Helptags<CR>
