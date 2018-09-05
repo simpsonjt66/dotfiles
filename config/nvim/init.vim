@@ -68,7 +68,7 @@ augroup myfiletypes
   autocmd Filetype markdown setlocal spelllang=en_ca
 
   " Git commit messages
-  autocmd FileType gitcommit setlocal spell
+  autocmd FileType gitcommit setlocal spell textwidth=72
 augroup end
 
 " ----------------------------------------------------
@@ -89,11 +89,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-nmap <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
+nmap <LocalLeader>vi :tabe ~/.config/nvim/init.vim<CR>
 nmap <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
-nmap <Leader>i gg=G<C-o><C-o>zz
-nmap <Leader>bpr obinding.remote_pry<esc>:w<cr>
-nmap <Leader>bp obinding.pry<esc>:w<cr>
+nmap <LocalLeader>i gg=G<C-o><C-o>zz
+nmap <LocalLeader>bpr obinding.remote_pry<esc>:w<cr>
+nmap <LocalLeader>bp obinding.pry<esc>:w<cr>
 
 nmap <Leader>p :Files<CR>
 nmap <Leader>h :Helptags<CR>
@@ -101,6 +101,9 @@ nmap <Leader>c :History:<CR>
 nmap <Leader>t :Tags<CR>:w
 
 nmap <C-e> :UltiSnipsEdit<CR>
+
+let g:vimrubocop_keymap = 0
+nmap <LocalLeader>ru :RuboCop<CR>
 
 "---------------------------------------------------------------------------
 "                 Vim-rspec settings
