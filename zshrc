@@ -106,6 +106,7 @@ HEROKU_AC_ZSH_SETUP_PATH=/home/jsimpson/.cache/heroku/autocomplete/zsh_setup && 
 alias rct='spring rails console test --sandbox'
 alias rc='spring rails console --sandbox'
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PUBLISHABLE_KEY="pk_test_4BcC6hjmpzeXJaBwEfmRGFte"
 export SECRET_KEY="sk_test_athgo7JVqyAbPmkZVTHrdJSo"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
