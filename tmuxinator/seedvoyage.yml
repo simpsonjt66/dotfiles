@@ -22,7 +22,7 @@ root: ~/Code/seedvoyage_webapp
 # on_project_stop: command
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: rvm use 2.4.4@rails514
+# pre_window: command
 # Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
 # tmux_command: byobu
 
@@ -40,5 +40,5 @@ pre_window: rvm use 2.4.4@rails514
 
 windows:
   - editor:
-    - vim
+    - nvim
   - server: foreman start -f Procfile.dev
