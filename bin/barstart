@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+killall -q polybar
+
+while pgrep -x polybar >/dev/null; do sleep 2; done
+
+# Launch top bar
+polybar example 2> /dev/null
