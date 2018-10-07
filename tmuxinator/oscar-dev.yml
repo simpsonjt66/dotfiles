@@ -1,0 +1,9 @@
+# ~/.tmuxinator/oscar-dev.yml
+
+name: oscar-dev
+root: ~/Code/oscar
+
+windows:
+  - editor:
+    - nvim
+  - server: bin/rails s
