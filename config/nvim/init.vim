@@ -29,6 +29,7 @@ Plug 'tpope/vim-surround'
 Plug 'chriskempson/base16-vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'wincent/ferret'
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -94,6 +95,8 @@ nmap <Leader>gw :!git add . && git commit -m 'WIP:' && git push --no-verify <cr>
 nmap <LocalLeader>i gg=G<C-o><C-o>zz
 nmap <LocalLeader>bpr obinding.remote_pry<esc>:w<cr>
 nmap <LocalLeader>bp obinding.pry<esc>:w<cr>
+" converts local variable to let in RSpec
+nmap <LocalLeader>vtl ^ysiw)Iletf(a:f=2xv$hS{
 
 nmap <Leader>p :Files<CR>
 nmap <Leader>h :Helptags<CR>
