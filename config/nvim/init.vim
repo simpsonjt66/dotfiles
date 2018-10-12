@@ -64,6 +64,7 @@ augroup myfiletypes
   autocmd BufWritePre  * %s/\s\+$//e
 
   " Markdown
+  autocmd BufNewFile, BufReadPost *.md set filetype=markdown
   autocmd FileType markdown setlocal ai sw=2 sts=2 et
   autocmd FileType markdown setlocal colorcolumn=80
   autocmd FileType markdown setlocal textwidth=80
@@ -74,6 +75,11 @@ augroup myfiletypes
   autocmd FileType gitcommit setlocal spell textwidth=72
 augroup end
 
+" ----------------------------------------------------
+"  Allow syntax highlighting in Markdown fenced code blocks
+" ----------------------------------------------------
+
+let g:markdown_fenced_languages = ['html', 'ruby', 'javascript']
 " ----------------------------------------------------
 " Mouse related goodies
 " ----------------------------------------------------
