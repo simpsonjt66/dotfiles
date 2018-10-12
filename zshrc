@@ -8,10 +8,10 @@ export LC_CTYPE=en_US.UTF-8
 export ZSH=~/.oh-my-zsh
 
 # Theme to load for zshell
-ZSH_THEME="sobole"
+export ZSH_THEME="sobole"
 
 # Disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
+export DISABLE_AUTO_TITLE="true"
 
 # Plugins
 plugins=(
