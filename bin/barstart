@@ -1,8 +1,15 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
+
+EXTERN=VGA1
 
 killall -q polybar
 
-while pgrep -x polybar >/dev/null; do sleep 2; done
+while pgrep -x polybar > /dev/null; do sleep 2; done
 
-# Launch top bar
-polybar example 2> /dev/null
+if xrandr --prop | grep -q "$EXTERN connected"
+then
+  MONITOR=VGA1 polybar example 2> /dev/null
+else
+  MONITOR=LVDS1 polybar example 2> /dev/null
+fi
+
