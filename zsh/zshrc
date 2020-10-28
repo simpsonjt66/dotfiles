@@ -36,10 +36,7 @@ alias gaa='git add --all'
 alias gcam='git commit -a -m'
 alias gco='git checkout'
 alias gst='git status'
-alias l='ls -lah'
 alias ls='ls --color=tty'
-
-setopt autocd autopushd pushdignoredups pushdsilent pushdminus          # .. is shortcut for cd .. (etc)
 
 # Make completion:
 # - Try exact (case-sensitive) match first.
@@ -55,6 +52,9 @@ zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 zplug "zsh-users/zsh-autosuggestions", from:github
 
 zplug load
+
+source $HOME/.zsh/directories.zsh
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
 source /usr/share/chruby/chruby.sh
