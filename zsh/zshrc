@@ -1,64 +1,63 @@
-#  vi: ft=zsh
+export EDITOR=vim
+export TERMINAL=/usr/local/bin/st
 
-# Locales
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
+export HISTFILE=~/.histfile
+export HISTSIZE=100000
+export SAVEHIST=$HISTSIZE
 
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
-# Theme to load for zshell
-export ZSH_THEME="sobole"
+setopt SHARE_HISTORY
 
-# Disable auto-setting terminal title.
-export DISABLE_AUTO_TITLE="true"
-
-# Plugins
-plugins=(
-  bundler
-  git
-  tmuxinator
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  )
-
-# Source the oh-my-zsh files
-source $ZSH/oh-my-zsh.sh
-
-# Source Tmuxinator completions
-source ~/.tmux/tmuxinator.zsh
-
-export EDITOR='nvim'
-
-# always start with 256 colors JS
+# Always start with 256 colors
 [[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
 
-# Aliases
-alias mux='tmuxinator'
-alias rc='spring rails console --sandbox'
-alias rct='spring rails console test --sandbox'
-alias typeless='history | tail -n 20000 | sed "s/.* //" | sort | uniq -c | sort -g | tail -n 100'
+bindkey -e # emacs bindings, set to -v for vi bindings
 
+# Completion
+zstyle :compinstall filename '/home/jsimpson/.zshrc'
 
-# Source fzf setup script
+autoload -Uz compinit
+compinit
+
+# Adding themes to the prompt
+autoload -Uz promptinit
+promptinit
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+         eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+autoload -U colors && colors
+
+alias gaa='git add --all'
+alias gcam='git commit -a -m'
+alias gco='git checkout'
+alias gst='git status'
+alias l='ls -lah'
+alias ls='ls --color=tty'
+
+setopt autocd autopushd pushdignoredups pushdsilent pushdminus          # .. is shortcut for cd .. (etc)
+
+# Make completion:
+# - Try exact (case-sensitive) match first.
+# - Then fall back to case-insensitive.
+# - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
+# - Substring complete (ie. bar -> foobar).
+zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+source ~/.zplug/init.zsh
+
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplug "zsh-users/zsh-autosuggestions", from:github
+
+zplug load
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
+
+source /usr/share/chruby/chruby.sh
+source /usr/share/chruby/auto.sh
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Default command for fzf
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-
-# Setup BASE16 color schemes
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/home/jsimpson/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
-
-# Seed Voyage specific environment variables for Stripe
-export PUBLISHABLE_KEY="pk_test_4BcC6hjmpzeXJaBwEfmRGFte"
-export SECRET_KEY="sk_test_athgo7JVqyAbPmkZVTHrdJSo"
-
-# Add rbenv to path
-export PATH="$HOME/.rbenv/bin:$PATH"
-
-# Initialize RBenv
-eval "$(rbenv init -)"
