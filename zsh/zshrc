@@ -18,11 +18,6 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 bindkey -e # emacs bindings, set to -v for vi bindings
 
-# Completion
-zstyle :compinstall filename '/home/jsimpson/.zshrc'
-
-autoload -Uz compinit
-compinit
 
 # Adding themes to the prompt
 autoload -Uz promptinit
@@ -41,13 +36,6 @@ alias gcam='git commit -a -m'
 alias gco='git checkout'
 alias gst='git status'
 alias ls='ls --color=tty'
-
-# Make completion:
-# - Try exact (case-sensitive) match first.
-# - Then fall back to case-insensitive.
-# - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
-# - Substring complete (ie. bar -> foobar).
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
