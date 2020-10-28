@@ -1,0 +1,25 @@
+[alias]
+  co = checkout
+  mro = !lab mr create --assignee 'Simpsonjt67' --remove-source-branch
+  mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
+  sl = !git --no-pager log --oneline --decorate -20
+  sla = !git --no-pager log --oneline --decorate --graph --all -20
+  slap = log --oneline --decorate --graph --all
+  slp = log --oneline --decorate
+  uncommit = reset --soft HEAD^
+  unstage = reset
+[color]
+  ui = auto
+[core]
+  editor = vim
+[fetch]
+  prune = true
+[merge]
+  ff = only
+[push]
+  default = upstream
+[pager]
+  branch = false
+[user]
+  name = John Simpson
+  email = simpsonjt66@gmail.com
