@@ -18,18 +18,11 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 bindkey -e # emacs bindings, set to -v for vi bindings
 
-
-# Adding themes to the prompt
-autoload -Uz promptinit
-promptinit
-
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
      [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
          eval "$("$BASE16_SHELL/profile_helper.sh")"
-
-autoload -U colors && colors
 
 alias gaa='git add --all'
 alias gcam='git commit -a -m'
