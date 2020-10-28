@@ -4,6 +4,8 @@ let maplocalleader="\\"
 
 if &loadplugins
   if has('packages')
+    packadd! vim-airline
+    packadd! vim-airline-themes
     packadd! vim-gitgutter
     packadd! tabular
     packadd! vim-snippets

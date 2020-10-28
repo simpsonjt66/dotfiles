@@ -61,3 +61,9 @@
 [submodule "ale"]
 	path = nvim/pack/bundle/opt/ale
 	url = https://github.com/dense-analysis/ale.git
+[submodule "vim-airline"]
+	path = nvim/pack/bundle/opt/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "vim-airline-themes"]
+	path = nvim/pack/bundle/opt/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
