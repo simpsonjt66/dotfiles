@@ -1,37 +1,38 @@
 let mapleader="\<Space>"
 let maplocalleader="\\"
 "
+
+if &loadplugins
+  if has('packages')
+    packadd! vim-gitgutter
+    packadd! tabular
+    packadd! vim-snippets
+    packadd! tslime.vim
+    packadd! auto-pairs
+    set rtp+=~/.fzf
+    packadd! fzf.vim
+    packadd! 'vim-rubocop'
+    packadd! 'nvim-yarp'
+    packadd! 'nerdtree'
+    " packadd! 'deoplete.nvim', { 'do': ':UpdateRemotepackadd!ins' }
+    packadd! ultisnips
+    packadd! vim-rspec
+    packadd! vim-endwise
+    packadd! vim-fugitive
+    packadd! vim-commentary
+    packadd! vim-rails
+    packadd! vim-surround
+    packadd! base16-vim
+    packadd! vim-ruby
+    packadd! ferret
+    packadd! ale
+  endif
+endif
+
 " Automatic, language-dependant indentation, syntax coloring and other
 " functionality
 filetype indent plugin on
 syntax on
-
-call plug#begin('~/.config/nvim/bundle')
-
-Plug 'airblade/vim-gitgutter'
-Plug 'godlygeek/tabular'
-Plug 'honza/vim-snippets'
-Plug 'jgdavey/tslime.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'ngmy/vim-rubocop'
-Plug 'roxma/nvim-yarp'
-Plug 'scrooloose/nerdtree'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'SirVer/ultisnips'
-Plug 'thoughtbot/vim-rspec'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-surround'
-Plug 'chriskempson/base16-vim'
-Plug 'vim-ruby/vim-ruby'
-Plug 'wincent/ferret'
-Plug 'w0rp/ale'
-
-call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 

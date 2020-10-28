@@ -1,0 +1,63 @@
+[submodule "vim-gitgutter"]
+	path = nvim/pack/bundle/opt/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "tabular"]
+	path = nvim/pack/bundle/opt/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "vim-snippets"]
+	path = nvim/pack/bundle/opt/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "tslime"]
+	path = nvim/pack/bundle/opt/tslime.vim
+	url = https://github.com/jgdavey/tslime.vim.git
+[submodule "auto-pairs"]
+	path = nvim/pack/bundle/opt/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "fzf"]
+	path = nvim/pack/bundle/opt/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "vim-rubocop"]
+	path = nvim/pack/bundle/opt/vim-rubocop
+	url = https://github.com/ngmy/vim-rubocop.git
+[submodule "nvim-yarp"]
+	path = nvim/pack/bundle/opt/nvim-yarp
+	url = https://github.com/roxma/nvim-yarp.git
+[submodule "nerdtree"]
+	path = nvim/pack/bundle/opt/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "deoplete.nvim"]
+	path = nvim/pack/bundle/opt/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "ultisnips"]
+	path = nvim/pack/bundle/opt/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "vim-rspec"]
+	path = nvim/pack/bundle/opt/vim-rspec
+	url = https://github.com/thoughtbot/vim-rspec.git
+[submodule "vim-endwise"]
+	path = nvim/pack/bundle/opt/vim-endwise
+	url = https://github.com/tpope/vim-endwise.git
+[submodule "vim-fugitive"]
+	path = nvim/pack/bundle/opt/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim-commentary"]
+	path = nvim/pack/bundle/opt/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "vim-rails"]
+	path = nvim/pack/bundle/opt/vim-rails
+	url = https://github.com/tpope/vim-rails.git
+[submodule "vim-surround"]
+	path = nvim/pack/bundle/opt/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "base16-vim"]
+	path = nvim/pack/bundle/opt/base16-vim
+	url = https://github.com/chriskempson/base16-vim.git
+[submodule "vim-ruby"]
+	path = nvim/pack/bundle/opt/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "ferret"]
+	path = nvim/pack/bundle/opt/ferret
+	url = https://github.com/wincent/ferret.git
+[submodule "ale"]
+	path = nvim/pack/bundle/opt/ale
+	url = https://github.com/dense-analysis/ale.git
