@@ -11,10 +11,10 @@ if &loadplugins
     packadd! auto-pairs
     set rtp+=~/.fzf
     packadd! fzf.vim
-    packadd! 'vim-rubocop'
-    packadd! 'nvim-yarp'
-    packadd! 'nerdtree'
-    " packadd! 'deoplete.nvim', { 'do': ':UpdateRemotepackadd!ins' }
+    packadd! vim-rubocop
+    packadd! nvim-yarp
+    packadd! nerdtree
+    packadd! deoplete.nvim
     packadd! ultisnips
     packadd! vim-rspec
     packadd! vim-endwise
