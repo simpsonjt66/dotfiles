@@ -1,7 +1,0 @@
-# ~/.tmuxinator/oscar-test.yml
-
-name: oscar-test
-root: ~/Code/oscar
-
-windows:
-  - terminal:
