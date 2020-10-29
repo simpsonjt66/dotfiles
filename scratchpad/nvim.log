@@ -1,0 +1,322 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.012  000.012: --- NVIM STARTING ---
+000.808  000.796: locale set
+001.593  000.784: inits 1
+001.642  000.049: window checked
+001.652  000.010: parsing arguments
+001.780  000.128: expanding arguments
+001.905  000.125: inits 2
+003.632  001.727: init highlight
+003.929  000.297: waiting for UI
+006.024  002.095: done waiting for UI
+006.062  000.038: initialized screen early for UI
+006.295  000.048  000.048: sourcing /usr/share/nvim/archlinux.vim
+006.318  000.168  000.120: sourcing /etc/xdg//nvim/sysinit.vim
+020.031  013.413  013.413: sourcing /usr/share/nvim/runtime/filetype.vim
+020.248  000.075  000.075: sourcing /usr/share/nvim/runtime/ftplugin.vim
+020.417  000.063  000.063: sourcing /usr/share/nvim/runtime/indent.vim
+021.232  000.517  000.517: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+021.425  000.821  000.304: sourcing /usr/share/nvim/runtime/syntax/synload.vim
+021.479  000.981  000.160: sourcing /usr/share/nvim/runtime/syntax/syntax.vim
+023.783  002.238  002.238: sourcing /home/jsimpson/.local/share/nvim/site/autoload/plug.vim
+028.931  000.941  000.941: sourcing /usr/share/nvim/runtime/ftoff.vim
+040.939  000.033  000.033: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/ftdetect/snippets.vim
+041.066  000.022  000.022: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/ftdetect/fugitive.vim
+041.340  000.152  000.152: sourcing /home/jsimpson/.config/nvim/bundle/vim-ruby/ftdetect/ruby.vim
+041.631  000.258  000.258: sourcing /home/jsimpson/.config/nvim/bundle/vim-ruby/ftdetect/ruby_extra.vim
+041.857  009.560  009.096: sourcing /usr/share/nvim/runtime/filetype.vim
+042.104  000.019  000.019: sourcing /usr/share/nvim/runtime/ftplugin.vim
+042.341  000.017  000.017: sourcing /usr/share/nvim/runtime/indent.vim
+043.973  000.264  000.264: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+044.784  000.218  000.218: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+057.248  014.597  014.115: sourcing /home/jsimpson/.config/nvim/bundle/base16-vim/colors/base16-tomorrow-night.vim
+057.262  014.783  000.186: sourcing /home/jsimpson/.vimrc_background
+057.729  051.333  009.242: sourcing /home/jsimpson/.config/nvim/init.vim
+057.738  000.175: sourcing vimrc file(s)
+058.094  000.110  000.110: sourcing /home/jsimpson/.config/nvim/plugin/nerdtree.vim
+058.315  000.192  000.192: sourcing /home/jsimpson/.config/nvim/plugin/settings.vim
+059.230  000.205  000.205: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/utility.vim
+060.010  000.258  000.258: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/highlight.vim
+061.480  003.051  002.588: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/plugin/gitgutter.vim
+062.154  000.147  000.147: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/init.vim
+062.772  000.171  000.171: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/parts.vim
+063.052  000.023  000.023: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/formatter/short_path.vim
+064.691  000.202  000.202: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/util.vim
+064.818  003.193  002.650: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/plugin/airline.vim
+065.018  000.070  000.070: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/plugin/airline-themes.vim
+065.405  000.268  000.268: sourcing /home/jsimpson/.config/nvim/bundle/tabular/plugin/Tabular.vim
+065.594  000.053  000.053: sourcing /home/jsimpson/.config/nvim/bundle/vim-snippets/plugin/vimsnippets.vim
+065.855  000.143  000.143: sourcing /home/jsimpson/.config/nvim/bundle/tslime.vim/plugin/tslime.vim
+066.427  000.457  000.457: sourcing /home/jsimpson/.config/nvim/bundle/auto-pairs/plugin/auto-pairs.vim
+067.755  001.194  001.194: sourcing /home/jsimpson/.config/nvim/bundle/fzf.vim/plugin/fzf.vim
+068.612  000.716  000.716: sourcing /home/jsimpson/.fzf/plugin/fzf.vim
+068.893  000.140  000.140: sourcing /home/jsimpson/.config/nvim/bundle/vim-rubocop/plugin/rubocop.vim
+069.642  000.211  000.211: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/autoload/nerdtree.vim
+070.680  000.506  000.506: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/path.vim
+070.961  000.139  000.139: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/menu_controller.vim
+071.174  000.090  000.090: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/menu_item.vim
+071.407  000.118  000.118: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/key_map.vim
+071.764  000.245  000.245: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/bookmark.vim
+072.112  000.227  000.227: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/tree_file_node.vim
+072.700  000.457  000.457: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/tree_dir_node.vim
+073.008  000.191  000.191: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/opener.vim
+073.392  000.268  000.268: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/creator.vim
+073.578  000.059  000.059: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/flag_set.vim
+073.850  000.155  000.155: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/nerdtree.vim
+074.263  000.307  000.307: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/ui.vim
+074.413  000.030  000.030: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/event.vim
+074.572  000.051  000.051: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/notifier.vim
+075.172  000.462  000.462: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/autoload/nerdtree/ui_glue.vim
+079.712  000.197  000.197: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/exec_menuitem.vim
+080.952  000.468  000.468: sourcing /usr/share/nvim/runtime/autoload/provider/clipboard.vim
+081.607  001.853  001.385: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/fs_menu.vim
+081.763  000.117  000.117: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/vcs.vim
+082.159  013.086  007.402: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/plugin/NERD_tree.vim
+082.774  000.368  000.368: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete.vim
+082.992  000.720  000.351: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/plugin/deoplete.vim
+083.508  000.119  000.119: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/autoload/UltiSnips/map_keys.vim
+083.636  000.534  000.415: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/plugin/UltiSnips.vim
+084.201  000.452  000.452: sourcing /home/jsimpson/.config/nvim/bundle/vim-rspec/plugin/rspec.vim
+084.947  000.635  000.635: sourcing /home/jsimpson/.config/nvim/bundle/vim-endwise/plugin/endwise.vim
+087.398  002.336  002.336: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/plugin/fugitive.vim
+087.824  000.305  000.305: sourcing /home/jsimpson/.config/nvim/bundle/vim-commentary/plugin/commentary.vim
+088.747  000.811  000.811: sourcing /home/jsimpson/.config/nvim/bundle/vim-rails/plugin/rails.vim
+089.726  000.860  000.860: sourcing /home/jsimpson/.config/nvim/bundle/vim-surround/plugin/surround.vim
+090.568  000.700  000.700: sourcing /home/jsimpson/.config/nvim/bundle/ferret/plugin/ferret.vim
+092.004  000.321  000.321: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/events.vim
+092.280  001.597  001.276: sourcing /home/jsimpson/.config/nvim/bundle/ale/plugin/ale.vim
+092.983  000.272  000.272: sourcing /usr/share/nvim/runtime/plugin/gzip.vim
+093.036  000.019  000.019: sourcing /usr/share/nvim/runtime/plugin/health.vim
+093.177  000.111  000.111: sourcing /usr/share/nvim/runtime/plugin/man.vim
+094.183  000.384  000.384: sourcing /usr/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+094.254  001.023  000.639: sourcing /usr/share/nvim/runtime/plugin/matchit.vim
+094.493  000.207  000.207: sourcing /usr/share/nvim/runtime/plugin/matchparen.vim
+095.271  000.691  000.691: sourcing /usr/share/nvim/runtime/plugin/netrwPlugin.vim
+095.993  000.222  000.222: sourcing /usr/share/nvim/runtime/autoload/remote/host.vim
+096.493  000.190  000.190: sourcing /usr/share/nvim/runtime/autoload/remote/define.vim
+096.622  001.078  000.665: sourcing /home/jsimpson/.local/share/nvim/rplugin.vim
+096.633  001.304  000.227: sourcing /usr/share/nvim/runtime/plugin/rplugin.vim
+096.854  000.173  000.173: sourcing /usr/share/nvim/runtime/plugin/shada.vim
+096.956  000.044  000.044: sourcing /usr/share/nvim/runtime/plugin/spellfile.vim
+097.239  000.238  000.238: sourcing /usr/share/nvim/runtime/plugin/tarPlugin.vim
+097.415  000.130  000.130: sourcing /usr/share/nvim/runtime/plugin/tohtml.vim
+097.495  000.035  000.035: sourcing /usr/share/nvim/runtime/plugin/tutor.vim
+097.831  000.273  000.273: sourcing /usr/share/nvim/runtime/plugin/zipPlugin.vim
+097.862  003.982: loading plugins
+097.974  000.112: loading packages
+098.693  000.275  000.275: sourcing /home/jsimpson/.config/nvim/bundle/tabular/autoload/tabular.vim
+101.514  003.331  003.056: sourcing /home/jsimpson/.config/nvim/bundle/tabular/after/plugin/TabularMaps.vim
+101.803  000.155  000.155: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/after/plugin/UltiSnips_after.vim
+101.835  000.374: loading after plugins
+101.856  000.020: inits 3
+104.074  002.219: reading ShaDa
+104.977  000.384  000.384: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions.vim
+105.167  000.073  000.073: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/quickfix.vim
+105.443  000.192  000.192: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline.vim
+105.663  000.052  000.052: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/netrw.vim
+105.838  000.050  000.050: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/fzf.vim
+106.436  000.079  000.079: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/section.vim
+106.869  000.218  000.218: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/highlighter.vim
+107.311  001.112  000.815: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/term.vim
+107.614  000.117  000.117: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/hunks.vim
+108.053  000.239  000.239: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/branch.vim
+108.322  000.069  000.069: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/fugitiveline.vim
+108.622  000.114  000.114: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/ale.vim
+109.073  000.147  000.147: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/whitespace.vim
+109.411  000.102  000.102: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/po.vim
+109.661  000.111  000.111: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/wordcount.vim
+109.928  000.066  000.066: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/keymap.vim
+126.308  000.065  000.065: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/themes.vim
+128.486  002.494  002.429: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/autoload/airline/themes/base16.vim
+130.641  004.913  002.420: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/autoload/airline/themes/base16.vim
+156.281  000.190  000.190: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/builder.vim
+156.883  000.107  000.107: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/default.vim
+164.598  005.273  005.273: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/autoload/fugitive.vim
+171.838  000.400  000.400: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/engine.vim
+172.208  000.095  000.095: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/statusline.vim
+210.968  000.373  000.373: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/hunk.vim
+225.479  000.214  000.214: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale.vim
+225.767  107.300: opening buffers
+226.010  000.146  000.146: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter.vim
+228.213  002.300: BufEnter autocommands
+228.220  000.007: editing files in windows
+228.829  000.193  000.193: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/init.vim
+229.356  000.141  000.141: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/custom.vim
+229.854  000.152  000.152: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/util.vim
+230.623  000.099  000.099: sourcing /usr/share/nvim/runtime/autoload/provider/pythonx.vim
+273.910  043.068  043.068: sourcing /usr/share/nvim/runtime/autoload/provider/python3.vim
+274.355  000.138  000.138: sourcing /usr/share/nvim/runtime/autoload/provider.vim
+399.741  000.253  000.253: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/mapping.vim
+400.519  000.389  000.389: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/handler.vim
+401.782  129.128: VimEnter autocommands
+401.796  000.014: UIEnter autocommands
+401.801  000.005: before starting main loop
+402.412  000.220  000.220: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/cursor.vim
+412.248  010.226: first screen update
+412.262  000.014: --- NVIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.011  000.011: --- NVIM STARTING ---
+000.577  000.566: locale set
+001.080  000.503: inits 1
+001.108  000.028: window checked
+001.114  000.006: parsing arguments
+001.228  000.114: expanding arguments
+001.312  000.085: inits 2
+002.244  000.932: init highlight
+002.380  000.136: waiting for UI
+003.283  000.903: done waiting for UI
+003.319  000.036: initialized screen early for UI
+003.495  000.035  000.035: sourcing /usr/share/nvim/archlinux.vim
+003.512  000.129  000.094: sourcing /etc/xdg//nvim/sysinit.vim
+016.002  012.292  012.292: sourcing /usr/share/nvim/runtime/filetype.vim
+016.197  000.063  000.063: sourcing /usr/share/nvim/runtime/ftplugin.vim
+016.346  000.051  000.051: sourcing /usr/share/nvim/runtime/indent.vim
+017.073  000.456  000.456: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+017.249  000.728  000.272: sourcing /usr/share/nvim/runtime/syntax/synload.vim
+017.297  000.874  000.146: sourcing /usr/share/nvim/runtime/syntax/syntax.vim
+019.384  002.029  002.029: sourcing /home/jsimpson/.local/share/nvim/site/autoload/plug.vim
+024.100  000.841  000.841: sourcing /usr/share/nvim/runtime/ftoff.vim
+035.011  000.032  000.032: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/ftdetect/snippets.vim
+035.130  000.021  000.021: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/ftdetect/fugitive.vim
+035.389  000.145  000.145: sourcing /home/jsimpson/.config/nvim/bundle/vim-ruby/ftdetect/ruby.vim
+035.648  000.226  000.226: sourcing /home/jsimpson/.config/nvim/bundle/vim-ruby/ftdetect/ruby_extra.vim
+035.865  008.681  008.256: sourcing /usr/share/nvim/runtime/filetype.vim
+036.099  000.019  000.019: sourcing /usr/share/nvim/runtime/ftplugin.vim
+036.320  000.016  000.016: sourcing /usr/share/nvim/runtime/indent.vim
+037.937  000.297  000.297: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+038.764  000.207  000.207: sourcing /usr/share/nvim/runtime/syntax/syncolor.vim
+050.948  014.332  013.828: sourcing /home/jsimpson/.config/nvim/bundle/base16-vim/colors/base16-tomorrow-night.vim
+050.962  014.510  000.178: sourcing /home/jsimpson/.vimrc_background
+051.438  047.870  008.494: sourcing /home/jsimpson/.config/nvim/init.vim
+051.447  000.128: sourcing vimrc file(s)
+051.814  000.112  000.112: sourcing /home/jsimpson/.config/nvim/plugin/nerdtree.vim
+052.027  000.182  000.182: sourcing /home/jsimpson/.config/nvim/plugin/settings.vim
+052.710  000.186  000.186: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/utility.vim
+053.375  000.202  000.202: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/highlight.vim
+054.666  002.525  002.137: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/plugin/gitgutter.vim
+055.311  000.145  000.145: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/init.vim
+055.929  000.167  000.167: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/parts.vim
+056.212  000.022  000.022: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/formatter/short_path.vim
+057.873  000.251  000.251: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/util.vim
+058.003  003.207  002.622: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/plugin/airline.vim
+058.208  000.066  000.066: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/plugin/airline-themes.vim
+058.584  000.264  000.264: sourcing /home/jsimpson/.config/nvim/bundle/tabular/plugin/Tabular.vim
+058.780  000.059  000.059: sourcing /home/jsimpson/.config/nvim/bundle/vim-snippets/plugin/vimsnippets.vim
+059.043  000.144  000.144: sourcing /home/jsimpson/.config/nvim/bundle/tslime.vim/plugin/tslime.vim
+059.634  000.473  000.473: sourcing /home/jsimpson/.config/nvim/bundle/auto-pairs/plugin/auto-pairs.vim
+060.952  001.194  001.194: sourcing /home/jsimpson/.config/nvim/bundle/fzf.vim/plugin/fzf.vim
+061.828  000.747  000.747: sourcing /home/jsimpson/.fzf/plugin/fzf.vim
+062.095  000.128  000.128: sourcing /home/jsimpson/.config/nvim/bundle/vim-rubocop/plugin/rubocop.vim
+062.841  000.209  000.209: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/autoload/nerdtree.vim
+063.836  000.492  000.492: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/path.vim
+064.108  000.141  000.141: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/menu_controller.vim
+064.336  000.089  000.089: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/menu_item.vim
+064.578  000.126  000.126: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/key_map.vim
+064.930  000.237  000.237: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/bookmark.vim
+065.269  000.223  000.223: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/tree_file_node.vim
+065.842  000.453  000.453: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/tree_dir_node.vim
+066.163  000.190  000.190: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/opener.vim
+066.526  000.247  000.247: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/creator.vim
+066.695  000.058  000.058: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/flag_set.vim
+066.965  000.153  000.153: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/nerdtree.vim
+067.378  000.304  000.304: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/ui.vim
+067.538  000.031  000.031: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/event.vim
+067.705  000.050  000.050: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/lib/nerdtree/notifier.vim
+068.325  000.468  000.468: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/autoload/nerdtree/ui_glue.vim
+072.866  000.192  000.192: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/exec_menuitem.vim
+074.063  000.461  000.461: sourcing /usr/share/nvim/runtime/autoload/provider/clipboard.vim
+074.738  001.831  001.369: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/fs_menu.vim
+074.894  000.115  000.115: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/nerdtree_plugin/vcs.vim
+075.289  013.015  007.405: sourcing /home/jsimpson/.config/nvim/bundle/nerdtree/plugin/NERD_tree.vim
+075.899  000.361  000.361: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete.vim
+076.070  000.668  000.307: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/plugin/deoplete.vim
+076.558  000.119  000.119: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/autoload/UltiSnips/map_keys.vim
+076.684  000.501  000.382: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/plugin/UltiSnips.vim
+077.242  000.447  000.447: sourcing /home/jsimpson/.config/nvim/bundle/vim-rspec/plugin/rspec.vim
+078.021  000.669  000.669: sourcing /home/jsimpson/.config/nvim/bundle/vim-endwise/plugin/endwise.vim
+080.494  002.356  002.356: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/plugin/fugitive.vim
+080.919  000.303  000.303: sourcing /home/jsimpson/.config/nvim/bundle/vim-commentary/plugin/commentary.vim
+081.902  000.865  000.865: sourcing /home/jsimpson/.config/nvim/bundle/vim-rails/plugin/rails.vim
+082.890  000.868  000.868: sourcing /home/jsimpson/.config/nvim/bundle/vim-surround/plugin/surround.vim
+083.704  000.669  000.669: sourcing /home/jsimpson/.config/nvim/bundle/ferret/plugin/ferret.vim
+085.161  000.321  000.321: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/events.vim
+085.437  001.615  001.294: sourcing /home/jsimpson/.config/nvim/bundle/ale/plugin/ale.vim
+086.146  000.272  000.272: sourcing /usr/share/nvim/runtime/plugin/gzip.vim
+086.202  000.020  000.020: sourcing /usr/share/nvim/runtime/plugin/health.vim
+086.350  000.118  000.118: sourcing /usr/share/nvim/runtime/plugin/man.vim
+087.321  000.380  000.380: sourcing /usr/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+087.392  001.009  000.629: sourcing /usr/share/nvim/runtime/plugin/matchit.vim
+087.650  000.226  000.226: sourcing /usr/share/nvim/runtime/plugin/matchparen.vim
+088.457  000.718  000.718: sourcing /usr/share/nvim/runtime/plugin/netrwPlugin.vim
+089.198  000.235  000.235: sourcing /usr/share/nvim/runtime/autoload/remote/host.vim
+089.700  000.193  000.193: sourcing /usr/share/nvim/runtime/autoload/remote/define.vim
+089.818  001.082  000.654: sourcing /home/jsimpson/.local/share/nvim/rplugin.vim
+089.829  001.310  000.228: sourcing /usr/share/nvim/runtime/plugin/rplugin.vim
+090.054  000.169  000.169: sourcing /usr/share/nvim/runtime/plugin/shada.vim
+090.160  000.050  000.050: sourcing /usr/share/nvim/runtime/plugin/spellfile.vim
+090.451  000.246  000.246: sourcing /usr/share/nvim/runtime/plugin/tarPlugin.vim
+090.631  000.134  000.134: sourcing /usr/share/nvim/runtime/plugin/tohtml.vim
+090.710  000.034  000.034: sourcing /usr/share/nvim/runtime/plugin/tutor.vim
+091.022  000.269  000.269: sourcing /usr/share/nvim/runtime/plugin/zipPlugin.vim
+091.053  003.955: loading plugins
+091.198  000.145: loading packages
+091.940  000.293  000.293: sourcing /home/jsimpson/.config/nvim/bundle/tabular/autoload/tabular.vim
+095.643  004.234  003.942: sourcing /home/jsimpson/.config/nvim/bundle/tabular/after/plugin/TabularMaps.vim
+095.988  000.177  000.177: sourcing /home/jsimpson/.config/nvim/bundle/ultisnips/after/plugin/UltiSnips_after.vim
+096.021  000.412: loading after plugins
+096.042  000.021: inits 3
+098.347  002.305: reading ShaDa
+099.172  000.335  000.335: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions.vim
+099.359  000.076  000.076: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/quickfix.vim
+099.637  000.193  000.193: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline.vim
+099.853  000.048  000.048: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/netrw.vim
+100.031  000.047  000.047: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/fzf.vim
+100.669  000.118  000.118: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/section.vim
+101.166  000.254  000.254: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/highlighter.vim
+101.616  001.223  000.851: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/term.vim
+101.925  000.119  000.119: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/hunks.vim
+102.369  000.242  000.242: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/branch.vim
+102.639  000.068  000.068: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/fugitiveline.vim
+102.940  000.114  000.114: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/ale.vim
+103.418  000.147  000.147: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/whitespace.vim
+103.733  000.072  000.072: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/po.vim
+103.972  000.112  000.112: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/wordcount.vim
+104.217  000.040  000.040: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/keymap.vim
+120.713  000.064  000.064: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/themes.vim
+122.866  002.469  002.405: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/autoload/airline/themes/base16.vim
+124.985  004.857  002.389: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline-themes/autoload/airline/themes/base16.vim
+150.756  000.187  000.187: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/builder.vim
+151.341  000.107  000.107: sourcing /home/jsimpson/.config/nvim/bundle/vim-airline/autoload/airline/extensions/default.vim
+158.978  005.192  005.192: sourcing /home/jsimpson/.config/nvim/bundle/vim-fugitive/autoload/fugitive.vim
+166.154  000.400  000.400: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/engine.vim
+166.513  000.095  000.095: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/statusline.vim
+207.031  000.378  000.378: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter/hunk.vim
+221.612  000.209  000.209: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale.vim
+221.904  109.296: opening buffers
+222.141  000.146  000.146: sourcing /home/jsimpson/.config/nvim/bundle/vim-gitgutter/autoload/gitgutter.vim
+224.332  002.281: BufEnter autocommands
+224.338  000.007: editing files in windows
+224.890  000.187  000.187: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/init.vim
+225.401  000.138  000.138: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/custom.vim
+225.891  000.152  000.152: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/util.vim
+226.639  000.096  000.096: sourcing /usr/share/nvim/runtime/autoload/provider/pythonx.vim
+269.507  042.645  042.645: sourcing /usr/share/nvim/runtime/autoload/provider/python3.vim
+270.177  000.216  000.216: sourcing /usr/share/nvim/runtime/autoload/provider.vim
+395.516  000.252  000.252: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/mapping.vim
+396.226  000.371  000.371: sourcing /home/jsimpson/.config/nvim/bundle/deoplete.nvim/autoload/deoplete/handler.vim
+397.437  129.041: VimEnter autocommands
+397.454  000.017: UIEnter autocommands
+397.461  000.007: before starting main loop
+398.415  000.330  000.330: sourcing /home/jsimpson/.config/nvim/bundle/ale/autoload/ale/cursor.vim
+407.146  009.355: first screen update
+407.157  000.011: --- NVIM STARTED ---

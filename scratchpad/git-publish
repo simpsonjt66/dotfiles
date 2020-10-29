@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+#
+# Usage: git publish <remote-branch-name>
+# Open the pull request page for <branch>, or the current branch if not
+# specified. Lands on the new pull request page when no PR exists yet.
+# The local branch must be tracking the remote branch.
+
+def get_current_branch
+  # As of git 2.22 `git branch --show-current` works
+  `git rev-parse --abbrev-ref HEAD`.chomp
+end
+
+def main
+  current_branch = get_current_branch
+  # git remote show origin | grep "HEAD branch" | cut -d ":" -f 2
+  # will show the default or base branch. This works if branch changed
+  # from master to main.
+  # git remote show origin | awk '/HEAD branch/ {print $NF}' will produce
+  # the same without spaces etc.
+  # These two aliases could be added to .gitconfig
+  # upstream-name = !git remote | egrep -o '(upstream|origin)' | tail -1
+  # head-branch = !git remote show $(git upstream-name) | awk '/HEAD branch/ {print $NF}'
+
+  if current_branch == 'master'
+    $stderr.puts "Currently on master, aborting."
+    exit 1
+  else
+    system("git push -u origin #{current_branch}:#{current_branch} --no-verify")
+  end
+end
+
+main
