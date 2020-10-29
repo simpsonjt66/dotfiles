@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Stash any unstaged changes
+git stash -q --keep-index
+
+# Run tests
+RUN_TESTS_CMD='bin/rspec --tag ~@js'
+NUM_FAILS=`${RUN_TESTS_CMD} | grep "example" | grep "fail" | awk {'print $3'}`
+
+# Unstash
+git stash pop -q
+
+if [ $NUM_FAILS -ne 0 ]
+then
+
+    echo -e "Can't commit! There are failing tests"
+    exit 1
+
+else
+
+    echo -e "All tests passed"
+    exit 0
+fi
+
