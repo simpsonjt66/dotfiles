@@ -26,13 +26,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 eval "$(zoxide init zsh)"
 
-alias gaa='git add --all'
-alias gcam='git commit -a -m'
-alias gco='git checkout'
-alias gst='git status'
-alias ls='ls --color=tty'
-
-
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
 source /usr/share/chruby/chruby.sh
