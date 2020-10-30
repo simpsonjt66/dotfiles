@@ -1,7 +1,9 @@
+# shows top 10 most commonly run commands targets for aliasing
 function zsh-stats() {
   fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
 }
 
+# sources .zshrc
 function sz() {
   source ~/.zshrc
 }
@@ -43,5 +45,48 @@ function git() {
     fi
   else
     command git "$@"
+  fi
+}
+
+# tmux doesn't handle dots in session names
+path_name="$(basename "$PWD" | tr . -)"
+session_name=${1-$path_name}
+
+function session_exists() {
+  tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"
+}
+
+function not_in_tmux() {
+  [[ -z "$TMUX" ]]
+}
+
+function create_detached_session() {
+  (TMUX='' command tmux new-session -Ad -s "$session_name")
+}
+
+
+function tmux() {
+  emulate -LR zsh
+  if [ $# -eq 0 ]; then
+    if not_in_tmux; then
+      echo "creating a new session"
+      command tmux new-session -As "$session_name"
+    else
+      if ! session_exists; then
+        echo "creating a detached session"
+        create_detached_session
+      fi
+      echo "switching client"
+      command tmux switch-client -t "$session_name"
+    fi
+  else
+    echo "passing args to tmux $@"
+    command tmux "$@"
+  fi
+}
+
+function ensure_tmux_is_running() {
+  if not_in_tmux; then
+    tmux
   fi
 }
