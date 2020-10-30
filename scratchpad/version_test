@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Returns the version of multiple installed applications
+class VersionTest
+  def applications
+    [
+      { name: 'tmux', command: '-V' },
+      { name: 'zsh',  command: '--version' },
+      { name: 'git',  command: '--version' },
+      { name: 'nvim', command: '--version' },
+      { name: 'rg',   command: '-V' },
+      { name: 'st',   command: '-v' }
+    ]
+  end
+
+  def initialize(_args)
+    results = []
+
+    applications.each do |application|
+      response = `#{application[:name]} #{application[:command]} 2>&1`
+      results << { name: application[:name], version: response[/(\d+\.)?(\d+\.)?(\*|\d+)/] }
+    end
+
+    results.each do |result|
+      puts result[:name].ljust(7) + result[:version]
+    end
+  end
+end
+
+VersionTest.new(ARGV)
