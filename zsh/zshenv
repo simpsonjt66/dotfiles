@@ -1,1 +1,9 @@
 export EDITOR=$(which nvim)
+
+SYSTEM_PATH=$PATH
+unset PATH
+
+PATH=$HOME/bin
+PATH=$PATH:$HOME/.zsh/bin
+PATH=$PATH:$SYSTEM_PATH
+export PATH
