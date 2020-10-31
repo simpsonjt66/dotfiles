@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+def current_branch
+  `git branch --show-current`
+end
+
+def default_branch
+  `git remote show origin | awk '/HEAD/ {print $NF}'`
+end
+
+def main
+  if current_branch == default_branch
+    warn 'Currently on default branch, aborting.'
+    exit 1
+  else
+    `git push -u origin #{current_branch} #{current_branch} --no-verify`
+  end
+end
+
+main
