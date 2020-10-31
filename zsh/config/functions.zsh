@@ -56,10 +56,10 @@ function tmux() {
 
   if [ $# -eq 0 ]; then
     if [[ -z "$TMUX" ]]; then
-      command tmux new-session -As "$session_name"
+      command tmux new -s "$session_name"
     else
-      if ! tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"; then
-        (TMUX='' command tmux new-session -Ad -s "$session_name")
+      if ! tmux has $session_name; then
+        (TMUX='' command tmux new -ds "$session_name")
       fi
       command tmux switch-client -t "$session_name"
     fi
