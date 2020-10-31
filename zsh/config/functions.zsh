@@ -48,45 +48,22 @@ function git() {
   fi
 }
 
-# tmux doesn't handle dots in session names
-path_name="$(basename "$PWD" | tr . -)"
-session_name=${1-$path_name}
-
-function session_exists() {
-  tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"
-}
-
-function not_in_tmux() {
-  [[ -z "$TMUX" ]]
-}
-
-function create_detached_session() {
-  (TMUX='' command tmux new-session -Ad -s "$session_name")
-}
-
-
 function tmux() {
   emulate -LR zsh
+
+  # tmux doesn't handle dots in session names
+  local session_name=${1-"$(basename "$PWD" | tr . -)"}
+
   if [ $# -eq 0 ]; then
-    if not_in_tmux; then
-      echo "creating a new session"
+    if [[ -z "$TMUX" ]]; then
       command tmux new-session -As "$session_name"
     else
-      if ! session_exists; then
-        echo "creating a detached session"
-        create_detached_session
+      if ! tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"; then
+        (TMUX='' command tmux new-session -Ad -s "$session_name")
       fi
-      echo "switching client"
       command tmux switch-client -t "$session_name"
     fi
   else
-    echo "passing args to tmux $@"
     command tmux "$@"
-  fi
-}
-
-function ensure_tmux_is_running() {
-  if not_in_tmux; then
-    tmux
   fi
 }
