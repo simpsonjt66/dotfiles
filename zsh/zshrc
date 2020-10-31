@@ -12,10 +12,6 @@ done
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
-
-# Always start with 256 colors
-[[ "$TERM" == "xterm" ]] && export TERM=xterm-256color
-
 bindkey -e # emacs bindings, set to -v for vi bindings
 
 # Base16 Shell
