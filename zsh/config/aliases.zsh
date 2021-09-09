@@ -8,3 +8,5 @@ alias be='bundle exec'
 alias rc='bin/rails console'
 alias rs='bin/rails server'
 alias rdb='bin/rails dbconsole'
+
+alias rdbm='bin/rails db:migrate && db:test:prepare'
