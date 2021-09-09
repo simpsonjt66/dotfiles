@@ -1,11 +1,13 @@
 #!/bin/bash
 
-git checkout master
+default_branch=git remote show origin | awk /HEAD/ {print $NF}
+
+git checkout $default_branch
 git fetch
 git remote prune origin
-git branch --merged master | grep -v 'master$' | xargs git branch -d
+git branch --merged $default_branch | grep -v "$default_branch$" | xargs git branch -d
 
-REMOVABLE=`git branch -r --merged master | sed 's/  *origin\///' | grep -v 'master$' | grep -v 'staging' | grep -v 'production$'`
+REMOVABLE=`git branch -r --merged $default_branch | sed 's/  *origin\///' | grep -v 'master$' | grep -v 'staging' | grep -v 'production$'`
 
 if [[ -z "$REMOVABLE" ]]; then
   exit 0
