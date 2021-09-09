@@ -111,7 +111,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: Iosevka Term Medium
+    family: Iosevka Term Medium Extended
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -122,7 +122,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Iosevka Term Medium
+    family: Iosevka Term Medium Extended
 
     # The `style` can be specified to pick a specific face.
     #style: Bold
@@ -133,7 +133,7 @@ font:
     #
     # If the itlic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Iosevka Term Medium
+    family: Iosevka Term Medium Extended
 
     # The `style` can be specified to pick a specific face.
     #style: Italic
@@ -280,7 +280,7 @@ mouse:
   # If this is `true`, the cursor is temporarily hidden when typing.
   hide_when_typing: false
 
-  url:
+  hints:
     # URL launcher
     #
     # This program is executed when clicking on a text which is recognized as a URL.
