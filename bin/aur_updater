@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+# Version 0.1
+# September 2021
+#
+# A small group of command line utilites to update the aur files contained in
+# the ~/Code/ directory.  It started out as what seemed to be a fairly
+# straightforward little command line app and gradually grew as I started to
+# discover multi threaded and Open3, so it quickly evolved to a competely
+# different animal.  The current plan is to complete the development of it,
+# then I think create a Gem where the code is slightly more organized, followed
+# by trying to port this over to maybe a node app, then a rust app.
+
+require 'optparse'
+
+Aur = Struct.new(:name, :git_url, :remote_reachable, :up_to_date)
+
+# Useage: aur_updater, from the parent folder where AUR repositories are stored.
+class AurUpdater
+  def initialize(options)
+    @aurs = []
+    @options = options
+  end
+
+  def run
+    all_aur_directories.each do |sub_directory|
+      Dir.chdir(sub_directory) do
+        @aurs.push Aur.new(sub_directory, git_remote, remote_reachable?, outdated?) if outdated?
+      end
+    end
+    if options[:list]
+      list_packages
+    else
+      update_packages
+    end
+  end
+
+  private
+
+  attr_reader :options, :aurs
+
+  def all_aur_directories
+    Dir['*/PKGBUILD'].map { |directory| directory.gsub('/PKGBUILD', '') }
+  end
+
+  def list_packages
+    all_aur_directories.each { |dir| puts dir }
+  end
+
+  def update_packages
+    return puts 'No packages to update' if @aurs.empty?
+
+    puts 'Update packages [y/n]'
+    prompt = $stdin.gets.chomp
+    return unless prompt == 'y'
+
+    @aurs.each do |aur|
+      Dir.chdir(aur.name)
+      system('git pull')
+      system('makepkg --install')
+    end
+  end
+
+  def outdated?
+    !`git status -uno`.include? 'Your branch is up to date'
+  end
+
+  def git_remote
+    `git remote get-url origin`.chomp
+  end
+
+  def remote_reachable?
+    system("git ls-remote #{git_remote} CHECK_GIT_REMOTE_URL_REACHABLE")
+  end
+
+  def aur?
+    File.file?('PKGBUILD')
+  end
+end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: aur_updater [options]'
+
+  opts.on('-l', '--[no-]list', 'List all AURs') do |l|
+    options[:list] = l
+  end
+end.parse!
+
+AurUpdater.new(options).run
+
+# git --git-dir=chruby/.git --work-tree=chruby status
+
