@@ -33,6 +33,10 @@ module Threaded
     GitMessage.new(stdout, stderr, status)
   end
 
+  def self.up_to_date?
+    "rev-list --right-only --count HEAD...@'{u}'"
+  end
+
   def self.run
     threads = []
     packages = Dir['*/PKGBUILD'].map { |pkg| pkg.gsub('/PKGBUILD', '') }.map { |x| [x, Aur.new] }.to_h
@@ -40,11 +44,7 @@ module Threaded
     packages.each_key do |pkg|
       threads << Thread.new do
         packages[pkg].name = pkg
-        packages[pkg].up_to_date = true if status(pkg, 'status -uno').output.include? 'Your branch is up to date'
-        # TODO: A better way of doing this might be:-
-        # git rev-list --right-only --count HEAD...@'{u}'
-        # This returns the number of commits that the local repo is behind the remote.
-
+        packages[pkg].up_to_date = status(pkg, up_to_date?).output.to_i.positive?
         packages[pkg].git_url = status(pkg, 'remote get-url origin').output.chomp
         packages[pkg].remote_reachable = status(pkg, 'ls-remote --exit-code').status.success?
       end
