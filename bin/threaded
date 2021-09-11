@@ -30,11 +30,19 @@ module Threaded
 
     stdout, stderr, status =
       Open3.capture3("git #{opts} #{command}")
-    GitMessage.new(stdout, stderr, status)
+    GitMessage.new(stdout.chomp, stderr, status)
   end
 
   def self.up_to_date?
     "rev-list --right-only --count HEAD...@'{u}'"
+  end
+
+  def self.git_remote
+    'remote get-url origin'
+  end
+
+  def self.remote_reachable?
+    'ls-remote --exit-code'
   end
 
   def self.run
@@ -44,9 +52,9 @@ module Threaded
     packages.each_key do |pkg|
       threads << Thread.new do
         packages[pkg].name = pkg
-        packages[pkg].up_to_date = status(pkg, up_to_date?).output.to_i.positive?
-        packages[pkg].git_url = status(pkg, 'remote get-url origin').output.chomp
-        packages[pkg].remote_reachable = status(pkg, 'ls-remote --exit-code').status.success?
+        packages[pkg].up_to_date = status(pkg, up_to_date?).output.to_i.zero?
+        packages[pkg].git_url = status(pkg, git_remote).output
+        packages[pkg].remote_reachable = status(pkg, remote_reachable?).status.success?
       end
       threads.each(&:join)
     end
