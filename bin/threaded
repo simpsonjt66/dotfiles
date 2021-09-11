@@ -2,6 +2,8 @@
 
 # frozen_string_literal: true
 
+require 'open3'
+
 # Version 0.1
 # September 2021
 #
@@ -12,38 +14,44 @@
 # different animal.  The current plan is to complete the development of it,
 # then I think create a Gem where the code is slightly more organized, followed
 # by trying to port this over to maybe a node app, then a rust app.
+module Threaded
+  Aur = Struct.new(:name, :git_url, :remote_reachable, :up_to_date)
+  GitMessage = Struct.new(:output, :error, :status)
 
-require 'open3'
+  def self.escape(string)
+    string && string.to_s.gsub('\'', '\'"\'"\'').to_s
+  end
 
-Aur = Struct.new(:name, :git_url, :remote_reachable, :up_to_date)
-GitMessage = Struct.new(:output, :error, :status)
+  def self.status(dir, command)
+    opts = []
+    opts << "--git-dir=#{dir}/.git"
+    opts << "--work-tree=#{dir}"
+    opts = opts.flatten.map { |s| escape(s) }.join(' ')
 
-def escape(string)
-  string && string.to_s.gsub('\'', '\'"\'"\'').to_s
-end
+    stdout, stderr, status =
+      Open3.capture3("git #{opts} #{command}")
+    GitMessage.new(stdout, stderr, status)
+  end
 
-def status(dir, command)
-  opts = []
-  opts << "--git-dir=#{dir}/.git"
-  opts << "--work-tree=#{dir}"
-  opts = opts.flatten.map { |s| escape(s) }.join(' ')
+  def self.run
+    threads = []
+    packages = Dir['*/PKGBUILD'].map { |pkg| pkg.gsub('/PKGBUILD', '') }.map { |x| [x, Aur.new] }.to_h
 
-  stdout, stderr, status =
-    Open3.capture3("git #{opts} #{command}")
-  GitMessage.new(stdout, stderr, status)
-end
+    packages.each_key do |pkg|
+      threads << Thread.new do
+        packages[pkg].name = pkg
+        packages[pkg].up_to_date = true if status(pkg, 'status -uno').output.include? 'Your branch is up to date'
+        # TODO: A better way of doing this might be:-
+        # git rev-list --right-only --count HEAD...@'{u}'
+        # This returns the number of commits that the local repo is behind the remote.
 
-threads = []
-packages = Dir['*/PKGBUILD'].map { |pkg| pkg.gsub('/PKGBUILD', '') }.map { |x| [x, Aur.new] }.to_h
-
-packages.each_key do |pkg|
-  threads << Thread.new do
-    packages[pkg].name = pkg
-    packages[pkg].up_to_date = true if status(pkg, 'status -uno').output.include? 'Your branch is up to date'
-    packages[pkg].git_url = status(pkg, 'remote get-url origin').output.chomp
-    packages[pkg].remote_reachable = status(pkg, 'ls-remote --exit-code').status.success?
+        packages[pkg].git_url = status(pkg, 'remote get-url origin').output.chomp
+        packages[pkg].remote_reachable = status(pkg, 'ls-remote --exit-code').status.success?
+      end
+      threads.each(&:join)
+    end
+    puts packages
   end
 end
 
-threads.each(&:join)
-puts packages
+Threaded.run
