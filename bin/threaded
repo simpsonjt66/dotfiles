@@ -14,15 +14,15 @@ require 'open3'
 # different animal.  The current plan is to complete the development of it,
 # then I think create a Gem where the code is slightly more organized, followed
 # by trying to port this over to maybe a node app, then a rust app.
-module Threaded
+class Threaded
   Aur = Struct.new(:name, :git_url, :remote_reachable, :up_to_date)
   GitMessage = Struct.new(:output, :error, :status)
 
-  def self.escape(string)
+  def escape(string)
     string && string.to_s.gsub('\'', '\'"\'"\'').to_s
   end
 
-  def self.status(dir, command)
+  def status(dir, command)
     opts = []
     opts << "--git-dir=#{dir}/.git"
     opts << "--work-tree=#{dir}"
@@ -33,33 +33,40 @@ module Threaded
     GitMessage.new(stdout.chomp, stderr, status)
   end
 
-  def self.up_to_date?
+  def up_to_date?
     "rev-list --right-only --count HEAD...@'{u}'"
   end
 
-  def self.git_remote
+  def git_remote
     'remote get-url origin'
   end
 
-  def self.remote_reachable?
+  def remote_reachable?
     'ls-remote --exit-code'
   end
 
-  def self.run
-    threads = []
-    packages = Dir['*/PKGBUILD'].map { |pkg| pkg.gsub('/PKGBUILD', '') }.map { |x| [x, Aur.new] }.to_h
+  def packages
+    @packages ||= Dir['*/PKGBUILD'].map { |pkg| pkg.gsub('/PKGBUILD', '') }
+                                   .map { |x| [x, Aur.new] }.to_h.sort
+  end
 
-    packages.each_key do |pkg|
+  def build_package_information(directory, git_info)
+    git_info.name = directory
+    git_info.up_to_date = status(directory, up_to_date?).output.to_i.zero?
+    git_info.git_url = status(directory, git_remote).output
+    git_info.remote_reachable = status(directory, remote_reachable?).status.success?
+  end
+
+  def run
+    threads = []
+    packages.each do |pkg|
       threads << Thread.new do
-        packages[pkg].name = pkg
-        packages[pkg].up_to_date = status(pkg, up_to_date?).output.to_i.zero?
-        packages[pkg].git_url = status(pkg, git_remote).output
-        packages[pkg].remote_reachable = status(pkg, remote_reachable?).status.success?
+        build_package_information(pkg[0], pkg[1])
       end
-      threads.each(&:join)
     end
+    threads.each(&:join)
     puts packages
   end
 end
 
-Threaded.run
+Threaded.new.run
