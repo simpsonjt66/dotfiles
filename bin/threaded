@@ -57,6 +57,16 @@ class Threaded
     git_info.remote_reachable = status(directory, remote_reachable?).status.success?
   end
 
+  def show_status
+    packages.each do |pkg|
+      package_name = pkg[0]
+      package_status = pkg[1]
+      if package_status.up_to_date
+        puts "#{package_name} \e[32m (up to date) \e[0m"
+      end
+    end
+  end
+
   def run
     threads = []
     packages.each do |pkg|
@@ -65,7 +75,7 @@ class Threaded
       end
     end
     threads.each(&:join)
-    puts packages
+    show_status
   end
 end
 
