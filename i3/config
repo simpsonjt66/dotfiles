@@ -168,6 +168,9 @@ bar {
 # Launch Rofi
 bindsym $mod+space exec rofi -show run
 
+# Screenshot using ImageMagik
+bindsym --release Print exec import ~/screenshot.png
+
 # Setup dual monitor on the left
 exec --no-startup-id /usr/bin/xrandr --output VGA-1 --auto --left-of LVDS-1
 
