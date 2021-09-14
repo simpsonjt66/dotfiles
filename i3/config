@@ -175,3 +175,6 @@ bindsym --release Print exec import ~/screenshot.png
 exec --no-startup-id /usr/bin/xrandr --output VGA-1 --auto --left-of LVDS-1
 
 bindsym $mod+p exec ~/Sources/i3lock-color/lock.sh
+
+assign [class="^Alacrity$"] number $ws1
+assign [class="^Google-chrome$"] number $ws2
