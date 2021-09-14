@@ -15,6 +15,7 @@
   ui = auto
 [core]
   editor = nvim
+	excludesfile = /home/jsimpson/.gitignore_global
 [fetch]
   prune = true
 [merge]
