@@ -1,6 +1,7 @@
 # Changing/making/removing directory
-setopt auto_pushd
-setopt pushd_ignore_dups
+setopt autocd
+setopt autopushd
+setopt pushdignoredups
 setopt pushdminus
 
 alias -- -='cd -'
@@ -21,6 +22,8 @@ function d () {
     dirs -v | head -10
   fi
 }
+
+compdef _dirs d
 
 alias l='exa -la'
 alias ll='exa -l'
