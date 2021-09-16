@@ -31,6 +31,11 @@ if &loadplugins
   endif
 endif
 
+" Speed up loading by disabling unneeded remote plugin providers
+let g:loaded_python_provider = 0
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider =0
+
 " Automatic, language-dependant indentation, syntax coloring and other
 " functionality
 filetype indent plugin on
