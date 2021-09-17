@@ -15,7 +15,7 @@
   ui = auto
 [core]
   editor = nvim
-	excludesfile = ~/.config/git/.gitignore_global
+  excludesfile = ~/.config/git/gitignore_global
 [fetch]
   prune = true
 [merge]
