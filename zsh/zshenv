@@ -28,4 +28,5 @@ unset PATH
 PATH=$HOME/bin
 PATH=$PATH:$HOME/.zsh/bin
 PATH=$PATH:$SYSTEM_PATH
+PATH=$PATH:$HOME/.local/bin
 export PATH
