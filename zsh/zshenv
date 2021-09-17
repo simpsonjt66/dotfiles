@@ -8,6 +8,8 @@ export XDG_STATE_HOME=${XDG_STATE_HOME:=${HOME}/.local/state}
 
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+
 # export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
 # ZPLUG_HOME="$XDG_DATA_HOME/zplug"
 # ZPLUG_LOADFILE="$XDG_CONFIG_HOME/zsh/plugins.zsh"
