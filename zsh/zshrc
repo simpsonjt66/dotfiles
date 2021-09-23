@@ -1,10 +1,9 @@
-source ~/.zplug/init.zsh
+source ~/Code/dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
-zplug "mafredri/zsh-async", from:github
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-zplug "zsh-users/zsh-autosuggestions", from:github
-
-zplug load
+fpath+=~/Code/dotfiles/zsh/plugins/pure
+autoload -U promptinit; promptinit
+prompt pure
 
 for zsh_source in $HOME/.zsh/*.zsh; do
   source $zsh_source
@@ -22,7 +21,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 eval "$(zoxide init zsh)"
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
 source /usr/share/chruby/chruby.sh
 source /usr/share/chruby/auto.sh

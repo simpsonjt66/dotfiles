@@ -67,3 +67,9 @@
 [submodule "vim-airline-themes"]
 	path = nvim/pack/bundle/opt/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "pure_prompt"]
+	path = zsh/plugins/pure
+	url = https://github.com/sindresorhus/pure.git
+[submodule "zsh-autosuggestions"]
+	path = zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
