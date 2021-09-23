@@ -1,11 +1,15 @@
-# shows top 10 most commonly run commands targets for aliasing
+#!/bin/bash
 function zsh-stats() {
-  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
+  # fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
+  # history -100000 | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
+  history 0 $HISTSIZE | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 }
 
 # sources .zshrc
 function sz() {
-  source ~/.zshrc
+  # shellcheck disable=SC1091
+  source "$HOME"/.zshrc
+  echo "/.zshrc reloaded"
 }
 
 # Wrapper for git blatantly copy and pasted from
@@ -39,7 +43,7 @@ function git() {
       ROOT=.
     fi
     if [ $# -eq 0 ]; then
-      cd "$ROOT"
+      cd "$ROOT" || exit
     else
       (cd "$ROOT" && eval "$@")
     fi
@@ -55,13 +59,16 @@ function tmux() {
   local session_name=${1-"$(basename "$PWD" | tr . -)"}
 
   if [ $# -eq 0 ]; then
+
+    # $TMUX is only set if inside a tmux shell
+    # -z is true if length of string is 0
     if [[ -z "$TMUX" ]]; then
       command tmux new -s "$session_name"
     else
-      if ! tmux has $session_name; then
+      if ! command tmux has -t "$session_name"; then
         (TMUX='' command tmux new -ds "$session_name")
       fi
-      command tmux switch-client -t "$session_name"
+      command tmux switch-client -t "$session_name" && command tmux display-message 'Booooyyyyyaaa'
     fi
   else
     command tmux "$@"
