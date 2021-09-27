@@ -51,26 +51,3 @@ function git() {
     command git "$@"
   fi
 }
-
-function tmux() {
-  emulate -LR zsh
-
-  # tmux doesn't handle dots in session names
-  local session_name=${1-"$(basename "$PWD" | tr . -)"}
-
-  if [ $# -eq 0 ]; then
-
-    # $TMUX is only set if inside a tmux shell
-    # -z is true if length of string is 0
-    if [[ -z "$TMUX" ]]; then
-      command tmux new -s "$session_name"
-    else
-      if ! command tmux has -t "$session_name"; then
-        (TMUX='' command tmux new -ds "$session_name")
-      fi
-      command tmux switch-client -t "$session_name" && command tmux display-message 'Booooyyyyyaaa'
-    fi
-  else
-    command tmux "$@"
-  fi
-}
