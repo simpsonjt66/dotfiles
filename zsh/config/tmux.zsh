@@ -2,7 +2,6 @@ function tmux() {
   emulate -LR zsh
 
   if [ $# -eq 0 ]; then
-  echo $#
     if [ -x .tmux ]; then
       ./.tmux
       return
@@ -12,7 +11,7 @@ function tmux() {
 
     if [[ ! $(pgrep tmux) ]]; then
       command tmux new -ds "$session_name"
-    elif [[ $(command tmux has -t "$session_name") ]]; then
+    elif [[ ! $(command tmux has -t "$session_name") ]]; then
       command tmux new -ds "$session_name"
     fi
     if [[ "$TMUX" ]]; then
