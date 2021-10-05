@@ -9,7 +9,7 @@ for zsh_source in $HOME/.zsh/*.zsh; do
   source $zsh_source
 done
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden'
+export FZF_DEFAULT_COMMAND='fd --type f'
 
 bindkey -e # emacs bindings, set to -v for vi bindings
 
