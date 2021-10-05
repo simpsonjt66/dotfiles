@@ -17,6 +17,8 @@ export BROWSER=/usr/bin/google-chrome-stable
 export PAGER=less
 export SHELL=/usr/bin/zsh
 
+export SCREENSHOT="$HOME/Pictures"
+
 # SYSTEM_PATH=$PATH
 # unset PATH
 
