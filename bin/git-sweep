@@ -1,27 +1,31 @@
 #!/bin/bash
 
-default_branch=git remote show origin | awk /HEAD/ {print $NF}
+default_branch=$(git remote show origin | awk '/HEAD/ {print $NF}')
 
-git checkout $default_branch
+echo "switching to $default_branch"
+git checkout "$default_branch" >/dev/null
+echo "fetching changes"
 git fetch
+echo "pruning origin"
 git remote prune origin
-git branch --merged $default_branch | grep -v "$default_branch$" | xargs git branch -d
+# TODO: Figure out how to make this work if there are no local branches
+# git branch --merged "$default_branch" | grep -v "$default_branch$" | xargs git branch -d
 
-REMOVABLE=`git branch -r --merged $default_branch | sed 's/  *origin\///' | grep -v 'master$' | grep -v 'staging' | grep -v 'production$'`
-
+REMOVABLE=$(git branch -r --merged "$default_branch" | sed 's/  *origin\///' | grep -v 'master$' | grep -v 'staging' | grep -v 'production$')
 if [[ -z "$REMOVABLE" ]]; then
+  echo 'There are no removable branches'
   exit 0
 fi
 
 echo "The following remote branches are fully merged and can be removed:"
 
 for branch in $REMOVABLE; do
-  echo $branch
+  echo "$branch"
 done
 
 read -p "Continue (y/n)? " -n 1 -r
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo $REMOVABLE | xargs git push origin --delete --no-verify
+  echo "$REMOVABLE" | xargs git push origin --delete --no-verify
 fi
