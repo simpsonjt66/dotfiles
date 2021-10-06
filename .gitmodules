@@ -73,3 +73,6 @@
 [submodule "zsh-autosuggestions"]
 	path = zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "base16-shell"]
+	path = base16-shell
+	url = https://github.com/simpsonjt66/base16-shell.git
