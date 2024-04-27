@@ -12,8 +12,8 @@ font pango: SourceCodePro, FontAwesome5Free 9
 floating_modifier $mod
 
 # Constrain the size of floating windows to 300px x 300px
-floating_maximum_size 300 x 300
-
+# floating_maximum_size 300 x 300
+for_window [window_role="GtkFileChooserDialog"] floating enable
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
