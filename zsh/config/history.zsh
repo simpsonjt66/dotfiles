@@ -1,5 +1,5 @@
 ## Command history configuration
-HISTFILE=$HOME/.histfile
+#HISTFILE=$HOME/.histfile
 
 HISTSIZE=100000
 SAVEHIST=100000
