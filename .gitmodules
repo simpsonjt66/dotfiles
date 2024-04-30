@@ -68,10 +68,10 @@
 	path = nvim/pack/bundle/opt/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
 [submodule "pure_prompt"]
-	path = zsh/plugins/pure
+	path = bin/zsh/pure
 	url = https://github.com/sindresorhus/pure.git
 [submodule "zsh-autosuggestions"]
-	path = zsh/plugins/zsh-autosuggestions
+	path = bin/zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule "base16-shell"]
 	path = base16-shell
