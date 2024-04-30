@@ -1,6 +1,6 @@
 ## Completions
 
-fpath=($HOME/.zsh/completion $fpath)
+fpath=($XDG_CONFIG_HOME/zsh/completion $fpath)
 
 autoload -U compinit
 compinit
