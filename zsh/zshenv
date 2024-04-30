@@ -10,7 +10,7 @@ export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 
-# export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
+export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
 
 export EDITOR=$(which nvim)
 export BROWSER=/usr/bin/google-chrome-stable

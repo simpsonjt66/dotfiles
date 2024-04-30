@@ -1,11 +1,11 @@
-source ~/Code/dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.local/bin/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
-fpath+=~/Code/dotfiles/zsh/plugins/pure
+fpath+=$HOME/.local/bin/zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 
-for zsh_source in $HOME/.zsh/*.zsh; do
+for zsh_source in $XDG_CONFIG_HOME/zsh/*.zsh; do
   source $zsh_source
 done
 
@@ -26,3 +26,9 @@ source /usr/share/chruby/chruby.sh
 source /usr/share/chruby/auto.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+HISTFILE="$XDG_STATE_HOME"/zsh/history
+# Completion files: Use XDG dirs
+[ -d "$XDG_CACHE_HOME"/zsh ] || mkdir -p "$XDG_CACHE_HOME"/zsh
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
+compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-$ZSH_VERSION
