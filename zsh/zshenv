@@ -3,8 +3,14 @@ export XDG_CACHE_HOME=${XDG_CACHE_HOME:=${HOME}/.cache}
 export XDG_DATA_HOME=${XDG_DATA_HOME:=${HOME}/.local/share}
 export XDG_STATE_HOME=${XDG_STATE_HOME:=${HOME}/.local/state}
 
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
+export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
+
 # export GEM_HOME="$XDG_DATA_HOME"/gem
 # export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 
 export LESSHISTFILE="$XDG_STATE_HOME"/less/history
 
