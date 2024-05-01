@@ -25,6 +25,6 @@ eval "$(zoxide init zsh)"
 source /usr/share/chruby/chruby.sh
 source /usr/share/chruby/auto.sh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 HISTFILE="$XDG_STATE_HOME"/zsh/history
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
