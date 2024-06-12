@@ -1,0 +1,12 @@
+chromedriver
+chruby
+google-chrome
+heroku-cli
+i3lock-color
+overmind
+pygtk
+ruby-install
+shunit2
+ttf-iosevka-term
+xorg-font-utils
+yay-bin
