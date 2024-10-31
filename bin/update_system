@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Function to check for failed systemd services
+check_failed_services() {
+  failed_services=$(systemctl --failed --no-legend | wc -l)
+  if [ "$failed_services" -gt 0 ]; then
+    echo "Error: There are $failed_services failed systemd services."
+    return 1
+  fi
+  return 0
+}
+
+# Function to check for errors in systemd logs
+check_systemd_logs() {
+  log_errors=$(journalctl -p 3 -b | grep -c error )
+  if [ "$log_errors" -gt 0 ]; then
+    echo "Error: Found $log_errors errors in the systemd logs."
+    return 1
+  fi
+  return 0
+}
+
+# Function to perform system upgrade
+perform_upgrade() {
+  echo "Performing system upgrade..."
+  sudo pacman -Syu
+}
+
+# Main script execution
+main() {
+  if check_failed_services && check_systemd_logs; then
+    echo "No issues found. Proceeding with system upgrade."
+    perform_upgrade
+  else
+    echo "Issues detected. Please review and resolve before upgrading."
+    exit 1
+  fi
+}
+
+# Run the main function
+main
