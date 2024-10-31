@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This script was inspired and plagarized from this article
+# https://unix.stackexchange.com/questions/233345/how-can-i-easily-make-screenshots-of-screen-regions-on-arch-linux-with-i3-wm
+
 DIR=$SCREENSHOT
 DATE="$(date +%Y%m%d-%H%M%S)"
 NAME="${DIR}/screenshot-${DATE}.png"
