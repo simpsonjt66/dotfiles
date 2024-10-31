@@ -160,7 +160,7 @@ bar {
         mode dock
         modifier $alt
         position top
-        tray_output none
+        tray_output primary
         separator_symbol ":"
         status_command i3blocks
 }
@@ -173,9 +173,11 @@ bindsym --release Print exec --no-startup-id scregcp -s
 bindsym --release Shift+Print exec --no-startup-id scregrp
 
 # Setup dual monitor on the left
-exec --no-startup-id /usr/bin/xrandr --output VGA-1 --auto --left-of LVDS-1
+# exec --no-startup-id /usr/bin/xrandr --output VGA-1 --auto --left-of LVDS-1
 
 bindsym $mod+p exec ~/Sources/i3lock-color/lock.sh
 
 assign [class="^Alacrity$"] number $ws1
 assign [class="^Google-chrome$"] number $ws2
+
+exec  --no-startup-id nm-applet
