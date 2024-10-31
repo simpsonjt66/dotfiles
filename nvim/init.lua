@@ -39,6 +39,17 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Enable bash-language-server
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'sh',
+  callback = function()
+    vim.lsp.start({
+      name = 'bash-language-server',
+      cmd = { 'bash-language-server', 'start' },
+    })
+  end,
+})
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 
