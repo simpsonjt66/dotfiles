@@ -69,20 +69,23 @@ render_timer = false
 TERM = "xterm-256color"
 
 [font]
-size = 9.0
+size = 10.0
 
 [font.bold]
-family = "Iosevka Term Medium Extended"
+family = "Iosevka NFM"
+style = "Bold"
 
 [font.glyph_offset]
 x = 0
 y = 0
 
 [font.italic]
-family = "Iosevka Term Medium Extended"
+family = "Iosevka NFM"
+style = "Italic"
 
 [font.normal]
-family = "Iosevka Term Medium Extended"
+family = "Iosevka NFM"
+style = "Regular"
 
 [font.offset]
 x = 0
