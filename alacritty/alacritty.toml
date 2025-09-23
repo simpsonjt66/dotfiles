@@ -66,7 +66,7 @@ print_events = false
 render_timer = false
 
 [env]
-TERM = "xterm-256color"
+TERM = "alacritty"
 
 [font]
 size = 10.0
