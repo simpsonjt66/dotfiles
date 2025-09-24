@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Google Drive
+Comment=Google Drive
+GenericName=This one for drive
+Exec=webapp_launcher https://drive.google.com
+Icon=chrome-aghbiahbpaijignceidepookljebhfak-Default
+StartupNotify=true

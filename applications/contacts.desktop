@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Google Contacts
+GenericName=Contact Manager
+Comment=Google Contacts
+Exec=webapp_launcher https://contacts.google.com
+Terminal=false
+Type=Application
+Icon=chrome-fmgjjmmmlfnkbppncabfkddbjimcfncm-Default
+StartupNotify=true

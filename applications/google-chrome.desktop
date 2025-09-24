@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Google Chrome Stable
+GenericName=This One
+Comment=This One
+Exec=/usr/bin/google-chrome-stable 
+Terminal=false
+Type=Application
+Icon=google-chrome
+StartupNotify=true
