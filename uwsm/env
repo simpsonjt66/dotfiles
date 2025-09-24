@@ -1,0 +1,4 @@
+# Changes to this file require a relaunch of Hyprland
+
+export TERMINAL=alacritty
+export EDITOR=nvim
