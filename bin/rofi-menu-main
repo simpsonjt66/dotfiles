@@ -6,6 +6,15 @@
 # Global flag to determine if "back" should exit the script
 BACK_TO_EXIT=false
 
+# Check if a command exists, otherwise print error and exit
+require_command() {
+  local cmd="$1"
+  if ! command -v "$cmd" &>/dev/null; then
+    notify-send "Error: $cmd not found"
+    exit 1
+  fi
+}
+
 # Navigate back to parent menu or exit
 # Args:
 #   $1 - Parent menu function name to call
@@ -75,6 +84,7 @@ menu() {
 # Args:
 #   $1 - Path to config file
 open_in_editor() {
+  require_command "launch-editor"
   notify-send "Editing config file" "$1"
   launch-editor "$1"
 }
@@ -170,21 +180,13 @@ show_config_menu() {
       return
     fi
   done
-
-  # case $(menu "Edit" "${#options[@]}" "${options[@]}") in
-  # *Hyprland*) open_in_editor ~/.config/hypr/hyprland.conf ;;
-  # *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf ;;
-  # *Rofi*) open_in_editor ~/.config/rofi/config.rasi ;;
-  # *Zsh*) open_in_editor ~/.config/zsh/.zshrc ;;
-  # *Waybar*) open_in_editor ~/.config/waybar/config.jsonc ;;
-  # *Alacritty*) open_in_editor ~/.config/alacritty/alacritty.toml ;;
-  # *Dunst*) open_in_editor ~/.config/dunst/dunstrc ;;
-  # *) show_main_menu ;;
-  # esac
 }
 
 # Font menu: Select and apply system fonts
 show_font_menu() {
+  require_command "font-list"
+  require_command "font-set"
+
   # Get available fonts from external script
   mapfile -t fonts < <(font-list)
   theme=$(menu "Font" "${#fonts[@]}" "${fonts[@]}")
@@ -221,5 +223,8 @@ show_main_menu() {
   esac
 }
 
+require_command "notify_send"
+require_command "rofi"
+require_command "launch-webapp"
 # Start the menu system
 show_main_menu
