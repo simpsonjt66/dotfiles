@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # A script to display Hyprland keybindings defined in your configuration
-# using walker for an interactive search menu.
+# using rofi for an interactive search menu.
 
 # Fetch dynamic keybindings from Hyprland
 #
 # Also do some pre-processing:
-# - Remove standard Omarchy bin path prefix
 # - Remove uwsm prefix
 # - Map numeric modifier key mask to a textual rendition
 # - Output comma-separated values that the parser can understand
@@ -15,7 +14,6 @@ dynamic_bindings() {
     jq -r '.[] | {modmask, key, keycode, description, dispatcher, arg} | "\(.modmask),\(.key)@\(.keycode),\(.description),\(.dispatcher),\(.arg)"' |
     sed -r \
       -e 's/null//' \
-      -e 's,~/.local/share/omarchy/bin/,,' \
       -e 's,uwsm app -- ,,' \
       -e 's/@0//' \
       -e 's/,@/,code:/' \
@@ -84,9 +82,9 @@ parse_bindings() {
 }
 
 monitor_height=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .height')
-menu_height=$((monitor_height * 40 / 100))
+menu_height=$((monitor_height * 60 / 100))
 
 dynamic_bindings |
   sort -u |
   parse_bindings |
-  rofi -dmenu -p 'Keybindings'
+  rofi -dmenu -p 'Keybindings' -theme-str "window {height: $menu_height px ;}"
