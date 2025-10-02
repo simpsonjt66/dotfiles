@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Obsidian
+GenericName=Note taking app
+Comment=Google Contacts
+Exec=/home/jsimpson/.local/bin/Obsidian.AppImage
+Terminal=false
+Type=Application
+Icon=obsidian-icon
+StartupNotify=true
+MimeType=x-scheme-handler/obsidian;
