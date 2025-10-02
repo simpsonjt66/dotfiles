@@ -4,7 +4,27 @@
 # Provides access to apps, config files, fonts, system controls, and learning resources
 
 # Global flag to determine if "back" should exit the script
+FONT_CACHE="$XDG_CACHE_HOME/rofi-font-list"
+CACHE_EXPIRY=3600
 BACK_TO_EXIT=false
+
+# Retrieves a cached list of fonts, or regenerates the cache
+get_fonts() {
+  # If cache exists and is recent, use it; else regenerate
+  if [[ -f "$FONT_CACHE" ]]; then
+    now=$(date +%s)
+    mod=$(date +%s -r "$FONT_CACHE")
+    age=$((now - mod))
+    if ((age < CACHE_EXPIRY)); then
+      mapfile -t fonts <"$FONT_CACHE"
+      return
+    fi
+  fi
+
+  # Regenerate cache
+  font-list >"$FONT_CACHE"
+  mapfile -t fonts <"$FONT_CACHE"
+}
 
 # Check if a command exists, otherwise print error and exit
 require_command() {
@@ -188,15 +208,21 @@ show_font_menu() {
   require_command "font-set"
 
   # Get available fonts from external script
-  mapfile -t fonts < <(font-list)
-  theme=$(menu "Font" "${#fonts[@]}" "${fonts[@]}")
-
-  # Handle cancellation or return to main menu
-  if [[ "$theme" == "CNCLD" || -z "$theme" ]]; then
+  get_fonts
+  local options=("${fonts[@]}" "󰑐 Refresh Font List" " Back")
+  theme=$(menu "Font" "${#options[@]}" "${options[@]}")
+  case "$theme" in
+  "󰑐 Refresh Font List")
+    rm -f "$FONT_CACHE"
+    show_font_menu
+    ;;
+  " Back" | "CNCLD" | "")
     back_to show_main_menu
-  else
+    ;;
+  *)
     font-set "$theme"
-  fi
+    ;;
+  esac
 }
 
 # Learn menu: Quick access to documentation and wikis
@@ -223,7 +249,7 @@ show_main_menu() {
   esac
 }
 
-require_command "notify_send"
+require_command "notify-send"
 require_command "rofi"
 require_command "launch-webapp"
 # Start the menu system
