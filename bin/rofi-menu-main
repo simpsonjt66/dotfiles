@@ -1,0 +1,191 @@
+#!/bin/bash
+
+# Main rofi menu system for Hyprland
+# Provides access to apps, config files, fonts, system controls, and learning resources
+
+# Global flag to determine if "back" should exit the script
+BACK_TO_EXIT=false
+
+# Navigate back to parent menu or exit
+# Args:
+#   $1 - Parent menu function name to call
+back_to() {
+  local parent_menu="$1"
+
+  if [[ "$BACK_TO_EXIT" == "true" ]]; then
+    exit 0
+  elif [[ -n "$parent_menu" ]]; then
+    "$parent_menu"
+  else
+    show_main_menu
+  fi
+}
+
+# Display a rofi menu with dynamic options
+# Args:
+#   $1 - Prompt text
+#   $2 - Array length (number of menu options)
+#   $@ - Menu options array, followed by extra args and preselect option
+# Returns:
+#   Selected menu item via stdout
+menu() {
+  local prompt="$1"
+  local array_length="$2"
+  shift 2
+  local options=("${@:1:$array_length}")
+
+  shift "$array_length"
+
+  local extra="$1"     # Additional rofi arguments
+  local preselect="$2" # Option to preslect by default
+
+  # Parse extra arguments into array
+  read -r -a args <<<"$extra"
+
+  # Calculate maximum option length for window sizing
+  for item in "${options[@]}"; do
+    current_length=${#item}
+
+    if [[ current_length -gt max_length ]]; then
+      max_length=$current_length
+    fi
+  done
+
+  # If preselect is specified, find its index and add to args
+  if [[ -n "$preselect" ]]; then
+    local index
+    index=$(printf '%s\n' "${options[@]}" | grep -nxF "$preselect" | cut -d: -f1)
+    if [[ -n "$index" ]]; then
+      args+=("-selected-row" "$((index - 1))")
+    fi
+  fi
+
+  # Display rofi menu with dynamic sizing
+  printf '%s\n' "${options[@]}" | rofi -dmenu \
+    -p "$prompt" "${args[@]}" \
+    -lines "$array_length" \
+    -no-fixed-num-lines \
+    -theme-str "window { width: ${max_length}em;} listview {scrollbar: false;}"
+}
+
+# Open a config file in the default editor
+# Args:
+#   $1 - Path to config file
+open_in_editor() {
+  notify-send "Editing config file" "$1"
+  launch-editor "$1"
+}
+
+# Execute system commands (shutdown, reboot, suspend, etc.) with confirmation
+# Args:
+#   $1 - Command flag (--shutdown, --reboot, --suspend, --sleep, --logout)
+run_cmd() {
+  selected="$(confirm_exit)"
+  if [[ "$selected" == "Yes" ]]; then
+    if [[ $1 == '--shutdown' ]]; then
+      systemctl poweroff
+    elif [[ $1 == '--reboot' ]]; then
+      systemctl reboot
+    elif [[ $1 == '--suspend' ]]; then
+      systemctl suspend
+    elif [[ $1 == '-sleep' ]]; then
+      systemctl suspend
+    elif [[ $1 == '--logout' ]]; then
+      hyprctl dispatch exit
+    fi
+  else
+    exit 0
+  fi
+}
+
+# Show Yes/No confirmation dialog
+# Returns:
+#   "Yes" or "No" via stdout
+confirm_exit() {
+  echo -e "Yes\nNo" | confirm_cmd
+}
+
+# Display a centered confirmation dialog with Yes/No options
+# Reads options from stdin
+# Returns:
+#   Selected option via stdout
+confirm_cmd() {
+  rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
+    -theme-str 'mainbox {children: [ "message", "listview" ];}' \
+    -theme-str 'listview {columns: 2; lines: 1;}' \
+    -theme-str 'element-text {horizontal-align: 0.5;}' \
+    -theme-str 'textbox {horizontal-align: 0.5;}' \
+    -dmenu \
+    -p 'Confirmation' \
+    -mesg 'Are you Sure?'
+}
+
+# System menu: Lock, Suspend, Logout, Sleep, Reboot, Shutdown
+show_system_menu() {
+  local options=(" Lock" " Suspend" "󰈆 Logout" "󰤄 Sleep" " Reboot" "󰐥 Shutdown")
+  case $(menu "Select" "${#options[@]}" "${options[@]}") in
+  *Lock*) Lock ;;
+  *Suspend*) run_cmd --suspend ;;
+  *Log*) run_cmd --logout ;;
+  *Sleep*) run_cmd --sleep ;;
+  *Reboot*) run_cmd --reboot ;;
+  *Shut*) run_cmd --shutdown ;;
+  *) show_main_menu ;;
+  esac
+}
+
+# Config menu: Edit various configuration files
+show_config_menu() {
+  local options=(" Hyprland" " Hypridle" " Rofi" " Zsh" " Alacritty" " Waybar" " Dunst")
+  case $(menu "Edit" "${#options[@]}" "${options[@]}") in
+  *Hyprland*) open_in_editor ~/.config/hypr/hypridle.conf ;;
+  *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf ;;
+  *Rofi*) open_in_editor ~/.config/rofi/config.rasi ;;
+  *Zsh*) open_in_editor ~/.config/zsh/.zshrc ;;
+  *Waybar*) open_in_editor ~/.config/waybar/config.jsonc ;;
+  *Alacritty*) open_in_editor ~/.config/alacritty/alacritty.toml ;;
+  *Dunst*) open_in_editor ~/.config/dunst/dunstrc ;;
+  *) show_main_menu ;;
+  esac
+}
+
+# Font menu: Select and apply system fonts
+show_font_menu() {
+  # Get available fonts from external script
+  mapfile -t fonts < <(font-list)
+  theme=$(menu "Font" "${#fonts[@]}" "${fonts[@]}")
+
+  # Handle cancellation or return to main menu
+  if [[ "$theme" == "CNCLD" || -z "$theme" ]]; then
+    back_to show_main_menu
+  else
+    font-set "$theme"
+  fi
+}
+
+# Learn menu: Quick access to documentation and wikis
+show_learn_menu() {
+  local options=(" Keybindings" " Hyprland" "󰣇  Arch" "  Neovim")
+  case $(menu "Learn" "${#options[@]}" "${options[@]}") in
+  *Keybindings*) rofi-menu-keybindings ;;
+  *Hyprland*) launch-webapp "https://wiki.hypr.land/" ;;
+  *Arch*) launch-webapp "https://wiki.archlinux.org/title/Main_page" ;;
+  *Neovim*) launch-webapp "https://www.lazyvim.org/keymaps" ;;
+  *) show_main_menu ;;
+  esac
+}
+
+# Main menu: Top-level menu with access to all submenus
+show_main_menu() {
+  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn")
+  case $(menu "Go" "${#options[@]}" "${options[@]}") in
+  *Apps*) rofi -show drun ;;
+  *Config*) show_config_menu ;;
+  *Font*) show_font_menu ;;
+  *System*) show_system_menu ;;
+  *Learn*) show_learn_menu ;;
+  esac
+}
+
+# Start the menu system
+show_main_menu
