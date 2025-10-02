@@ -38,6 +38,9 @@ menu() {
 
   local extra="$1"     # Additional rofi arguments
   local preselect="$2" # Option to preslect by default
+  local current_length=0
+  local max_length=0
+  local args=()
 
   # Parse extra arguments into array
   read -r -a args <<<"$extra"
@@ -134,19 +137,50 @@ show_system_menu() {
   esac
 }
 
+config_menu_items=(
+  " Hyprland:$XDG_CONFIG_HOME/hypr/hyprland.conf"
+  " Hypridle:$XDG_CONFIG_HOME/hypr/hypridle.conf"
+  " Rofi:$XDG_CONFIG_HOME/rofi/config.rasi"
+  " Zsh:$XDG_CONFIG_HOME/zsh/.zshrc"
+  " Alacritty:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
+  " Waybar:$XDG_CONFIG_HOME/waybar/config.jsonc"
+  " Dunst:$XDG_CONFIG_HOME/dunst/dunstrc"
+)
+
 # Config menu: Edit various configuration files
 show_config_menu() {
-  local options=(" Hyprland" " Hypridle" " Rofi" " Zsh" " Alacritty" " Waybar" " Dunst")
-  case $(menu "Edit" "${#options[@]}" "${options[@]}") in
-  *Hyprland*) open_in_editor ~/.config/hypr/hypridle.conf ;;
-  *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf ;;
-  *Rofi*) open_in_editor ~/.config/rofi/config.rasi ;;
-  *Zsh*) open_in_editor ~/.config/zsh/.zshrc ;;
-  *Waybar*) open_in_editor ~/.config/waybar/config.jsonc ;;
-  *Alacritty*) open_in_editor ~/.config/alacritty/alacritty.toml ;;
-  *Dunst*) open_in_editor ~/.config/dunst/dunstrc ;;
-  *) show_main_menu ;;
-  esac
+  local options=()
+  for item in "${config_menu_items[@]}"; do
+    options+=("${item%%:*}") # Get display name with icon
+  done
+  options+=(" Back")
+
+  local choice
+  choice=$(menu "Edit config" "${#options[@]}" "${options[@]}")
+  if [[ "$choice" == " Back" || -z "$choice" ]]; then
+    show_main_menu
+    return
+  fi
+
+  for item in "${config_menu_items[@]}"; do
+    name="${item%%:*}"
+    path="${item#*:}"
+    if [[ "$name" == "$choice" ]]; then
+      open_in_editor "$path"
+      return
+    fi
+  done
+
+  # case $(menu "Edit" "${#options[@]}" "${options[@]}") in
+  # *Hyprland*) open_in_editor ~/.config/hypr/hyprland.conf ;;
+  # *Hypridle*) open_in_editor ~/.config/hypr/hypridle.conf ;;
+  # *Rofi*) open_in_editor ~/.config/rofi/config.rasi ;;
+  # *Zsh*) open_in_editor ~/.config/zsh/.zshrc ;;
+  # *Waybar*) open_in_editor ~/.config/waybar/config.jsonc ;;
+  # *Alacritty*) open_in_editor ~/.config/alacritty/alacritty.toml ;;
+  # *Dunst*) open_in_editor ~/.config/dunst/dunstrc ;;
+  # *) show_main_menu ;;
+  # esac
 }
 
 # Font menu: Select and apply system fonts
