@@ -78,7 +78,7 @@ menu() {
   for item in "${options[@]}"; do
     current_length=${#item}
 
-    if [[ current_length -gt max_length ]]; then
+    if [[ $current_length -gt $max_length ]]; then
       max_length=$current_length
     fi
   done
@@ -97,7 +97,7 @@ menu() {
     -p "$prompt" "${args[@]}" \
     -lines "$array_length" \
     -no-fixed-num-lines \
-    -theme-str "window { width: ${max_length}em;} listview {scrollbar: false;}"
+    -theme-str "window { width: $max_length em;} listview {scrollbar: false;}"
 }
 
 # Open a config file in the default editor
