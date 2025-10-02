@@ -8,6 +8,11 @@ alias rs='bin/rails server'
 alias t='tmux'
 alias v='nvim'
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
-alias l='exa -la'
-alias ll='exa -l'
+
+# File system
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias d='dirs -v'
