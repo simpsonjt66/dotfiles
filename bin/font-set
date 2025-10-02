@@ -1,0 +1,29 @@
+#!/bin/bash
+
+font_name="$1"
+
+if [[ -n "$font_name" && "$font_name" != "CNCLD" ]]; then
+  if fc-list | grep -iq "$font_name"; then
+    if [[ -f ~/.config/alacritty/alacritty.toml ]]; then
+      sed -i "s/family = \".*\"/family = \"$font_name\"/g" ~/.config/alacritty/alacritty.toml
+    fi
+    # Escape any special characters in the new font name to avoid regex issues
+    escaped_font_name=$(printf '%s' "$font_name" | sed 's/[][\/.^$*]/\\&/g')
+
+    sed -i -E "s/^[[:space:]]*(font *= *)(.*)([[:space:]]+[[:digit:]]+)/\1$escaped_font_name\3/" ~/.config/dunst/dunstrc
+    sed -i "s/font-family: .*/font-family: '$escaped_font_name';/g" ~/.config/waybar/style.css
+    # xmlstarlet ed -L \
+    #   -u '//match[@target="pattern"][test/string="monospace"]/edit[@name="family"]/string' \
+    #   -v "$font_name" \
+    #   ~/.config/fontconfig/fonts.conf
+    #
+    # omarchy-restart-waybar
+    # omarchy-restart-swayosd
+    # omarchy-restart-walker
+  else
+    echo "Font '$font_name' not found."
+    exit 1
+  fi
+else
+  echo "Usage: omarchy-font-set <font-name>"
+fi

@@ -206,11 +206,11 @@ show_config_menu() {
 show_font_menu() {
   require_command "font-list"
   require_command "font-set"
-
+  require_command "font-current"
   # Get available fonts from external script
   get_fonts
   local options=("${fonts[@]}" "󰑐 Refresh Font List" " Back")
-  theme=$(menu "Font" "${#options[@]}" "${options[@]}")
+  theme=$(menu "Font" "${#options[@]}" "${options[@]}" "" "$(font-current)")
   case "$theme" in
   "󰑐 Refresh Font List")
     rm -f "$FONT_CACHE"
