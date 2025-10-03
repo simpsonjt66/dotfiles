@@ -1,0 +1,3 @@
+#!/bin/bash
+
+basename "$(realpath "$XDG_CONFIG_HOME/themes/current")" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g'

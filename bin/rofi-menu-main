@@ -202,6 +202,21 @@ show_config_menu() {
   done
 }
 
+show_theme_menu() {
+  require_command "theme-list"
+  require_command "theme-current"
+  mapfile -t themes < <(theme-list)
+  local options=("${themes[@]}")
+  theme=$(menu "Theme" "${#options[@]}" "${options[@]}" "" "$(theme-current)")
+  case "$theme" in
+  " Back" | "CNCLD" | "")
+    back_to show_main_menu
+    ;;
+  *)
+    theme-set "$theme"
+    ;;
+  esac
+}
 # Font menu: Select and apply system fonts
 show_font_menu() {
   require_command "font-list"
@@ -239,13 +254,14 @@ show_learn_menu() {
 
 # Main menu: Top-level menu with access to all submenus
 show_main_menu() {
-  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn")
+  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme")
   case $(menu "Go" "${#options[@]}" "${options[@]}") in
   *Apps*) rofi -show drun ;;
   *Config*) show_config_menu ;;
   *Font*) show_font_menu ;;
   *System*) show_system_menu ;;
   *Learn*) show_learn_menu ;;
+  *Theme*) show_theme_menu ;;
   esac
 }
 
