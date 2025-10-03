@@ -17,7 +17,7 @@ ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
 hyprctl reload
 theme-set-terminal
-notify-send "Theme set to $1"
+notify-send -a "theme-set" -i dialog-positive "Theme set to $1"
 #
 # Change background with theme
 # omarchy-theme-bg-next
