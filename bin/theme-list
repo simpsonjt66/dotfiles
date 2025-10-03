@@ -1,5 +1,19 @@
 #!/bin/bash
+#
+# List all folders in the themes folder, in human readable form
 
-find "$XDG_CONFIG_HOME/themes/" -mindepth 1 -maxdepth 1 \( -type d ! -type l \) | sort | while read -r path; do
-  basename "$path" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g'
-done
+# Configuration
+THEMES_DIR="$XDG_CONFIG_HOME/themes"
+
+# Check if themes directory exists
+if [ ! -d "$THEMES_DIR" ]; then
+  notify-send -a theme-list -u "Error" "Theme directory $THEMES_DIR not found." >&2
+  exit 1
+fi
+
+# Find, process and display theme names in human readable format
+fd . "$XDG_CONFIG_HOME/themes/" -t d -d 1 |
+  sort |
+  xargs -I {} basename {} |
+  tr '_-' ' ' |
+  sed -e 's/\b./\u&/g'
