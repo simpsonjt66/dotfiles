@@ -60,3 +60,4 @@ pathprepend() {
 }
 
 pathappend $HOME/.local/bin
+pathappend $HOME/.local/share/npm/bin/
