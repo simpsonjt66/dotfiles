@@ -1,5 +1,5 @@
 [alias]
-  aa = add --all
+	aa = add --all
   co = checkout
   c = commit -v
   mup = !git checkout master && git fetch origin && echo && git sl master..origin/master && echo && git pull --quiet && git checkout -
@@ -11,6 +11,8 @@
   slp = log --oneline --decorate
   uncommit = reset --soft HEAD^
   unstage = reset
+  cm = commit -m
+	cam = commit -a -m
 [color]
   ui = auto
 [core]
