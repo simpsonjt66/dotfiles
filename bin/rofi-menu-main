@@ -1,7 +1,8 @@
 #!/bin/bash
-
 # Main rofi menu system for Hyprland
 # Provides access to apps, config files, fonts, system controls, and learning resources
+
+set -euo pipefail
 
 # Global flag to determine if "back" should exit the script
 FONT_CACHE="$XDG_CACHE_HOME/rofi-font-list"
@@ -65,8 +66,8 @@ menu() {
 
   shift "$array_length"
 
-  local extra="$1"     # Additional rofi arguments
-  local preselect="$2" # Option to preslect by default
+  local extra="${1:-}"     # Additional rofi arguments
+  local preselect="${2:-}" # Option to preselect by default
   local current_length=0
   local max_length=0
   local args=()
@@ -104,7 +105,6 @@ menu() {
 # Args:
 #   $1 - Path to config file
 open_in_editor() {
-  require_command "launch-editor"
   notify-send "Editing config file" "$1"
   launch-editor "$1"
 }
@@ -113,15 +113,15 @@ open_in_editor() {
 # Args:
 #   $1 - Command flag (--shutdown, --reboot, --suspend, --sleep, --logout)
 run_cmd() {
-  selected="$(confirm_exit)"
-  if [[ "$selected" == "Yes" ]]; then
+  selection="$(confirm_exit)"
+  if [[ "$selection" == "Yes" ]]; then
     if [[ $1 == '--shutdown' ]]; then
       systemctl poweroff
     elif [[ $1 == '--reboot' ]]; then
       systemctl reboot
     elif [[ $1 == '--suspend' ]]; then
       systemctl suspend
-    elif [[ $1 == '-sleep' ]]; then
+    elif [[ $1 == '--sleep' ]]; then
       systemctl suspend
     elif [[ $1 == '--logout' ]]; then
       hyprctl dispatch exit
@@ -157,7 +157,7 @@ confirm_cmd() {
 show_system_menu() {
   local options=(" Lock" " Suspend" "󰈆 Logout" "󰤄 Sleep" " Reboot" "󰐥 Shutdown")
   case $(menu "Select" "${#options[@]}" "${options[@]}") in
-  *Lock*) Lock ;;
+  *Lock*) loginctl lock-session ;;
   *Suspend*) run_cmd --suspend ;;
   *Log*) run_cmd --logout ;;
   *Sleep*) run_cmd --sleep ;;
@@ -167,27 +167,28 @@ show_system_menu() {
   esac
 }
 
-config_menu_items=(
-  " Hyprland:$XDG_CONFIG_HOME/hypr/hyprland.conf"
-  " Hypridle:$XDG_CONFIG_HOME/hypr/hypridle.conf"
-  " Rofi:$XDG_CONFIG_HOME/rofi/config.rasi"
-  " Zsh:$XDG_CONFIG_HOME/zsh/.zshrc"
-  " Alacritty:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
-  " Waybar:$XDG_CONFIG_HOME/waybar/config.jsonc"
-  " Dunst:$XDG_CONFIG_HOME/dunst/dunstrc"
-)
-
 # Config menu: Edit various configuration files
 show_config_menu() {
+
+  local config_menu_items=(
+    " Hyprland:$XDG_CONFIG_HOME/hypr/hyprland.conf"
+    " Hypridle:$XDG_CONFIG_HOME/hypr/hypridle.conf"
+    " Rofi:$XDG_CONFIG_HOME/rofi/config.rasi"
+    " Zsh:$XDG_CONFIG_HOME/zsh/.zshrc"
+    " Alacritty:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
+    " Waybar:$XDG_CONFIG_HOME/waybar/config.jsonc"
+    " Dunst:$XDG_CONFIG_HOME/dunst/dunstrc"
+  )
+
   local options=()
   for item in "${config_menu_items[@]}"; do
     options+=("${item%%:*}") # Get display name with icon
   done
   options+=(" Back")
 
-  local choice
-  choice=$(menu "Edit config" "${#options[@]}" "${options[@]}")
-  if [[ "$choice" == " Back" || -z "$choice" ]]; then
+  local selection
+  selection=$(menu "Edit config" "${#options[@]}" "${options[@]}")
+  if [[ "$selection" == " Back" || -z "$choice" ]]; then
     show_main_menu
     return
   fi
@@ -195,7 +196,7 @@ show_config_menu() {
   for item in "${config_menu_items[@]}"; do
     name="${item%%:*}"
     path="${item#*:}"
-    if [[ "$name" == "$choice" ]]; then
+    if [[ "$name" == "$selection" ]]; then
       open_in_editor "$path"
       return
     fi
@@ -203,30 +204,27 @@ show_config_menu() {
 }
 
 show_theme_menu() {
-  require_command "theme-list"
-  require_command "theme-current"
   mapfile -t themes < <(theme-list)
+  local selection
   local options=("${themes[@]}")
-  theme=$(menu "Theme" "${#options[@]}" "${options[@]}" "" "$(theme-current)")
-  case "$theme" in
+  selection=$(menu "Theme" "${#options[@]}" "${options[@]}" "" "$(theme-current)")
+  case "$selection" in
   " Back" | "CNCLD" | "")
     back_to show_main_menu
     ;;
   *)
-    theme-set "$theme"
+    theme-set "$selection"
     ;;
   esac
 }
 # Font menu: Select and apply system fonts
 show_font_menu() {
-  require_command "font-list"
-  require_command "font-set"
-  require_command "font-current"
   # Get available fonts from external script
   get_fonts
   local options=("${fonts[@]}" "󰑐 Refresh Font List" " Back")
-  theme=$(menu "Font" "${#options[@]}" "${options[@]}" "" "$(font-current)")
-  case "$theme" in
+  local selection
+  selection=$(menu "Font" "${#options[@]}" "${options[@]}" "" "$(font-current)")
+  case "$selection" in
   "󰑐 Refresh Font List")
     rm -f "$FONT_CACHE"
     show_font_menu
@@ -235,7 +233,7 @@ show_font_menu() {
     back_to show_main_menu
     ;;
   *)
-    font-set "$theme"
+    font-set "$selection"
     ;;
   esac
 }
@@ -246,7 +244,7 @@ show_screenshot_menu() {
   *Region*) cmd-screenshot ;;
   *Window*) cmd-screenshot window ;;
   *Display*) cmd-screenshot output ;;
-  *) show_capture_menu ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -276,8 +274,19 @@ show_main_menu() {
   esac
 }
 
+# Check all required commands at startup
 require_command "notify-send"
 require_command "rofi"
 require_command "launch-webapp"
+require_command "launch-editor"
+require_command "theme-list"
+require_command "theme-current"
+require_command "theme-set"
+require_command "font-list"
+require_command "font-set"
+require_command "font-current"
+require_command "rofi-menu-keybindings"
+require_command "cmd-screenshot"
+
 # Start the menu system
 show_main_menu
