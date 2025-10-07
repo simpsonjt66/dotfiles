@@ -240,6 +240,16 @@ show_font_menu() {
   esac
 }
 
+show_screenshot_menu() {
+  local options=("  Region" "  Window" "  Display")
+  case $(menu "Screenshot" "${#options[@]}" "${options[@]}") in
+  *Region*) cmd-screenshot ;;
+  *Window*) cmd-screenshot window ;;
+  *Display*) cmd-screenshot output ;;
+  *) show_capture_menu ;;
+  esac
+}
+
 # Learn menu: Quick access to documentation and wikis
 show_learn_menu() {
   local options=(" Keybindings" " Hyprland" "󰣇  Arch" "  Neovim")
@@ -254,7 +264,7 @@ show_learn_menu() {
 
 # Main menu: Top-level menu with access to all submenus
 show_main_menu() {
-  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme")
+  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme" "  Screenshot")
   case $(menu "Go" "${#options[@]}" "${options[@]}") in
   *Apps*) rofi -show drun ;;
   *Config*) show_config_menu ;;
@@ -262,6 +272,7 @@ show_main_menu() {
   *System*) show_system_menu ;;
   *Learn*) show_learn_menu ;;
   *Theme*) show_theme_menu ;;
+  *Screenshot*) show_screenshot_menu ;;
   esac
 }
 
