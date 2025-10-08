@@ -1,4 +1,0 @@
-require 'awesome_print'
-AwesomePrint.pry!
-
-Pry.config.history_file = "~/.local/state/pry_history"
