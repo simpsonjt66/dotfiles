@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Sheets
+GenericName=Google Sheets
+Comment=Spreadsheets by Google
+Exec=launch-webapp https://docs.google.com/spreadsheets/u/0/
+Terminal=false
+Type=Application
+Icon=chrome-fhihpiojkbmbpdjeoajapmgkhlnakfjf-Profile_1
+StartupNotify=true
+StartupWMClass=sheets
+
