@@ -1,7 +1,20 @@
 #!/bin/bash
 
+# toggle-waybar
+#
+# Toggles the Waybar status bar on and off.
+#
+# This script checks if `waybar` is running. If it is, the script
+# kills the process to hide the bar. If it's not running, the script
+# starts it to show the bar.
+
+# Check if the waybar process is running.
 if pgrep -x waybar >/dev/null; then
+  # If it's running, kill it.
   pkill -x waybar
 else
+  # If it's not running, start it in the background.
+  # `uwsm app` launches the application within the Universal Wayland Session Manager,
+  # ensuring proper integration with the Wayland session.
   uwsm app -- waybar >/dev/null 2>&1 &
 fi
