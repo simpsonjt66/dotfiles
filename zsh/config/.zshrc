@@ -1,7 +1,7 @@
-source $HOME/.local/bin/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/Code/dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
-fpath+=$HOME/.local/bin/zsh/pure
+fpath+=$HOME/Code/dotfiles/zsh/plugins/pure
 autoload -U promptinit; promptinit
 prompt pure
 

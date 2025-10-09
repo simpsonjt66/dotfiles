@@ -57,3 +57,4 @@ pathprepend() {
 
 pathappend $HOME/.local/bin
 pathappend $HOME/.local/share/npm/bin/
+\npathappend $HOME/.local/share/applications

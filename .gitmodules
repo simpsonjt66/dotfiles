@@ -94,3 +94,9 @@
 [submodule "LuaSnip"]
 	path = nvim/pack/bundle/opt/LuaSnip
 	url = https://github.com/L3MON4D3/LuaSnip
+[submodule "zsh/plugins/pure"]
+	path = zsh/plugins/pure
+	url = https://github.com/sindresorhus/pure.git
+[submodule "zsh/plugins/zsh-autosuggestions"]
+	path = zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
