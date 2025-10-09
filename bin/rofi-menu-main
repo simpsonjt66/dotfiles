@@ -260,9 +260,18 @@ show_learn_menu() {
   esac
 }
 
+show_toggle_menu() {
+  local options=("󰍜 Toggle waybar" "󱫖 Toggle hypridle")
+  case $(menu "Toggle" "${#options[@]}" "${options[@]}") in
+  *waybar*) toggle-waybar ;;
+  *hypridle*) toggle-idle ;;
+  *) show_main_menu ;;
+  esac
+}
+
 # Main menu: Top-level menu with access to all submenus
 show_main_menu() {
-  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme" "  Screenshot")
+  local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme" "  Screenshot" "󰔎  Toggle")
   case $(menu "Go" "${#options[@]}" "${options[@]}") in
   *Apps*) rofi -show drun ;;
   *Config*) show_config_menu ;;
@@ -271,6 +280,7 @@ show_main_menu() {
   *Learn*) show_learn_menu ;;
   *Theme*) show_theme_menu ;;
   *Screenshot*) show_screenshot_menu ;;
+  *Toggle*) show_toggle_menu ;;
   esac
 }
 
