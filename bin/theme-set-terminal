@@ -1,3 +1,12 @@
 #!/bin/bash
 
+# theme-set-terminal
+#
+# Triggers a reload of the Alacritty terminal configuration.
+#
+# This script works by updating the modification time of the alacritty.toml file.
+# If Alacritty is configured to watch its config file for changes, this will
+# cause it to reload the configuration, applying any theme changes that have
+# been made by other scripts (e.g., `theme-set`).
+
 touch "$XDG_CONFIG_HOME/alacritty/alacritty.toml"

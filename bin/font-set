@@ -1,26 +1,45 @@
 #!/bin/bash
 
+# Sets the system-wide monospaced font for various applications.
+#
+# This script takes a font name as an argument and updates the configuration
+# files for Alacritty, Dunst, Waybar, and Fontconfig.
+
 # Escape any special characters in the new font name to avoid regex issues
 new_font=$(printf '%s' "$1" | sed 's/[][\/.^$*]/\\&/g')
 
+# Check if a font name was provided.
 if [[ -n "$new_font" && "$new_font" != "CNCLD" ]]; then
+  # Check if the font is installed on the system.
   if fc-list | grep -iq "$new_font"; then
+    # --- Update Alacritty configuration ---
+    # Replaces the value of the 'family' key in alacritty.toml.
     sed -i "s/\(family = \)\"[^\"]*\"/\1\"$new_font\"/g" ~/.config/alacritty/alacritty.toml
 
+    # --- Update Dunst configuration ---
+    # Replaces the font name in dunstrc, keeping the font size.
     sed -i -E "s/^[[:space:]]*(font *= *)(.*)([[:space:]]+[[:digit:]]+)/\1$new_font\3/" ~/.config/dunst/dunstrc
+    
+    # --- Update Waybar configuration ---
+    # Replaces the font-family in style.css.
     sed -i "s/font-family: .*/font-family: '$new_font';/g" ~/.config/waybar/style.css
 
+    # --- Update Fontconfig configuration ---
+    # Sets the preferred monospace font for applications that use fontconfig.
     xmlstarlet ed -L \
-      -u '//alias[family="monospace"]/prefer/family' \
+      -u '//alias[family="monospace"]/prefer/family'
       -v "$new_font" \
       ~/.config/fontconfig/fonts.conf
 
+    # Rebuild the font cache to apply the changes.
     fc-cache -f
+    # Send a notification to confirm the font change.
     notify-send "System font updated to $new_font"
   else
     echo "Font '$new_font' not found."
     exit 1
   fi
 else
-  echo "Usage: omarchy-font-set <font-name>"
+  # Print usage message if no font name is provided.
+  echo "Usage: font-set <font-name>"
 fi

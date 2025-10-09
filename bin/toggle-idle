@@ -1,9 +1,23 @@
 #!/bin/bash
 
+# toggle-idle
+#
+# Toggles the Hyprland idle daemon (hypridle) on and off.
+#
+# This script checks if `hypridle` is running. If it is, the script
+# kills the process to disable automatic idling and screen locking.
+# If it's not running, the script starts it to enable the feature.
+# Notifications are sent to confirm the state change.
+
+# Check if the hypridle process is running.
 if pgrep -x hypridle >/dev/null; then
+  # If it's running, kill it and send a notification.
   pkill -x hypridle
   notify-send "Stopped locking computer when idle"
 else
+  # If it's not running, start it in the background and send a notification.
+  # `uwsm app` launches the application within the Universal Wayland Session Manager,
+  # ensuring proper integration with the Wayland session.
   uwsm app -- hypridle >/dev/null 2>&1 &
   notify-send "Now locking computer when idle"
 fi

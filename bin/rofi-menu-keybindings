@@ -1,14 +1,24 @@
 #!/bin/bash
 
-# A script to display Hyprland keybindings defined in your configuration
-# using rofi for an interactive search menu.
-
-# Fetch dynamic keybindings from Hyprland
+# rofi-menu-keybindings
 #
-# Also do some pre-processing:
-# - Remove uwsm prefix
-# - Map numeric modifier key mask to a textual rendition
-# - Output comma-separated values that the parser can understand
+# A script to display Hyprland keybindings in an interactive Rofi menu.
+#
+# This script fetches keybindings from Hyprland, formats them for readability,
+# and displays them in a searchable Rofi menu. It's useful for quickly
+# looking up keybindings without having to open the configuration file.
+#
+# Dependencies:
+# - rofi: For the interactive menu.
+# - hyprctl: To get the keybindings from Hyprland.
+# - jq: To parse the JSON output from hyprctl.
+# - awk: For advanced text processing and formatting.
+# - sed: For simple text substitutions.
+
+# Fetches dynamic keybindings from Hyprland and performs initial processing.
+#
+# The output is a comma-separated list of bindings with the following format:
+# MODIFIERS,KEY,DESCRIPTION,DISPATCHER,ARG
 dynamic_bindings() {
   hyprctl -j binds |
     jq -r '.[] | {modmask, key, keycode, description, dispatcher, arg} | "\(.modmask),\(.key)@\(.keycode),\(.description),\(.dispatcher),\(.arg)"' |
@@ -17,6 +27,8 @@ dynamic_bindings() {
       -e 's,uwsm app -- ,,' \
       -e 's/@0//' \
       -e 's/,@/,code:/' \
+      # The following lines replace the numeric modifier mask with a human-readable string.
+      # The numbers correspond to the bitmask used by Hyprland.
       -e 's/^0,/,/' \
       -e 's/^1,/SHIFT,/' \
       -e 's/^4,/CTRL,/' \
@@ -35,39 +47,39 @@ dynamic_bindings() {
       -e 's/^77,/SUPER SHIFT CTRL ALT,/'
 }
 
-# Parse and format keybindings
+# Parses and formats the keybindings for display in Rofi.
 #
 # `awk` does the heavy lifting:
-# - Set the field separator to a comma ','.
+# - Sets the field separator to a comma ','.
 # - Joins the key combination (e.g., "SUPER + Q").
 # - Joins the command that the key executes.
 # - Prints everything in a nicely aligned format.
 parse_bindings() {
-  awk -F, '
-{
+  awk -F, '\
+{ 
     # Combine the modifier and key (first two fields)
     key_combo = $1 " + " $2;
 
-    # Clean up: strip leading "+" if present, trim spaces
+    # Clean up: strip leading "+" if present, and trim whitespace.
     gsub(/^[ \t]*\+?[ \t]*/, "", key_combo);
     gsub(/[ \t]+$/, "", key_combo);
 
-    # Use description, if set
+    # Use the description field if it's available.
     action = $3;
 
     if (action == "") {
-        # Reconstruct the command from the remaining fields
+        # If no description, reconstruct the command from the dispatcher and argument.
         for (i = 4; i <= NF; i++) {
             action = action $i (i < NF ? "," : "");
         }
 
-        # Clean up trailing commas, remove leading "exec, ", and trim
-        sub(/,$/, "", action);
-        gsub(/(^|,)[[:space:]]*exec[[:space:]]*,?/, "", action);
-        gsub(/^[ \t]+|[ \t]+$/, "", action);
-        gsub(/[ \t]+/, " ", key_combo);  # Collapse multiple spaces to one
+        # Clean up the reconstructed action string.
+        sub(/,$/, "", action); # Remove trailing comma.
+        gsub(/(^|,)[[:space:]]*exec[[:space:]]*,?/, "", action); # Remove "exec," prefix.
+        gsub(/^[ \t]+|[ \t]+$/, "", action); # Trim whitespace.
+        gsub(/[ \t]+/, " ", key_combo);  # Collapse multiple spaces in key_combo.
 
-        # Escape XML entities
+        # Escape XML entities for Rofi's pango markup.
         gsub(/&/, "\\&amp;", action);
         gsub(/</, "\\&lt;", action);
         gsub(/>/, "\\&gt;", action);
@@ -75,15 +87,22 @@ parse_bindings() {
         gsub(/'"'"'/, "\\&apos;", action);
     }
 
+    # Print the formatted keybinding if the action is not empty.
     if (action != "") {
-        printf "%-35s → %s\n", key_combo, action;
+        printf "% -35s → %s\n", key_combo, action;
     }
 }'
 }
 
+# Calculate the height of the Rofi menu to be 60% of the focused monitor's height.
 monitor_height=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .height')
 menu_height=$((monitor_height * 60 / 100))
 
+# The main pipeline:
+# 1. Get the bindings from Hyprland.
+# 2. Sort and remove duplicates.
+# 3. Parse and format the bindings.
+# 4. Display the bindings in a Rofi menu.
 dynamic_bindings |
   sort -u |
   parse_bindings |

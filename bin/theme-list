@@ -1,6 +1,14 @@
 #!/bin/bash
 #
-# List all folders in the themes folder, in human readable form
+# theme-list
+#
+# Lists all available themes in a human-readable format.
+#
+# This script finds all theme directories, formats their names for display
+# (e.g., "tokyo-night" becomes "Tokyo Night"), and prints them to stdout.
+#
+# Dependencies:
+# - fd: A fast and user-friendly alternative to `find`.
 
 # Configuration
 THEMES_DIR="$XDG_CONFIG_HOME/themes"
@@ -11,9 +19,15 @@ if [ ! -d "$THEMES_DIR" ]; then
   exit 1
 fi
 
-# Find, process and display theme names in human readable format
+# The main pipeline for finding and formatting theme names:
+# 1. `fd . "$THEMES_DIR" -t d -d 1`: Finds all directories at a depth of 1 in the themes directory.
+# 2. `sort`: Sorts the list of theme directories alphabetically.
+# 3. `xargs -I {} basename {}`: Extracts the directory name from each path.
+# 4. `tr 
+' '`: Replaces underscores and hyphens with spaces.
+# 5. `sed -e 's/\b./\u&/g'`: Capitalizes the first letter of each word.
 fd . "$XDG_CONFIG_HOME/themes/" -t d -d 1 |
   sort |
   xargs -I {} basename {} |
-  tr '_-' ' ' |
+  tr "_-" " " |
   sed -e 's/\b./\u&/g'

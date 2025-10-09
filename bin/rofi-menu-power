@@ -1,9 +1,26 @@
 #!/bin/bash
 
+# rofi-menu-power
+#
+# A Rofi-based power menu for Hyprland.
+#
+# This script displays a power menu with options for shutting down,
+# rebooting, locking the screen, suspending, and logging out.
+# It uses Rofi for the menu interface and shows the system uptime.
+#
+# Dependencies:
+# - rofi
+# - systemctl
+# - hyprctl
+# - betterlockscreen or i3lock (for locking)
+
+# --- Variables and Options ---
+
+# Get system uptime and hostname for display in the menu.
 uptime="$(uptime -p | sed -e 's/up //g')"
 host=$(hostname)
 
-# options
+# Define the menu options with icons.
 shutdown="󰐥  Power Off"
 reboot="  Reboot"
 lock="  Lock"
@@ -13,12 +30,16 @@ sleep="󰤄  Sleep"
 yes=" Yes"
 no=" No"
 
+# --- Rofi Functions ---
+
+# Displays the main power menu using Rofi.
 rofi_cmd() {
   rofi -dmenu \
     -p "$host" \
     -mesg "Uptime: $uptime"
 }
 
+# Displays a centered confirmation dialog using Rofi.
 confirm_cmd() {
   rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
     -theme-str 'mainbox {children: [ "message", "listview" ];}' \
@@ -30,14 +51,21 @@ confirm_cmd() {
     -mesg 'Are you Sure?'
 }
 
+# --- Helper Functions ---
+
+# A helper function to show a Yes/No confirmation dialog.
 confirm_exit() {
   echo -e "$yes\n$no" | confirm_cmd
 }
 
+# Populates and displays the main power menu.
 run_rofi() {
   echo -e "$lock\n$sleep\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
 }
 
+# Executes the selected power command after confirmation.
+# Args:
+#   $1 - The command to execute (e.g., --shutdown, --reboot).
 run_cmd() {
   selected="$(confirm_exit)"
   if [[ "$selected" == "$yes" ]]; then
@@ -57,28 +85,28 @@ run_cmd() {
   fi
 }
 
+# --- Main Logic ---
+
+# Get the user's choice from the power menu.
 chosen="$(run_rofi)"
+
+# Execute the corresponding action based on the user's choice.
 case ${chosen} in
 $shutdown)
   run_cmd --shutdown
-  ;;
-$reboot)
+  ;;$reboot)
   run_cmd --reboot
-  ;;
-$lock)
+  ;;$lock)
+  # Lock the screen using betterlockscreen if available, otherwise use i3lock.
   if [[ -x '/usr/bin/betterlockscreen' ]]; then
     betterlockscreen -l
   elif [[ -x '/usr/bin/i3lock' ]]; then
     i3lock
   fi
-  ;;
-$suspend)
+  ;;$suspend)
   run_cmd --suspend
-  ;;
-$logout)
+  ;;$logout)
   run_cmd --logout
-  ;;
-$sleep)
+  ;;$sleep)
   run_cmd --sleep
-  ;;
-esac
+  ;;esac

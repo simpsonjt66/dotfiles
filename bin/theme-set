@@ -1,34 +1,63 @@
 #!/bin/bash
 
+# theme-set
+#
+# Sets the system-wide theme by updating a symlink and reloading relevant applications.
+#
+# This script takes a human-readable theme name as an argument (e.g., "Tokyo Night"),
+# converts it to a directory-friendly format (e.g., "tokyo-night"), and then
+# updates the `current` theme symlink to point to the new theme directory.
+#
+# It also reloads Hyprland and sets the terminal theme.
+
+# --- Configuration ---
 THEMES_DIR="$XDG_CONFIG_HOME/themes"
 CURRENT_THEME_DIR="$XDG_CONFIG_HOME/themes/current"
 
+# --- Theme Name Processing ---
+# Convert the input theme name to a directory-friendly format.
+# 1. `sed -E 's/<[^>]+>//g'`: Removes any pango markup.
+# 2. `tr '[:upper:]' '[:lower:]'`: Converts to lowercase.
+# 3. `tr ' ' '-'`: Replaces spaces with hyphens.
 THEME_NAME=$(echo "$1" | sed -E 's/<[^>]+>//g' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 THEME_PATH="$THEMES_DIR/$THEME_NAME"
 
-# Check if the theme entered exists
+# --- Theme Validation ---
+# Check if the theme directory exists.
 if [[ ! -d "$THEME_PATH" ]]; then
   notify-send "Theme '$THEME_NAME' does not exist in $THEMES_DIR"
   exit 1
 fi
 
-# Update theme symlinks
+# --- Theme Application ---
+
+# Update the `current` theme symlink to point to the selected theme.
+# The -n flag is important to handle the symlink correctly if it already exists.
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 
+# Reload Hyprland to apply any theme-related settings.
 hyprctl reload
+
+# Set the terminal theme using a separate script.
 theme-set-terminal
+
+# Send a notification to confirm the theme change.
 notify-send -a "theme-set" -i dialog-positive "Theme set to $1"
-#
-# Change background with theme
+
+# --- Optional Theming Steps ---
+# The following lines are commented out but can be enabled to extend
+# the themeing process to other applications.
+
+# Change the background image.
 # omarchy-theme-bg-next
-#
-# Restart components to apply new theme
+
+# Restart components to apply the new theme.
 # omarchy-restart-waybar
 # omarchy-restart-swayosd
-# pkill -SIGUSR2 btop
-# makoctl reload
+# pkill -SIGUSR2 btop  # Reload btop to apply new theme.
+# makoctl reload      # Reload mako notification daemon.
 
-# Change gnome, browser, vscode themes
+# Set themes for other applications.
 # omarchy-theme-set-terminal
 # omarchy-theme-set-gnome
 # omarchy-theme-set-eza

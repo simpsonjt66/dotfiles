@@ -1,13 +1,21 @@
 #!/bin/bash
 
+# Takes a screenshot using hyprshot and allows editing with satty.
+# The final image is saved to the Pictures directory and copied to the clipboard.
+
 OUTPUT_DIR="$HOME/Pictures"
 
+# Check if the screenshot directory exists.
 if [[ ! -d "$OUTPUT_DIR" ]]; then
   notify-send "Screenshot directory does not exist: $OUTPUT_DIR" -u critical -t 3000
   exit 1
 fi
 
-pkill slurp || hyprshot -m "${1:-region}" --raw |
+# Kill any existing slurp process to avoid conflicts.
+pkill slurp || \
+# Take a screenshot using hyprshot. The mode (region, output, window) can be passed as an argument.
+hyprshot -m "${1:-region}" --raw | \
+# Pipe the raw image data to satty for editing and saving.
   satty --filename - \
     --output-filename "$OUTPUT_DIR/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png" \
     --early-exit \

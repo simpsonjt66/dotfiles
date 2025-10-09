@@ -1,3 +1,13 @@
 #!/bin/bash
 
+# Launches the impala Wi-Fi manager in a new terminal window.
+#
+# This script assigns the 'Impala' window class to the terminal,
+# which can be used by the window manager for specific rules (e.g., floating).
+
+# Launch a new terminal session using uwsm.
+# `setsid` detaches the process from the current terminal.
+# `uwsm app` launches the application within the Universal Wayland Session Manager,
+# ensuring proper integration with the Wayland session.
+# The terminal is given the class 'Impala' and executes the 'impala' command.
 exec setsid uwsm app -- "$TERMINAL" --class=Impala -e impala "$@"

@@ -1,17 +1,40 @@
 #!/bin/bash
-# Main rofi menu system for Hyprland
-# Provides access to apps, config files, fonts, system controls, and learning resources
+# rofi-menu-main
+#
+# A comprehensive Rofi-based menu system for Hyprland.
+#
+# This script provides a central menu with access to various sub-menus for:
+# - Launching applications
+# - Editing configuration files
+# - Changing themes and fonts
+# - System power controls (shutdown, reboot, etc.)
+# - Accessing learning resources (wikis, keybindings)
+# - Taking screenshots
+# - Toggling system components (Waybar, Hypridle)
+#
+# The menu is built using Rofi and is designed to be easily extensible.
+#
+# Dependencies:
+# - rofi
+# - notify-send
+# - And several custom scripts from this `bin` directory.
 
 set -euo pipefail
 
-# Global flag to determine if "back" should exit the script
+# --- Global Variables and Constants ---
+
+# Cache file for the font list to improve performance.
 FONT_CACHE="$XDG_CACHE_HOME/rofi-font-list"
+# Cache expiry time in seconds (1 hour).
 CACHE_EXPIRY=3600
+# A flag to control the behavior of the "back" action.
 BACK_TO_EXIT=false
 
-# Retrieves a cached list of fonts, or regenerates the cache
+# --- Font Cache Management ---
+
+# Retrieves a cached list of fonts, or regenerates the cache if it's old or missing.
 get_fonts() {
-  # If cache exists and is recent, use it; else regenerate
+  # If the cache file exists and is not older than CACHE_EXPIRY, use it.
   if [[ -f "$FONT_CACHE" ]]; then
     now=$(date +%s)
     mod=$(date +%s -r "$FONT_CACHE")
@@ -22,12 +45,16 @@ get_fonts() {
     fi
   fi
 
-  # Regenerate cache
+  # Regenerate the font cache by calling the `font-list` script.
   font-list >"$FONT_CACHE"
   mapfile -t fonts <"$FONT_CACHE"
 }
 
-# Check if a command exists, otherwise print error and exit
+# --- Utility Functions ---
+
+# Checks if a command exists on the system. If not, it sends a notification and exits.
+# Args:
+#   $1 - The name of the command to check.
 require_command() {
   local cmd="$1"
   if ! command -v "$cmd" &>/dev/null; then
@@ -36,9 +63,10 @@ require_command() {
   fi
 }
 
-# Navigate back to parent menu or exit
+# Navigates back to a parent menu or exits the script.
+# The behavior is controlled by the global BACK_TO_EXIT flag.
 # Args:
-#   $1 - Parent menu function name to call
+#   $1 - The name of the parent menu function to call.
 back_to() {
   local parent_menu="$1"
 
@@ -51,13 +79,16 @@ back_to() {
   fi
 }
 
-# Display a rofi menu with dynamic options
+# --- Rofi Menu Functions ---
+
+# A generic function to display a Rofi menu with dynamic options.
+# It calculates the window size based on the content and handles pre-selection.
 # Args:
-#   $1 - Prompt text
-#   $2 - Array length (number of menu options)
-#   $@ - Menu options array, followed by extra args and preselect option
+#   $1 - The prompt text for the Rofi menu.
+#   $2 - The length of the options array.
+#   $@ - The array of menu options, followed by extra Rofi arguments and a pre-select option.
 # Returns:
-#   Selected menu item via stdout
+#   The selected menu item via stdout.
 menu() {
   local prompt="$1"
   local array_length="$2"
@@ -72,10 +103,10 @@ menu() {
   local max_length=0
   local args=()
 
-  # Parse extra arguments into array
+  # Parse extra arguments into an array.
   read -r -a args <<<"$extra"
 
-  # Calculate maximum option length for window sizing
+  # Calculate the maximum option length for dynamic window sizing.
   for item in "${options[@]}"; do
     current_length=${#item}
 
@@ -84,7 +115,7 @@ menu() {
     fi
   done
 
-  # If preselect is specified, find its index and add to args
+  # If a pre-select option is provided, find its index and add it to the Rofi arguments.
   if [[ -n "$preselect" ]]; then
     local index
     index=$(printf '%s\n' "${options[@]}" | grep -nxF "$preselect" | cut -d: -f1)
@@ -93,7 +124,7 @@ menu() {
     fi
   fi
 
-  # Display rofi menu with dynamic sizing
+  # Display the Rofi menu.
   printf '%s\n' "${options[@]}" | rofi -dmenu \
     -p "$prompt" "${args[@]}" \
     -lines "$array_length" \
@@ -101,17 +132,19 @@ menu() {
     -theme-str "window { width: $max_length em;} listview {scrollbar: false;}"
 }
 
-# Open a config file in the default editor
+# --- Action Functions ---
+
+# Opens a configuration file in the default editor.
 # Args:
-#   $1 - Path to config file
+#   $1 - The path to the configuration file.
 open_in_editor() {
   notify-send "Editing config file" "$1"
   launch-editor "$1"
 }
 
-# Execute system commands (shutdown, reboot, suspend, etc.) with confirmation
+# Executes system commands (shutdown, reboot, etc.) after a confirmation dialog.
 # Args:
-#   $1 - Command flag (--shutdown, --reboot, --suspend, --sleep, --logout)
+#   $1 - The command to execute (e.g., --shutdown, --reboot).
 run_cmd() {
   selection="$(confirm_exit)"
   if [[ "$selection" == "Yes" ]]; then
@@ -131,17 +164,19 @@ run_cmd() {
   fi
 }
 
-# Show Yes/No confirmation dialog
+# --- Confirmation Dialogs ---
+
+# Shows a simple Yes/No confirmation dialog.
 # Returns:
-#   "Yes" or "No" via stdout
+#   "Yes" or "No" via stdout.
 confirm_exit() {
   echo -e "Yes\nNo" | confirm_cmd
 }
 
-# Display a centered confirmation dialog with Yes/No options
-# Reads options from stdin
+# A generic, centered confirmation dialog with customizable options.
+# Reads the options from stdin.
 # Returns:
-#   Selected option via stdout
+#   The selected option via stdout.
 confirm_cmd() {
   rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
     -theme-str 'mainbox {children: [ "message", "listview" ];}' \
@@ -153,21 +188,23 @@ confirm_cmd() {
     -mesg 'Are you Sure?'
 }
 
-# System menu: Lock, Suspend, Logout, Sleep, Reboot, Shutdown
+# --- Sub-menus ---
+
+# System menu: Lock, Suspend, Logout, Sleep, Reboot, Shutdown.
 show_system_menu() {
   local options=(" Lock" " Suspend" "󰈆 Logout" "󰤄 Sleep" " Reboot" "󰐥 Shutdown")
   case $(menu "Select" "${#options[@]}" "${options[@]}") in
-  *Lock*) loginctl lock-session ;;
-  *Suspend*) run_cmd --suspend ;;
-  *Log*) run_cmd --logout ;;
-  *Sleep*) run_cmd --sleep ;;
-  *Reboot*) run_cmd --reboot ;;
-  *Shut*) run_cmd --shutdown ;;
-  *) show_main_menu ;;
+  *Lock*) loginctl lock-session ;; 
+  *Suspend*) run_cmd --suspend ;; 
+  *Log*) run_cmd --logout ;; 
+  *Sleep*) run_cmd --sleep ;; 
+  *Reboot*) run_cmd --reboot ;; 
+  *Shut*) run_cmd --shutdown ;; 
+  *) show_main_menu ;; 
   esac
 }
 
-# Config menu: Edit various configuration files
+# Config menu: Edit various configuration files.
 show_config_menu() {
 
   local config_menu_items=(
@@ -182,7 +219,7 @@ show_config_menu() {
 
   local options=()
   for item in "${config_menu_items[@]}"; do
-    options+=("${item%%:*}") # Get display name with icon
+    options+=("${item%%:*}") # Extract the display name with icon.
   done
   options+=(" Back")
 
@@ -193,6 +230,7 @@ show_config_menu() {
     return
   fi
 
+  # Find the selected item and open its corresponding file.
   for item in "${config_menu_items[@]}"; do
     name="${item%%:*}"
     path="${item#*:}"
@@ -203,6 +241,7 @@ show_config_menu() {
   done
 }
 
+# Theme menu: Select and apply a system theme.
 show_theme_menu() {
   mapfile -t themes < <(theme-list)
   local selection
@@ -217,7 +256,7 @@ show_theme_menu() {
     ;;
   esac
 }
-# Font menu: Select and apply system fonts
+# Font menu: Select and apply a system font.
 show_font_menu() {
   # Get available fonts from external script
   get_fonts
@@ -228,63 +267,69 @@ show_font_menu() {
   "󰑐 Refresh Font List")
     rm -f "$FONT_CACHE"
     show_font_menu
-    ;;
+    ;; 
   " Back" | "CNCLD" | "")
     back_to show_main_menu
     ;;
-  *)
+  *) 
     font-set "$selection"
     ;;
   esac
 }
 
+# Screenshot menu: Take a screenshot of a region, window, or display.
 show_screenshot_menu() {
   local options=("  Region" "  Window" "  Display")
   case $(menu "Screenshot" "${#options[@]}" "${options[@]}") in
-  *Region*) cmd-screenshot ;;
-  *Window*) cmd-screenshot window ;;
-  *Display*) cmd-screenshot output ;;
-  *) show_main_menu ;;
+  *Region*) cmd-screenshot ;; 
+  *Window*) cmd-screenshot window ;; 
+  *Display*) cmd-screenshot output ;; 
+  *) show_main_menu ;; 
   esac
 }
 
-# Learn menu: Quick access to documentation and wikis
+# Learn menu: Quick access to documentation and wikis.
 show_learn_menu() {
   local options=(" Keybindings" " Hyprland" "󰣇  Arch" "  Neovim")
   case $(menu "Learn" "${#options[@]}" "${options[@]}") in
-  *Keybindings*) rofi-menu-keybindings ;;
-  *Hyprland*) launch-webapp "https://wiki.hypr.land/" ;;
-  *Arch*) launch-webapp "https://wiki.archlinux.org/title/Main_page" ;;
-  *Neovim*) launch-webapp "https://www.lazyvim.org/keymaps" ;;
-  *) show_main_menu ;;
+  *Keybindings*) rofi-menu-keybindings ;; 
+  *Hyprland*) launch-webapp "https://wiki.hypr.land/" ;; 
+  *Arch*) launch-webapp "https://wiki.archlinux.org/title/Main_page" ;; 
+  *Neovim*) launch-webapp "https://www.lazyvim.org/keymaps" ;; 
+  *) show_main_menu ;; 
   esac
 }
 
+# Toggle menu: Toggle system components like Waybar or Hypridle.
 show_toggle_menu() {
   local options=("󰍜 Toggle waybar" "󱫖 Toggle hypridle")
   case $(menu "Toggle" "${#options[@]}" "${options[@]}") in
-  *waybar*) toggle-waybar ;;
-  *hypridle*) toggle-idle ;;
-  *) show_main_menu ;;
+  *waybar*) toggle-waybar ;; 
+  *hypridle*) toggle-idle ;; 
+  *) show_main_menu ;; 
   esac
 }
 
-# Main menu: Top-level menu with access to all submenus
+# --- Main Menu ---
+
+# The main menu, which is the entry point to all other sub-menus.
 show_main_menu() {
   local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme" "  Screenshot" "󰔎  Toggle")
   case $(menu "Go" "${#options[@]}" "${options[@]}") in
-  *Apps*) rofi -show drun ;;
-  *Config*) show_config_menu ;;
-  *Font*) show_font_menu ;;
-  *System*) show_system_menu ;;
-  *Learn*) show_learn_menu ;;
-  *Theme*) show_theme_menu ;;
-  *Screenshot*) show_screenshot_menu ;;
-  *Toggle*) show_toggle_menu ;;
+  *Apps*) rofi -show drun ;; 
+  *Config*) show_config_menu ;; 
+  *Font*) show_font_menu ;; 
+  *System*) show_system_menu ;; 
+  *Learn*) show_learn_menu ;; 
+  *Theme*) show_theme_menu ;; 
+  *Screenshot*) show_screenshot_menu ;; 
+  *Toggle*) show_toggle_menu ;; 
   esac
 }
 
-# Check all required commands at startup
+# --- Script Initialization ---
+
+# Check for all required commands at startup to ensure the script can run correctly.
 require_command "notify-send"
 require_command "rofi"
 require_command "launch-webapp"
@@ -298,5 +343,5 @@ require_command "font-current"
 require_command "rofi-menu-keybindings"
 require_command "cmd-screenshot"
 
-# Start the menu system
+# Start the menu system by showing the main menu.
 show_main_menu

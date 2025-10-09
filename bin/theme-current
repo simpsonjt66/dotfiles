@@ -1,3 +1,14 @@
 #!/bin/bash
 
+# Gets the human-readable name of the current theme.
+#
+# This script reads the `current` theme symlink from the themes directory,
+# gets the name of the theme directory it points to, and formats it
+# for display (e.g., "tokyo-night" becomes "Tokyo Night").
+
+# 1. `realpath "$XDG_CONFIG_HOME/themes/current"`: Gets the actual path of the theme directory.
+# 2. `basename "..."`: Extracts the directory name from the path.
+# 3. `sed -E '...'`: Formats the name.
+#    - `s/(^|-)([a-z])/\1\u\2/g`: Capitalizes the first letter of each word.
+#    - `s/-/ /g`: Replaces hyphens with spaces.
 basename "$(realpath "$XDG_CONFIG_HOME/themes/current")" | sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g'

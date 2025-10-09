@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Interactively lists and selects packages using yay and fzf.
+#
+# This script uses `yay` to list packages (by default, foreign packages)
+# and pipes the list to `fzf` for interactive selection. A preview window
+# shows detailed information for the selected package.
+
+fzf_args=(
+  --multi  # Allow multiple selections.
+  --preview 'yay -Qi {1}'  # Show package info in the preview window.
+  --preview-label='alt-p: toggle description, alt-j/k" scroll, tab: multiselect, F11: maximize'
+  --preview-label-pos='bottom'
+  --preview-window 'down:65%:wrap'
+  --bind 'alt-p:toggle-preview'
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --color 'pointer:red,marker:red'
+)
+
+# Use the arguments passed to the script for `yay`.
+# If no arguments are provided, default to "-Qm" to list foreign packages (from AUR).
+args="$@"
+if [[ -z "$args" ]]; then
+  args="-Qm"
+fi
+
+# List packages with `yay` and pipe to `fzf` for interactive selection.
+# The selected package names are stored in the `pkg_names` variable.
+pkg_names=$(yay $args | fzf "${fzf_args[@]}")
