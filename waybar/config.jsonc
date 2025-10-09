@@ -45,8 +45,7 @@
   "clock": {
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
-    "tooltip": false,
-    "on-click-right": "omarchy-cmd-tzupdate"
+    "tooltip": false
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -59,7 +58,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-wifi"
+    "on-click": "launch-wifi"
   },
   "battery": {
     "format": "{capacity}% {icon}",
