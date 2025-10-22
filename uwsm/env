@@ -1,4 +1,25 @@
 # Changes to this file require a relaunch of Hyprland
 
+# Terminal and editor
 export TERMINAL=alacritty
 export EDITOR=nvim
+
+# Cursor configuration (must be set before Hyprland starts)
+export XCURSOR_SIZE=24
+export HYPRCURSOR_SIZE=24
+
+# Wayland environment
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+
+# Toolkit backends
+export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORMTHEME=qt6ct
+export GDK_BACKEND=wayland,x11
+export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+
+# Application-specific Wayland support
+export MOZ_ENABLE_WAYLAND=1
+export ELECTRON_OZONE_PLATFORM_HINT=auto
