@@ -194,13 +194,13 @@ confirm_cmd() {
 show_system_menu() {
   local options=(" Lock" " Suspend" "󰈆 Logout" "󰤄 Sleep" " Reboot" "󰐥 Shutdown")
   case $(menu "Select" "${#options[@]}" "${options[@]}") in
-  *Lock*) loginctl lock-session ;; 
-  *Suspend*) run_cmd --suspend ;; 
-  *Log*) run_cmd --logout ;; 
-  *Sleep*) run_cmd --sleep ;; 
-  *Reboot*) run_cmd --reboot ;; 
-  *Shut*) run_cmd --shutdown ;; 
-  *) show_main_menu ;; 
+  *Lock*) loginctl lock-session ;;
+  *Suspend*) run_cmd --suspend ;;
+  *Log*) run_cmd --logout ;;
+  *Sleep*) run_cmd --sleep ;;
+  *Reboot*) run_cmd --reboot ;;
+  *Shut*) run_cmd --shutdown ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -267,11 +267,11 @@ show_font_menu() {
   "󰑐 Refresh Font List")
     rm -f "$FONT_CACHE"
     show_font_menu
-    ;; 
+    ;;
   " Back" | "CNCLD" | "")
     back_to show_main_menu
     ;;
-  *) 
+  *)
     font-set "$selection"
     ;;
   esac
@@ -281,10 +281,10 @@ show_font_menu() {
 show_screenshot_menu() {
   local options=("  Region" "  Window" "  Display")
   case $(menu "Screenshot" "${#options[@]}" "${options[@]}") in
-  *Region*) cmd-screenshot ;; 
-  *Window*) cmd-screenshot window ;; 
-  *Display*) cmd-screenshot output ;; 
-  *) show_main_menu ;; 
+  *Region*) cmd-screenshot ;;
+  *Window*) cmd-screenshot window ;;
+  *Display*) cmd-screenshot output ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -292,11 +292,11 @@ show_screenshot_menu() {
 show_learn_menu() {
   local options=(" Keybindings" " Hyprland" "󰣇  Arch" "  Neovim")
   case $(menu "Learn" "${#options[@]}" "${options[@]}") in
-  *Keybindings*) rofi-menu-keybindings ;; 
-  *Hyprland*) launch-webapp "https://wiki.hypr.land/" ;; 
-  *Arch*) launch-webapp "https://wiki.archlinux.org/title/Main_page" ;; 
-  *Neovim*) launch-webapp "https://www.lazyvim.org/keymaps" ;; 
-  *) show_main_menu ;; 
+  *Keybindings*) rofi-menu-keybindings ;;
+  *Hyprland*) launch-webapp "https://wiki.hypr.land/" ;;
+  *Arch*) launch-webapp "https://wiki.archlinux.org/title/Main_page" ;;
+  *Neovim*) launch-webapp "https://www.lazyvim.org/keymaps" ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -304,9 +304,9 @@ show_learn_menu() {
 show_toggle_menu() {
   local options=("󰍜 Toggle waybar" "󱫖 Toggle hypridle")
   case $(menu "Toggle" "${#options[@]}" "${options[@]}") in
-  *waybar*) toggle-waybar ;; 
-  *hypridle*) toggle-idle ;; 
-  *) show_main_menu ;; 
+  *waybar*) toggle-waybar ;;
+  *hypridle*) toggle-idle ;;
+  *) show_main_menu ;;
   esac
 }
 
@@ -316,14 +316,14 @@ show_toggle_menu() {
 show_main_menu() {
   local options=("󰀻 Apps" " Config" " Font" " System" "󰧑 Learn" "󰸌 Theme" "  Screenshot" "󰔎  Toggle")
   case $(menu "Go" "${#options[@]}" "${options[@]}") in
-  *Apps*) rofi -show drun ;; 
-  *Config*) show_config_menu ;; 
-  *Font*) show_font_menu ;; 
-  *System*) show_system_menu ;; 
-  *Learn*) show_learn_menu ;; 
-  *Theme*) show_theme_menu ;; 
-  *Screenshot*) show_screenshot_menu ;; 
-  *Toggle*) show_toggle_menu ;; 
+  *Apps*) rofi -show drun ;;
+  *Config*) show_config_menu ;;
+  *Font*) show_font_menu ;;
+  *System*) show_system_menu ;;
+  *Learn*) show_learn_menu ;;
+  *Theme*) show_theme_menu ;;
+  *Screenshot*) show_screenshot_menu ;;
+  *Toggle*) show_toggle_menu ;;
   esac
 }
 
@@ -345,3 +345,4 @@ require_command "cmd-screenshot"
 
 # Start the menu system by showing the main menu.
 show_main_menu
+

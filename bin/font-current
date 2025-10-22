@@ -3,4 +3,5 @@
 # Extracts the current font name from the waybar style.css file.
 # This is useful for scripts that need to know the current theme's font.
 
-grep -oP 'font-family:\s*["\'\\]?K[^;"\'\\]+' ~/.config/waybar/style.css | head -n1
+grep -oP 'font-family:\s*["'\'']?\K[^;"'\'']+' ~/.config/waybar/style.css | head -n1
+

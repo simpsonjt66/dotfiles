@@ -3,5 +3,5 @@
 # Lists all unique monospaced font families available on the system.
 # This is useful for populating font selection menus.
 
-fc-list :spacing=100 -f "% {family[0]}
-" | sort -u
+fc-list :spacing=100 -f "%{family[0]}\n" | sort -u
+

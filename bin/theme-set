@@ -11,8 +11,8 @@
 # It also reloads Hyprland and sets the terminal theme.
 
 # --- Configuration ---
-THEMES_DIR="$XDG_CONFIG_HOME/themes"
-CURRENT_THEME_DIR="$XDG_CONFIG_HOME/themes/current"
+THEME_DIR="$XDG_CONFIG_HOME/themes"
+CURRENT_LINK="$XDG_CONFIG_HOME/themes/current"
 
 # --- Theme Name Processing ---
 # Convert the input theme name to a directory-friendly format.
@@ -20,12 +20,12 @@ CURRENT_THEME_DIR="$XDG_CONFIG_HOME/themes/current"
 # 2. `tr '[:upper:]' '[:lower:]'`: Converts to lowercase.
 # 3. `tr ' ' '-'`: Replaces spaces with hyphens.
 THEME_NAME=$(echo "$1" | sed -E 's/<[^>]+>//g' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-THEME_PATH="$THEMES_DIR/$THEME_NAME"
+THEME_PATH="$THEME_DIR/$THEME_NAME"
 
 # --- Theme Validation ---
 # Check if the theme directory exists.
 if [[ ! -d "$THEME_PATH" ]]; then
-  notify-send "Theme '$THEME_NAME' does not exist in $THEMES_DIR"
+  notify-send "Theme '$THEME_NAME' does not exist in $THEME_DIR"
   exit 1
 fi
 
@@ -33,7 +33,7 @@ fi
 
 # Update the `current` theme symlink to point to the selected theme.
 # The -n flag is important to handle the symlink correctly if it already exists.
-ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
+ln -nsf "$THEME_PATH" "$CURRENT_LINK"
 
 # Reload Hyprland to apply any theme-related settings.
 hyprctl reload
@@ -44,22 +44,3 @@ theme-set-terminal
 # Send a notification to confirm the theme change.
 notify-send -a "theme-set" -i dialog-positive "Theme set to $1"
 
-# --- Optional Theming Steps ---
-# The following lines are commented out but can be enabled to extend
-# the themeing process to other applications.
-
-# Change the background image.
-# omarchy-theme-bg-next
-
-# Restart components to apply the new theme.
-# omarchy-restart-waybar
-# omarchy-restart-swayosd
-# pkill -SIGUSR2 btop  # Reload btop to apply new theme.
-# makoctl reload      # Reload mako notification daemon.
-
-# Set themes for other applications.
-# omarchy-theme-set-terminal
-# omarchy-theme-set-gnome
-# omarchy-theme-set-eza
-# omarchy-theme-set-browser
-# omarchy-theme-set-vscode
