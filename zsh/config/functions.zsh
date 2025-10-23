@@ -8,7 +8,7 @@ function zsh-stats() {
 # sources .zshrc
 function sz() {
   # shellcheck disable=SC1091
-  source "$HOME"/.zshrc
+  source "$XDG_CONFIG_HOME"/zsh/.zshrc
   echo "/.zshrc reloaded"
 }
 
@@ -51,3 +51,16 @@ function git() {
     command git "$@"
   fi
 }
+
+# Hybrid cd/zoxide function: uses builtin cd for home (~) and existing paths,
+# falls back to zoxide's smart directory jumping for fuzzy matching
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
+

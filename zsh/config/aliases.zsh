@@ -17,3 +17,4 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias d='dirs -v'
+alias cd='zd'
