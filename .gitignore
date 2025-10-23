@@ -1,3 +1,6 @@
 bin/Obsidian.AppImage
 nvim.bak
 *.AppImage
+
+# Secret API keys and tokens
+zsh/secrets.zsh

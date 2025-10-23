@@ -1,46 +1,47 @@
 #!/bin/bash
 
-# theme-set
+# theme-switcher
 #
-# Sets the system-wide theme by updating a symlink and reloading relevant applications.
-#
-# This script takes a human-readable theme name as an argument (e.g., "Tokyo Night"),
-# converts it to a directory-friendly format (e.g., "tokyo-night"), and then
-# updates the `current` theme symlink to point to the new theme directory.
-#
-# It also reloads Hyprland and sets the terminal theme.
+# Interactive theme switcher with state persistence
 
 # --- Configuration ---
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/current"
+CURRENT_LINK="$STATE_DIR/theme"
 THEME_DIR="$XDG_CONFIG_HOME/themes"
-CURRENT_LINK="$XDG_CONFIG_HOME/themes/current"
+
+# --- Input Validation ---
+if [[ -z "$1" ]]; then
+  notify-send -a "theme-switcher" "No theme name provided"
+  exit 1
+fi
+
+# --- Ensure State Directory Exists ---
+if [[ ! -d "$STATE_DIR" ]]; then
+  mkdir -p "$STATE_DIR"
+  notify-send -a "theme-switcher" "Created state directory: $STATE_DIR"
+fi
 
 # --- Theme Name Processing ---
 # Convert the input theme name to a directory-friendly format.
-# 1. `sed -E 's/<[^>]+>//g'`: Removes any pango markup.
-# 2. `tr '[:upper:]' '[:lower:]'`: Converts to lowercase.
-# 3. `tr ' ' '-'`: Replaces spaces with hyphens.
-THEME_NAME=$(echo "$1" | sed -E 's/<[^>]+>//g' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+# 1. Strip leading/trailing whitespace
+# 2. Convert to lowercase
+# 3. Replace spaces with hyphens
+THEME_NAME=$(echo "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 THEME_PATH="$THEME_DIR/$THEME_NAME"
 
 # --- Theme Validation ---
 # Check if the theme directory exists.
 if [[ ! -d "$THEME_PATH" ]]; then
-  notify-send "Theme '$THEME_NAME' does not exist in $THEME_DIR"
+  notify-send -a "theme-switcher" "Theme '$THEME_NAME' does not exist in $THEME_DIR"
   exit 1
 fi
 
-# --- Theme Application ---
-
-# Update the `current` theme symlink to point to the selected theme.
-# The -n flag is important to handle the symlink correctly if it already exists.
+# --- Create Symlink ---
+# Update the `current` symlink to point to the selected theme.
 ln -nsf "$THEME_PATH" "$CURRENT_LINK"
 
-# Reload Hyprland to apply any theme-related settings.
-hyprctl reload
-
-# Set the terminal theme using a separate script.
+# --- Force Alacritty to reload ---
 theme-set-terminal
 
-# Send a notification to confirm the theme change.
-notify-send -a "theme-set" -i dialog-positive "Theme set to $1"
-
+# --- Reload hyprland ---
+hyprctl reload
