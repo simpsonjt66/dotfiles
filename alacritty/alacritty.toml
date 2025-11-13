@@ -1,14 +1,8 @@
-general.import = [ "~/.local/state/current/theme/alacritty.toml"]
+general.import = [ "~/.local/state/current/theme/alacritty.toml", 
+  "~/.local/state/current/font/alacritty.toml"] 
 
 [env]
 TERM = "alacritty"
-
-[font]
-normal = { family = "IosevkaTerm Nerd Font Mono", style = "Regular" }
-bold = { family = "IosevkaTerm Nerd Font Mono", style = "Bold" }
-italic = { family = "IosevkaTerm Nerd Font Mono", style = "Italic" }
-
-size = 10.0
 
 [window]
 padding.x = 0
