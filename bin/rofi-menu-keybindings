@@ -27,8 +27,6 @@ dynamic_bindings() {
       -e 's,uwsm app -- ,,' \
       -e 's/@0//' \
       -e 's/,@/,code:/' \
-      # The following lines replace the numeric modifier mask with a human-readable string.
-      # The numbers correspond to the bitmask used by Hyprland.
       -e 's/^0,/,/' \
       -e 's/^1,/SHIFT,/' \
       -e 's/^4,/CTRL,/' \
@@ -55,7 +53,7 @@ dynamic_bindings() {
 # - Joins the command that the key executes.
 # - Prints everything in a nicely aligned format.
 parse_bindings() {
-  awk -F, '\
+  awk -F, '
 { 
     # Combine the modifier and key (first two fields)
     key_combo = $1 " + " $2;
@@ -64,7 +62,7 @@ parse_bindings() {
     gsub(/^[ \t]*\+?[ \t]*/, "", key_combo);
     gsub(/[ \t]+$/, "", key_combo);
 
-    # Use the description field if it's available.
+    # Use the description field if set.
     action = $3;
 
     if (action == "") {
@@ -79,7 +77,7 @@ parse_bindings() {
         gsub(/^[ \t]+|[ \t]+$/, "", action); # Trim whitespace.
         gsub(/[ \t]+/, " ", key_combo);  # Collapse multiple spaces in key_combo.
 
-        # Escape XML entities for Rofi's pango markup.
+        # Escape XML entities for Rofis pango markup.
         gsub(/&/, "\\&amp;", action);
         gsub(/</, "\\&lt;", action);
         gsub(/>/, "\\&gt;", action);
@@ -89,7 +87,7 @@ parse_bindings() {
 
     # Print the formatted keybinding if the action is not empty.
     if (action != "") {
-        printf "% -35s → %s\n", key_combo, action;
+        printf "%-35s → %s\n", key_combo, action;
     }
 }'
 }
@@ -107,3 +105,4 @@ dynamic_bindings |
   sort -u |
   parse_bindings |
   rofi -dmenu -p 'Keybindings' -theme-str "window {height: $menu_height px ;}"
+

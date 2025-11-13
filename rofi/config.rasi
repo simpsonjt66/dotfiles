@@ -1,10 +1,7 @@
-// Rofi Configuration
-// Author: Binoy Manoj
-// GitHub: https://github.com/binoymanoj
+@import "~/.local/state/current/font/rofi.rasi"
 
 configuration {
     modi: "drun,run,filebrowser,window";
-    font: "JetBrainsMono Nerd Font 12";
     terminal: "kitty";
     drun-display-format: "{icon} {name}";
     location: 0;
@@ -22,4 +19,4 @@ configuration {
     icon-theme: "Papirus";
 }
 
-@theme "catppuccin"
+@theme "grey-menu"
