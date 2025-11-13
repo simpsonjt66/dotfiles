@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+
+# Find all symlinks that are linked from the dotfiles directory
+# Usage: dotfiles-symlinks [directory] [--json] [--help]
+# If directory is specified, list symlinks in that directory and subdirectories
+# If no argument given, list symlinks in ~/.config
+# Use --json flag for JSON output format
+
+show_help() {
+    cat << EOF
+Usage: dotfiles-symlinks [DIRECTORY] [OPTIONS]
+
+Find and list all symlinks that point to files in ~/Code/dotfiles directory.
+
+ARGUMENTS:
+    DIRECTORY    Directory to scan for symlinks (default: ~/.config)
+                 Will recursively search all subdirectories
+
+OPTIONS:
+    --json       Output results in JSON format with source, target, and type fields
+    --help       Display this help message
+
+OUTPUT:
+    Default format: Table with columns SYMLINK, TYPE, TARGET
+    JSON format:    Array of objects with "source", "target", "type" fields
+    
+    TYPE can be: "file" or "directory"
+
+EXAMPLES:
+    dotfiles-symlinks
+        List all dotfiles symlinks in ~/.config directory (table format)
+    
+    dotfiles-symlinks ~/bin
+        List all dotfiles symlinks in ~/bin directory (table format)
+    
+    dotfiles-symlinks --json
+        List all dotfiles symlinks in ~/.config directory (JSON format)
+    
+    dotfiles-symlinks ~/bin --json
+        List all dotfiles symlinks in ~/bin directory (JSON format)
+
+EOF
+}
+
+DOTFILES_DIR="$HOME/Code/dotfiles"
+JSON_OUTPUT=false
+SCAN_DIR=""
+
+# Parse arguments
+for arg in "$@"; do
+    if [[ "$arg" == "--help" ]] || [[ "$arg" == "-h" ]]; then
+        show_help
+        exit 0
+    elif [[ "$arg" == "--json" ]]; then
+        JSON_OUTPUT=true
+    elif [ -z "$SCAN_DIR" ]; then
+        SCAN_DIR="$arg"
+    fi
+done
+
+# Set default directory if not specified
+if [ -z "$SCAN_DIR" ]; then
+    SCAN_DIR="$HOME/.config"
+fi
+
+# Check if fd is available
+if ! command -v fd &> /dev/null; then
+    echo "Error: fd command not found. Please install fd-find."
+    exit 1
+fi
+
+# Check if directory exists
+if [ ! -d "$SCAN_DIR" ]; then
+    echo "Error: Directory $SCAN_DIR does not exist."
+    exit 1
+fi
+
+if [ "$JSON_OUTPUT" = true ]; then
+    # JSON output format
+    echo "["
+    first=true
+    
+    # Find all symlinks in the specified directory
+    fd --type l --hidden . "$SCAN_DIR" | while read -r symlink; do
+        # Get the target of the symlink
+        target=$(readlink -f "$symlink")
+        
+        # Check if the target is within the dotfiles directory
+        if [[ "$target" == "$DOTFILES_DIR"* ]]; then
+            # Determine if it's a file or directory
+            if [ -d "$symlink" ]; then
+                type="directory"
+            else
+                type="file"
+            fi
+            
+            # Convert paths to relative with ~
+            source_display="${symlink/$HOME/~}"
+            target_display="${target/$HOME/~}"
+            
+            # Print comma for all but first entry
+            if [ "$first" = true ]; then
+                first=false
+            else
+                echo ","
+            fi
+            
+            printf '  {"source": "%s", "target": "%s", "type": "%s"}' "$source_display" "$target_display" "$type"
+        fi
+    done
+    echo
+    echo "]"
+else
+    # Table output format
+    # Print which directory is being analyzed
+    echo "Analyzing symlinks in: $SCAN_DIR"
+    echo
+    
+    # Print header
+    printf "SYMLINK\tTYPE\tTARGET\n"
+    
+    # Find all symlinks in the specified directory
+    fd --type l --hidden . "$SCAN_DIR" | while read -r symlink; do
+        # Get the target of the symlink
+        target=$(readlink -f "$symlink")
+        
+        # Check if the target is within the dotfiles directory
+        if [[ "$target" == "$DOTFILES_DIR"* ]]; then
+            # Determine if it's a file or directory
+            if [ -d "$symlink" ]; then
+                type="directory"
+            else
+                type="file"
+            fi
+            
+            # Convert target to relative path with ~
+            target_display="${target/$HOME/~}"
+            
+            printf "%s\t%s\t%s\n" "$symlink" "$type" "$target_display"
+        fi
+    done | column -t -s $'\t'
+fi
