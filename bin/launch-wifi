@@ -10,4 +10,6 @@
 # `uwsm app` launches the application within the Universal Wayland Session Manager,
 # ensuring proper integration with the Wayland session.
 # The terminal is given the class 'Impala' and executes the 'impala' command.
-exec setsid uwsm app -- "$TERMINAL" --class=Impala -e impala "$@"
+# exec setsid uwsm app -- "$TERMINAL" --class=Impala -e impala "$@"
+
+launch-or-focus-tui impala

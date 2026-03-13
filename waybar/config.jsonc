@@ -40,7 +40,7 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "$TERMINAL -e btop"
+    "on-click": "launch-or-focus-tui btop"
   },
   "clock": {
     "format": "{:L%A %H:%M}",

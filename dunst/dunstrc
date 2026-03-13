@@ -8,7 +8,7 @@
     offset = (35, 35)
     indicate_hidden = yes
     notification_limit = 5
-    gap-size = 12
+    # gap-size = 12
     padding = 12
     horizontal_padding = 20
     frame_width = 1
@@ -35,10 +35,10 @@
 
 # Icon
     icon_position = left
-    min_icon_size = 54
-    min_icon_size = 80
-    icon_path = /usr/share/icons/breeze/status/64/
+    enable_recursive_icon_lookup = true
+    icon_theme = Adwaita
     icon_corner_radius = 4
+    max_icon_size = 32
 
 # Misc/Advanced 
     dmenu = rofi -show drun -p 'Open with'
