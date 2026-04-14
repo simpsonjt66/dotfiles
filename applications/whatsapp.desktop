@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=WhatsApp Web   
+GenericName=WhatsApp Web Interface
+Exec=launch-webapp https://web.whatsapp.com/
+Terminal=false
+Type=Application
+Icon=~/.local/share/icons/whatsapp.jpg
+StartupNotify=true
+StartupWMClass=whatsapp

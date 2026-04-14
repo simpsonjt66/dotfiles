@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Rippling
+GenericName=Peaks Payroll System
+Comment=Webapp for Peaks payroll system 
+Exec=launch-webapp https://app.rippling.com
+Terminal=false
+Type=Application
+Icon=~/.local/share/icons/rippling.svg
+StartupNotify=true
+StartupWMClass=Rippling
