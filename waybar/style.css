@@ -1,5 +1,8 @@
 @import url("../../.local/state/current/font/waybar.css");
 
+@define-color background rgb(0, 0, 0);
+@define-color color rgb(255, 255, 255);
+
 * {
   background-color: @background;
   color: @foreground;
@@ -32,11 +35,7 @@
 #cpu,
 #battery,
 #network,
-#bluetooth,
-#pulseaudio,
-#custom-omarchy,
-#custom-screenrecording-indicator,
-#custom-update {
+#pulseaudio {
   min-width: 12px;
   margin: 0 7.5px;
 }
@@ -46,11 +45,16 @@
 }
 
 tooltip {
-  padding: 2px;
+  background: rgba(43, 48, 59, 0.95);
+  border: 1px solid rgba(100, 114, 125, 0.5);
+  border-radius: 4px;
 }
 
-#custom-update {
-  font-size: 10px;
+tooltip label {
+  color: #ffffff;
+  font-family: "JetBrains Mono Nerd Font";
+  font-size: 13px;
+  padding: 3px;
 }
 
 #clock {
@@ -61,12 +65,3 @@ tooltip {
   opacity: 0;
 }
 
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 10px;
-}
-
-#custom-screenrecording-indicator.active {
-  color: #a55555;
-}
