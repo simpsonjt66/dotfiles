@@ -1,12 +1,9 @@
-#!/usr/bin/env xdg-open
 [Desktop Entry]
 Version=1.0
-Name=GMail
-GenericName=This One
-Comment=This One
+Name=gmail
+Comment=gmail
 Exec=launch-webapp https://mail.google.com
 Terminal=false
 Type=Application
-Icon=chrome-fmgjjmmmlfnkbppncabfkddbjimcfncm-Default
+Icon=/home/jsimpson/.local/share/applications/icons/gmail.png
 StartupNotify=true
-StartupWMClass=gmail
