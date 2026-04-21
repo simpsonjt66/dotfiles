@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=claude
+Comment=claude
+Exec=launch-webapp https://claude.ai
+Terminal=false
+Type=Application
+Icon=/home/jsimpson/.local/share/applications/icons/claude.png
+StartupNotify=true
