@@ -225,7 +225,7 @@ show_config_menu() {
 
   local selection
   selection=$(menu "Edit config" "${#options[@]}" "${options[@]}")
-  if [[ "$selection" == " Back" || -z "$choice" ]]; then
+  if [[ "$selection" == " Back" || -z "$selection" ]]; then
     show_main_menu
     return
   fi
@@ -246,6 +246,7 @@ show_theme_menu() {
   mapfile -t themes < <(theme-list)
   local selection
   local options=("${themes[@]}")
+  options+=(" Back")
   selection=$(menu "Theme" "${#options[@]}" "${options[@]}" "" "$(theme-current)")
   case "$selection" in
   " Back" | "CNCLD" | "")
@@ -345,4 +346,3 @@ require_command "cmd-screenshot"
 
 # Start the menu system by showing the main menu.
 show_main_menu
-

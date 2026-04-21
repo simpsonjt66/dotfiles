@@ -19,4 +19,5 @@ fi
 # `uwsm app` launches the application within the Universal Wayland Session Manager,
 # ensuring proper integration with the Wayland session.
 # The terminal is started in the great-grandparent directory of the file.
-exec setsid uwsm app -- "$TERMINAL" -e bash -c "cd \"$(dirname \"$parent_dir\")\"; \"$EDITOR\" \"$@\""
+exec setsid uwsm app -- "$TERMINAL" -e bash -c "cd '$(dirname "$parent_dir")'; '$EDITOR' '$file_path'"
+
