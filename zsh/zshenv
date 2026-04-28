@@ -62,3 +62,4 @@ pathprepend() {
 pathappend $HOME/.local/bin
 pathappend $HOME/.local/share/npm/bin/
 pathappend $HOME/.local/share/applications
+pathappend $HOME/.local/share/gem/ruby/3.4.0/bin/

@@ -28,9 +28,11 @@
     active-background:           rgba ( 29, 31, 33, 17 % );
     selected-active-background:  rgba ( 68, 145, 237, 100 % );
 }
+
 window {
     background-color: @background;
     border:           1;
+    font: "JetBrainsMono Nerd Font 12";
     padding:          5px 5px 5px 5px;
 }
 mainbox {
@@ -48,11 +50,9 @@ textbox {
 listview {
     fixed-height: 0;
     border-color: @separatorcolor;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 5px 5px 5px;
 }
 element {
-    orientation: horizontal;
-    children: [ element-icon, element-text ];
     spacing: 5px;
     padding: 5px 0px 5px 0px;
     border-radius: 5px;
@@ -105,11 +105,6 @@ element.alternate.active {
 }
 scrollbar {
     enabled: false;
-    // width:        0px ;
-    // border:       0;
-    // handle-color: @normal-foreground;
-    // handle-width: 8px ;
-    // padding:      0;
 }
 mode-switcher {
     border:       2px 0px 0px ;

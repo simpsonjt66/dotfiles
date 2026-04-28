@@ -14,22 +14,22 @@ if [[ -n "$new_font" && "$new_font" != "CNCLD" ]]; then
   if fc-list | grep -iq "$new_font"; then
     # --- Update Alacritty configuration ---
     # Replaces the value of the 'family' key in alacritty.toml.
-    sed -i "s/\(family = \)\"[^\"]*\"/\1\"$new_font\"/g" ~/.config/alacritty/alacritty.toml
+    sed -i "s/\(family = \)\"[^\"]*\"/\1\"$new_font\"/g" ~/.local/state/current/font/alacritty.toml
 
     # --- Update Dunst configuration ---
     # Replaces the font name in dunstrc, keeping the font size.
-    sed -i -E "s/^[[:space:]]*(font *= *)(.*)([[:space:]]+[[:digit:]]+)/\1$new_font\3/" ~/.config/dunst/dunstrc
-    
+    # sed -i -E "s/^[[:space:]]*(font *= *)(.*)([[:space:]]+[[:digit:]]+)/\1$new_font\3/" ~/.config/dunst/dunstrc
+
     # --- Update Waybar configuration ---
     # Replaces the font-family in style.css.
-    sed -i "s/font-family: .*/font-family: '$new_font';/g" ~/.config/waybar/style.css
+    # sed -i "s/font-family: .*/font-family: '$new_font';/g" ~/.config/waybar/style.css
 
     # --- Update Fontconfig configuration ---
     # Sets the preferred monospace font for applications that use fontconfig.
-    xmlstarlet ed -L \
-      -u '//alias[family="monospace"]/prefer/family'
-      -v "$new_font" \
-      ~/.config/fontconfig/fonts.conf
+    # xmlstarlet ed -L \
+    #   -u '//alias[family="monospace"]/prefer/family'
+    #   -v "$new_font" \
+    #   ~/.config/fontconfig/fonts.conf
 
     # Rebuild the font cache to apply the changes.
     fc-cache -f
@@ -43,3 +43,4 @@ else
   # Print usage message if no font name is provided.
   echo "Usage: font-set <font-name>"
 fi
+

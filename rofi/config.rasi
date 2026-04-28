@@ -1,8 +1,6 @@
-@import "~/.local/state/current/font/rofi.rasi"
-
 configuration {
     modi: "drun,run,filebrowser,window";
-    terminal: "alacritty";
+    terminal: "kitty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
@@ -16,7 +14,6 @@ configuration {
     
     // Enable icons
     show-icons: true;
-    icon-theme: "Papirus";
+    icon-theme: "Yaru-blue";
 }
 
-@theme "grey-menu"

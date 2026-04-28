@@ -31,7 +31,9 @@
 window {
     background-color: @background;
     border:           1;
+    font: "JetBrainsMono Nerd Font 12";
     padding:          5px 5px 5px 5px;
+    width: 400px;
 }
 mainbox {
     border:  0;
@@ -54,17 +56,17 @@ element {
     orientation: horizontal;
     children: [ element-icon, element-text ];
     spacing: 5px;
-    padding: 5px 0px 5px 0px;
+    padding: 0px 0px 0px 0px;
     border-radius: 5px;
 }
 element-text {
     background-color: inherit;
     text-color:       inherit;
     vertical-align: 0.5;
-    padding: 1px 20px 1px;
+    padding: 1px 1px 1px 1px;
 }
 element-icon{
-    padding: 5 10px;
+    padding: 5px 0px 5px 5px;
     size: 24px;
   }
 element.normal.normal {
