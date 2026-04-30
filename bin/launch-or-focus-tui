@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_ID="org.jsimpson.$(basename "$1")"
+APP_ID="org.hyperion.$(basename "$1")"
 LAUNCH_COMMAND="launch-tui $@"
 
 exec launch-or-focus "$APP_ID" "$LAUNCH_COMMAND"

@@ -58,7 +58,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "launch-wifi"
+    "on-click": "launch-or-focus-tui impala"
   },
   "battery": {
     "format": "{capacity}% {icon}",
