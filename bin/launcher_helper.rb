@@ -54,6 +54,7 @@ def show_config_menu
     ' Dunst' => "#{ENV['XDG_CONFIG_HOME']}/dunst/dunstrc",
     ' Hypridle' => "#{ENV['XDG_CONFIG_HOME']}/hypr/hypridle.conf",
     ' Hyprland' => "#{ENV['XDG_CONFIG_HOME']}/hypr/hyprland.conf",
+    ' Kitty' => "#{ENV['XDG_CONFIG_HOME']}/kitty/kitty.conf",
     ' Rofi' => "#{ENV['XDG_CONFIG_HOME']}/rofi/config.rasi",
     ' Waybar' => "#{ENV['XDG_CONFIG_HOME']}/waybar/config.jsonc",
     ' Zsh' => "#{ENV['XDG_CONFIG_HOME']}/zsh/.zshrc"
