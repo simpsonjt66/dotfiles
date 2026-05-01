@@ -16,5 +16,14 @@ bindkey -e # emacs bindings, set to -v for vi bindings
 eval "$(zoxide init zsh)"
 eval "$(mise activate zsh)"
 
+source "$XDG_DATA_HOME/cargo/env"
+
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+
+typeset -U path PATH
+
+path+=($HOME/.local/bin)
+path+=($HOME/.local/share/npm/bin/)
+path+=($HOME/.local/share/applications)
+path+=($CARGO_HOME/bin)
 
