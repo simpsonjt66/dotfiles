@@ -109,18 +109,7 @@ def show_system_menu
 end
 
 def rofi_confirm(message)
-  result = nil
-  IO.popen(['rofi',
-            '-dmenu',
-            '-p', 'Confirmation',
-            '-mesg', message,
-            '-theme-str', confirm_dialog_theme],
-           'r+') do |io|
-    io.puts %w[Yes No]
-    io.close_write
-    result = io.read.chomp
-  end
-  result == 'Yes'
+  system("confirm-dialog", message)
 end
 
 def confirm_dialog_theme
