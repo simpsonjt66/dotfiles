@@ -96,33 +96,24 @@ def show_system_menu
   when /Lock/
     system('loginctl lock-session')
   when /Suspend/
-    system('systemctl suspend') if rofi_confirm('Suspend system?')
+    system('systemctl suspend') if confirm_dialog('Suspend system?')
   when /Logout/
-    system('hyprctl dispatch exit') if rofi_confirm('Logout?')
+    system('hyprctl dispatch exit') if confirm_dialog('Logout?')
   when /Reboot/
-    system('systemctl reboot') if rofi_confirm('Reboot system?')
+    system('systemctl reboot') if confirm_dialog('Reboot system?')
   when /Shutdown/
-    system('systemctl poweroff') if rofi_confirm('Shutdown system?')
+    system('systemctl poweroff') if confirm_dialog('Shutdown system?')
   else
     show_main_menu
   end
 end
 
-def rofi_confirm(message)
+def confirm_dialog(message)
   system('confirm-dialog', message)
 end
 
-def confirm_dialog_theme
-  <<~TEXT
-    window {location: center; anchor: center; fullscreen: false; width: 250px;}
-    mainbox {children: [ 'message', 'listview' ];}
-    listview {columns: 2; lines: 1;}
-    element-text {horizontal-align: 0.5;}
-    textbox {horizontal-align: 0.5;}
-  TEXT
-end
-
 menu_main = ARGV[0] || 'main'
+
 case menu_main
 when 'main'
   show_main_menu
