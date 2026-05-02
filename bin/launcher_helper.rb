@@ -25,6 +25,7 @@ def rofi_select(items:, current: nil)
 end
 
 def show_main_menu
+  @menu_stack.push(:main)
   menu_options = [
     '󰀻 Apps',
     ' Config',
@@ -49,9 +50,11 @@ def show_main_menu
   else
     puts 'No Match'
   end
+  @menu_stack.pop
 end
 
 def show_config_menu
+  @menu_stack.push(:config)
   menu_options = {
     ' Alacritty' => "#{ENV['XDG_CONFIG_HOME']}/alacritty/alacritty.toml",
     ' Dunst' => "#{ENV['XDG_CONFIG_HOME']}/dunst/dunstrc",
@@ -71,23 +74,21 @@ def show_config_menu
     expanded = File.expand_path(filepath)
     system('notify-send', "Editing config file #{expanded}")
     system('launch-editor', expanded)
-  else
-    show_main_menu
   end
+  handle_escape
 end
 
 def show_font_menu
+  @menu_stack.push(:font)
   menu_options = Open3.capture3('font-list')[0].lines.map(&:chomp)
   current_font = Open3.capture3('font-current')[0].strip
   selected = rofi_select(items: menu_options, current: current_font)
-  if selected
-    system('font-set', selected)
-  else
-    show_main_menu
-  end
+  system('font-set', selected) if selected
+  handle_escape
 end
 
 def show_system_menu
+  @menu_stack.push(:system)
   menu_options = [
     ' Lock',
     ' Suspend',
@@ -107,13 +108,25 @@ def show_system_menu
   when /Shutdown/
     system('systemctl poweroff') if confirm_dialog('Shutdown system?')
   else
-    show_main_menu
+    handle_escape
   end
 end
 
 def confirm_dialog(message)
   system('confirm-dialog', message)
 end
+
+def handle_escape
+  if @menu_stack.length > 1
+    @menu_stack.pop
+    parent_menu = @menu_stack.last
+    send("show_#{parent_menu}_menu")
+  else
+    exit(0)
+  end
+end
+
+@menu_stack = []
 
 menu_main = ARGV[0] || 'main'
 
@@ -129,5 +142,3 @@ when 'font'
 else
   exit 1
 end
-
-exit 0

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ruby ~/.local/bin/launcher_helper.rb
