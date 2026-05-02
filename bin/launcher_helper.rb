@@ -109,7 +109,7 @@ def show_system_menu
 end
 
 def rofi_confirm(message)
-  system("confirm-dialog", message)
+  system('confirm-dialog', message)
 end
 
 def confirm_dialog_theme
@@ -122,6 +122,18 @@ def confirm_dialog_theme
   TEXT
 end
 
-show_main_menu
+menu_main = ARGV[0] || 'main'
+case menu_main
+when 'main'
+  show_main_menu
+when 'config'
+  show_config_menu
+when 'system'
+  show_system_menu
+when 'font'
+  show_font_menu
+else
+  exit 1
+end
 
 exit 0
