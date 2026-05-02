@@ -36,7 +36,10 @@ def show_main_menu
   ]
   case rofi_select(items: menu_options)
   when /Apps/
-    IO.popen(['rofi', '-show', 'drun', '-theme', '~/.config/rofi/themes/app-launcher.rasi'])
+    IO.popen(['rofi',
+              '-show', 'drun',
+              '-run-command', 'uwsm-app {cmd}',
+              '-theme', '~/.config/rofi/themes/app-launcher.rasi'])
   when /Config/
     show_config_menu
   when /System/
