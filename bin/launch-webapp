@@ -12,8 +12,8 @@ browser=$(xdg-settings get default-web-browser)
 launch_command=$(rg -N '^Exec=' ~/.local/share/applications/"$browser" -m 1 2>/dev/null | cut -d '=' -f2 | cut -d ' ' -f1)
 
 # Launch the URL as a web app in a new session using uwsm.
-# `setsid` detaches the process from the current terminal.
-# `uwsm app` launches the application within the Universal Wayland Session Manager,
+# `uwsm-app` launches the application within the Universal Wayland Session Manager,
 # ensuring proper integration with the Wayland session.
 # The --app flag is passed to the browser to open the URL in app mode.
-exec setsid uwsm app -- "$launch_command" --app="$1"
+exec uwsm-app -- "$launch_command" --app="$1"
+

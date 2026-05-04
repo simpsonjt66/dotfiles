@@ -24,7 +24,7 @@ dynamic_bindings() {
     jq -r '.[] | {modmask, key, keycode, description, dispatcher, arg} | "\(.modmask),\(.key)@\(.keycode),\(.description),\(.dispatcher),\(.arg)"' |
     sed -r \
       -e 's/null//' \
-      -e 's,uwsm app -- ,,' \
+      -e 's,uwsm-app -- ,,' \
       -e 's/@0//' \
       -e 's/,@/,code:/' \
       -e 's/^0,/,/' \
@@ -105,4 +105,3 @@ dynamic_bindings |
   sort -u |
   parse_bindings |
   rofi -dmenu -p 'Keybindings' -theme-str "window {height: $menu_height px ;}"
-

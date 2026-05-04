@@ -14,7 +14,8 @@ if pgrep -x waybar >/dev/null; then
   pkill -x waybar
 else
   # If it's not running, start it in the background.
-  # `uwsm app` launches the application within the Universal Wayland Session Manager,
+  # `uwsm-app` launches the application within the Universal Wayland Session Manager,
   # ensuring proper integration with the Wayland session.
-  uwsm app -- waybar >/dev/null 2>&1 &
+  uwsm-app -- waybar >/dev/null 2>&1 &
 fi
+

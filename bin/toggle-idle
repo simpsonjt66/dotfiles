@@ -16,8 +16,9 @@ if pgrep -x hypridle >/dev/null; then
   notify-send "Stopped locking computer when idle"
 else
   # If it's not running, start it in the background and send a notification.
-  # `uwsm app` launches the application within the Universal Wayland Session Manager,
+  # `uwsm-app` launches the application within the Universal Wayland Session Manager,
   # ensuring proper integration with the Wayland session.
-  uwsm app -- hypridle >/dev/null 2>&1 &
+  uwsm-app -- hypridle >/dev/null 2>&1 &
   notify-send "Now locking computer when idle"
 fi
+
