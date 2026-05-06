@@ -37,10 +37,7 @@ def show_main_menu
   ]
   case rofi_select(items: menu_options)
   when /Apps/
-    IO.popen(['rofi',
-              '-show', 'drun',
-              '-run-command', 'uwsm-app {cmd}',
-              '-theme', '~/.config/rofi/themes/app-launcher.rasi'])
+    show_apps_menu
   when /Config/
     show_config_menu
   when /System/
@@ -50,6 +47,15 @@ def show_main_menu
   else
     puts 'No Match'
   end
+  @menu_stack.pop
+end
+
+def show_apps_menu
+  @menu_stack.push(:apps)
+  IO.popen(['rofi',
+            '-show', 'drun',
+            '-run-command', 'uwsm-app {cmd}',
+            '-theme', '~/.config/rofi/themes/app-launcher.rasi'])
   @menu_stack.pop
 end
 
@@ -133,6 +139,8 @@ menu_main = ARGV[0] || 'main'
 case menu_main
 when 'main'
   show_main_menu
+when 'apps'
+  show_apps_menu
 when 'config'
   show_config_menu
 when 'system'
