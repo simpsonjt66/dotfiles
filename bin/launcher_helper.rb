@@ -3,6 +3,25 @@
 
 require 'shellwords'
 require 'open3'
+require 'English'
+
+MAIN_MENU_OPTIONS = {
+  '󰀻 Apps' => 'apps',
+  ' Config' => 'config',
+  ' Font' => 'font',
+  ' System' => 'system',
+  '󰸌 Theme' => 'theme',
+  ' Screenshot' => 'screenshot',
+  '󰔎 Toggle' => 'toggle'
+}.freeze
+
+SYSTEM_MENU_OPTIONS = [
+  { prompt: ' Lock',     command: 'loginctl lock-session' },
+  { prompt: ' Suspend',  command: 'systemctl suspend', confirm: 'Suspend system?' },
+  { prompt: '󰈆 Logout',   command: 'hyprctl dispatch exit', confirm: 'Logout?' },
+  { prompt: ' Reboot',   command: 'systemctl reboot', confirm: 'Reboot system?' },
+  { prompt: '󰐥 Shutdown', command: 'systemctl poweroff', confirm: 'Shutdown system?' }
+].freeze
 
 def rofi_select(items:, current: nil)
   current_index = current ? items.index(current) || 0 : 0
@@ -21,32 +40,16 @@ def rofi_select(items:, current: nil)
     io.close_write
     result = io.read.chomp
   end
-  $?.exitstatus == 0 && !result.empty? ? result : nil
+  $CHILD_STATUS.exitstatus.zero? && !result.empty? ? result : nil
 end
 
 def show_main_menu
   @menu_stack.push(:main)
-  menu_options = [
-    '󰀻 Apps',
-    ' Config',
-    ' Font',
-    ' System',
-    '󰸌 Theme',
-    ' Screenshot',
-    '󰔎 Toggle'
-  ]
-  case rofi_select(items: menu_options)
-  when /Apps/
-    show_apps_menu
-  when /Config/
-    show_config_menu
-  when /System/
-    show_system_menu
-  when /Font/
-    show_font_menu
-  else
-    puts 'No Match'
-  end
+  selected = rofi_select(items: MAIN_MENU_OPTIONS.keys)
+  return unless selected
+
+  send("show_#{MAIN_MENU_OPTIONS[selected]}_menu")
+
   @menu_stack.pop
 end
 
@@ -95,24 +98,12 @@ end
 
 def show_system_menu
   @menu_stack.push(:system)
-  menu_options = [
-    ' Lock',
-    ' Suspend',
-    '󰈆 Logout',
-    ' Reboot',
-    '󰐥 Shutdown'
-  ]
-  case rofi_select(items: menu_options)
-  when /Lock/
-    system('loginctl lock-session')
-  when /Suspend/
-    system('systemctl suspend') if confirm_dialog('Suspend system?')
-  when /Logout/
-    system('hyprctl dispatch exit') if confirm_dialog('Logout?')
-  when /Reboot/
-    system('systemctl reboot') if confirm_dialog('Reboot system?')
-  when /Shutdown/
-    system('systemctl poweroff') if confirm_dialog('Shutdown system?')
+  selected = rofi_select(items: SYSTEM_MENU_OPTIONS.map { |opt| opt[:prompt] })
+
+  option = SYSTEM_MENU_OPTIONS.find { |opt| opt[:prompt] == selected }
+
+  if option
+    system(option[:command]) if option[:confirm].nil? || confirm_dialog(option[:confirm])
   else
     handle_escape
   end
