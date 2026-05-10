@@ -4,24 +4,9 @@
 require 'shellwords'
 require 'open3'
 require 'English'
+require 'yaml'
 
-MAIN_MENU_OPTIONS = {
-  '󰀻 Apps' => 'apps',
-  ' Config' => 'config',
-  ' Font' => 'font',
-  ' System' => 'system',
-  '󰸌 Theme' => 'theme',
-  ' Screenshot' => 'screenshot',
-  '󰔎 Toggle' => 'toggle'
-}.freeze
-
-SYSTEM_MENU_OPTIONS = [
-  { prompt: ' Lock',     command: 'loginctl lock-session' },
-  { prompt: ' Suspend',  command: 'systemctl suspend', confirm: 'Suspend system?' },
-  { prompt: '󰈆 Logout',   command: 'hyprctl dispatch exit', confirm: 'Logout?' },
-  { prompt: ' Reboot',   command: 'systemctl reboot', confirm: 'Reboot system?' },
-  { prompt: '󰐥 Shutdown', command: 'systemctl poweroff', confirm: 'Shutdown system?' }
-].freeze
+OPTIONS = YAML.load_file('/home/jsimpson/.local/bin/config.yaml')
 
 def rofi_select(items:, current: nil)
   current_index = current ? items.index(current) || 0 : 0
@@ -45,10 +30,13 @@ end
 
 def show_main_menu
   @menu_stack.push(:main)
-  selected = rofi_select(items: MAIN_MENU_OPTIONS.keys)
+  menu_options = OPTIONS['main_menu'].map { |item| item['name'] }
+  selected = rofi_select(items: menu_options)
+
   return unless selected
 
-  send("show_#{MAIN_MENU_OPTIONS[selected]}_menu")
+  launch_command = OPTIONS['main_menu'].find { |item| item['name'] == selected }&.dig('command')
+  send("show_#{launch_command}_menu")
 
   @menu_stack.pop
 end
@@ -64,23 +52,13 @@ end
 
 def show_config_menu
   @menu_stack.push(:config)
-  menu_options = {
-    ' Alacritty' => "#{ENV['XDG_CONFIG_HOME']}/alacritty/alacritty.toml",
-    ' Dunst' => "#{ENV['XDG_CONFIG_HOME']}/dunst/dunstrc",
-    ' Hypridle' => "#{ENV['XDG_CONFIG_HOME']}/hypr/hypridle.conf",
-    ' Hyprland' => "#{ENV['XDG_CONFIG_HOME']}/hypr/hyprland.conf",
-    ' Kitty' => "#{ENV['XDG_CONFIG_HOME']}/kitty/kitty.conf",
-    ' Rofi' => "#{ENV['XDG_CONFIG_HOME']}/rofi/config.rasi",
-    ' Waybar' => "#{ENV['XDG_CONFIG_HOME']}/waybar/config.jsonc",
-    ' Zsh' => "#{ENV['XDG_CONFIG_HOME']}/zsh/.zshrc"
-  }
-  names = menu_options.keys
-  selected = rofi_select(items: names)
+  menu_prompts = OPTIONS['config_menu'].map { |item| item['prompt'] }
+  selected = rofi_select(items: menu_prompts)
 
-  filepath = menu_options[selected]
+  filepath = OPTIONS['config_menu'].find { |item| item['prompt'] == selected }&.dig('command')
 
   if filepath
-    expanded = File.expand_path(filepath)
+    expanded = File.expand_path("#{ENV['XDG_CONFIG_HOME']}/" + filepath)
     system('notify-send', "Editing config file #{expanded}")
     system('launch-editor', expanded)
   end
@@ -98,15 +76,12 @@ end
 
 def show_system_menu
   @menu_stack.push(:system)
-  selected = rofi_select(items: SYSTEM_MENU_OPTIONS.map { |opt| opt[:prompt] })
+  menu_prompts = OPTIONS['system_menu'].map { |item| item['prompt'] }
+  selected = rofi_select(items: menu_prompts)
 
-  option = SYSTEM_MENU_OPTIONS.find { |opt| opt[:prompt] == selected }
-
-  if option
-    system(option[:command]) if option[:confirm].nil? || confirm_dialog(option[:confirm])
-  else
-    handle_escape
-  end
+  option = OPTIONS['system_menu'].find { |item| item['prompt'] == selected }
+  system(option['command']) if option['confirm'].nil? || confirm_dialog(option['confirm'])
+  handle_escape
 end
 
 def confirm_dialog(message)
