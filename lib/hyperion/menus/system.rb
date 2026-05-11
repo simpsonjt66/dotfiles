@@ -6,10 +6,12 @@ module Menus
     def self.show
       menu_options = OPTIONS[:system_menu]
       prompts = menu_options.map { |item| item[:prompt] }
-      selected = rofi_select(items: prompts)
+      selected = Utilities.rofi_select(items: prompts)
+
+      return unless selected
 
       option = menu_options.find { |item| item[:prompt] == selected }
-      system(option[:command]) if option[:confirm].nil? || confirm_dialog(option[:confirm])
+      system(option[:command]) if option[:confirm].nil? || Utilities.confirm_dialog(option[:confirm])
     end
   end
 end

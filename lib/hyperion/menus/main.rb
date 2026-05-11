@@ -6,7 +6,7 @@ module Menus
     def self.show
       menu_options = OPTIONS[:main_menu]
       prompts = menu_options.map { |item| item[:name] }
-      selected = rofi_select(items: prompts)
+      selected = Utilities.rofi_select(items: prompts)
 
       return unless selected
 
