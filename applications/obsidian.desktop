@@ -3,8 +3,8 @@
 Version=1.0
 Name=Obsidian
 GenericName=Note taking app
-Comment=Google Contacts
-Exec=/home/jsimpson/.local/share/applications/Obsidian.AppImage --enable-features=UseOzonePlatform --ozone-platform=wayland
+Comment=Obsidian AppImage
+Exec=/home/jsimpson/.local/share/AppImage/Obsidian.AppImage --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations
 Terminal=false
 Type=Application
 Icon=obsidian-icon
