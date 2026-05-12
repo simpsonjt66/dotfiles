@@ -5,7 +5,7 @@ fpath+=$XDG_DATA_HOME//zsh/plugins/pure
 autoload -U promptinit; promptinit
 prompt pure
 
-for zsh_source in $ZSHDOTDIR/config.d/.zsh; do
+for zsh_source in $ZDOTDIR/config.d/*.zsh; do
   [ -r "$zsh_source" ] && source $zsh_source
 done
 
