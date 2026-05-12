@@ -1,0 +1,49 @@
+src_base: ~/Code/dotfiles
+dest_base: ~/
+
+categories:
+  config:
+    - src: config/alacritty
+      dest: .config/alacritty
+    - src: config/bottom
+      dest: .config/bottom
+    - src: config/dunst
+      dest: .config/dunst
+    - src: config/fastfetch
+      dest: .config/fastfetch
+    - src: config/fontconfig
+      dest: .config/fontconfig
+    - src: config/git
+      dest: .config/git
+    - src: config/gitui
+      dest: .config/gitui
+    - src: config/hypr
+      dest: .config/hypr
+    - src: config/kitty
+      dest: .config/kitty
+    - src: config/npm
+      dest: .config/npm
+    - src: config/nvim
+      dest: .config/nvim
+    - src: config/rofi
+      dest: .config/rofi
+    - src: config/tmux
+      dest: .config/tmux
+    - src: config/uwsm/env
+      dest: .config/uwsm/env
+    - src: config/waybar
+      dest: .config/waybar
+    - src: config/zsh
+      dest: .config/zsh
+  bin:
+    - src: bin
+      dest: .local/bin
+  applications:
+    - src: applications
+      dest: .local/share/applications
+  lib:
+    - src: lib/hyperion
+      dest: .local/lib/hyperion
+  themes:
+    - src: themes
+      dest: .local/share/hyperion/themes
