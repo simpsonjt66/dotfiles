@@ -9,7 +9,6 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 
 # System variables to make folder XDG desktop compliant
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-export _JAVA_OPTIONS=Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export PSQL_HISTORY="$XDG_DATA_HOME"/psql_history
 export HISTFILE="$XDG_STATE_HOME"/zsh/history
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
@@ -26,11 +25,10 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 [ -f "$XDG_CONFIG_HOME/zsh/secrets.zsh" ] && source "$XDG_CONFIG_HOME/zsh/secrets.zsh"
 
 
-export EDITOR=$(which nvim)
+export EDITOR=$(command -v nvim)
 export BROWSER=/usr/bin/google-chrome-stable
 export PAGER=less
 export SHELL=/usr/bin/zsh
 
 export SCREENSHOT="$HOME/Pictures"
 
-. "/home/jsimpson/.local/share/cargo/env"

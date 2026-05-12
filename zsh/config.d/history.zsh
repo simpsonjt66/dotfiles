@@ -1,5 +1,5 @@
 ## Command history configuration
-#HISTFILE=$HOME/.histfile
+#HISTFILE=$XDG_STATE_HOME/zsh/history
 
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE

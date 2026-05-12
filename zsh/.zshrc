@@ -1,12 +1,12 @@
-source $HOME/Code/dotfiles/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $XDG_DATA_HOME/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=59'
 
-fpath+=$HOME/Code/dotfiles/zsh/plugins/pure
+fpath+=$XDG_DATA_HOME//zsh/plugins/pure
 autoload -U promptinit; promptinit
 prompt pure
 
-for zsh_source in $XDG_CONFIG_HOME/zsh/*.zsh; do
-  source $zsh_source
+for zsh_source in $ZSHDOTDIR/config.d/.zsh; do
+  [ -r "$zsh_source" ] && source $zsh_source
 done
 
 export FZF_DEFAULT_COMMAND='fd --type f'
@@ -16,14 +16,11 @@ bindkey -e # emacs bindings, set to -v for vi bindings
 eval "$(zoxide init zsh)"
 eval "$(mise activate zsh)"
 
-source "$XDG_DATA_HOME/cargo/env"
-
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 typeset -U path PATH
 
 path+=($HOME/.local/bin)
 path+=($HOME/.local/share/npm/bin/)
-path+=($HOME/.local/share/applications)
 path+=($CARGO_HOME/bin)
 
