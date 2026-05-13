@@ -1,9 +1,7 @@
--- See https://wiki.hypr.land/Configuring/Keywords/
-
--- hl.bind("ALT + S", togglespecialworkspace, scratchpad)
+hl.bind("ALT + S", hl.dsp.workspace.toggle_special("scratchpad"), { description = "Toggle scratchpad" })
 
 -- Apps
-hl.bind("SUPER + return", hl.dsp.exec_cmd([[uwsm-app -- xdg-terrminal-exec]]))
+hl.bind("SUPER + return", hl.dsp.exec_cmd([[uwsm-app -- xdg-terminal-exec]]))
 
 -- Actions
 hl.bind("SUPER + W", hl.dsp.window.close())
@@ -15,7 +13,7 @@ hl.bind("CTRL + PRINT", hl.dsp.exec_cmd("cmd-screenshot output"), { description 
 -- Webapps
 -- hl.bind(SUPER, E, Email, exec, launch-webapp "https://mail.google.com"
 -- hl.bind(SUPER, A, ChatGPT, exec, launch-webapp "https://claude.ai"
---
+
 -- Containers
 hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
 hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
@@ -69,11 +67,11 @@ hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true, description
 -- hl.bind( = $mainMod, K, Show key bindings, exec, rofi-menu-keybindings
 hl.bind("Menu", hl.dsp.exec_cmd("hyperion-menu"), { description = "System menu" })
 hl.bind("SUPER + space", hl.dsp.exec_cmd("hyperion-menu apps"), { description = "Apps menu" })
-hl.bind("XF86PowerOff", hl.dsp.exec_cmd("hyperion menu system"), { description = "Power menu" })
--- hl.bind( = $mainMod, V, Clipboard manager, exec, cliphist list | rofi -dmenu -display-comlumns 2 | cliphist decode | wl-copy
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd("hyperion-menu system"), { description = "Power menu" })
+hl.bind("SUPER + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -display-comlumns 2 | cliphist decode | wl-copy"))
 
 -- Session
--- hl.bind( = $mainMod SHIFT, M, Exit, exec, uwsm stop
+hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("uwsm stop"))
 
 -- Brightness control
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightness up"))
