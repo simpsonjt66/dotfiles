@@ -1,0 +1,7 @@
+require("config.autostart")
+require("config.bindings")
+require("config.input")
+require("config.looknfeel")
+require("config.monitors")
+require("config.windows")
+require("config.workspaces")
