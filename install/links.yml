@@ -35,6 +35,8 @@ categories:
       dest: .config/waybar
     - src: config/zsh
       dest: .config/zsh
+    - src: config/xdg/xdg-terminals.links
+      dest: .config/xdg-teminals.list
   bin:
     - src: bin
       dest: .local/bin

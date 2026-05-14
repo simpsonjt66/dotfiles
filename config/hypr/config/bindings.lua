@@ -2,6 +2,7 @@ hl.bind("ALT + S", hl.dsp.workspace.toggle_special("scratchpad"), { description 
 
 -- Apps
 hl.bind("SUPER + return", hl.dsp.exec_cmd([[uwsm-app -- xdg-terminal-exec]]))
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("launch-browser"))
 
 -- Actions
 hl.bind("SUPER + W", hl.dsp.window.close())

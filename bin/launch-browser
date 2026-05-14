@@ -14,5 +14,4 @@ browser_exec=$(sed -n 's/^Exec=\([^ ]*\).*/\1/p' ~/.local/share/applications/"$d
 # Launch the browser in a new session using uwsm.
 # `uwsm-app` launches the application within the Universal Wayland Session Manager,
 # ensuring proper integration with the Wayland session.
-exec uwsm-app -- "$browser_exec"
-
+exec setsid uwsm-app -- "$browser_exec"
