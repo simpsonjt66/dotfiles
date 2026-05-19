@@ -13,6 +13,8 @@ main_menu:
     command: 'screenshot'
   - name: '󰔎 Toggle' 
     command: 'toggle'
+  - name: '󰱔 Default'
+    command: 'default'
 system_menu:
   - prompt: ' Lock'     
     command: 'loginctl lock-session'
@@ -45,3 +47,25 @@ config_menu:
     command: '/waybar/config.jsonc'
   - prompt: ' Zsh' 
     command: '/zsh/.zshrc'
+default_menu:
+  - prompt: ' Terminal'
+    command: 'terminal'
+  - prompt: ' Browser'
+    command: 'browser'
+  - prompt: ' Editor'
+    command: 'editor'
+default_editor_menu:
+  - prompt: ' NeoVim'
+    command: 'hyperion-default-editor nvim'
+  - prompt: ' Vim'
+    command: 'hyperion-default-editor vim'
+default_browser_menu:
+  - prompt: '󰊯 Google Chrome'
+    command: 'hyperion-default-browser chrome'
+  - prompt: '󰖟 Zen'
+    command: 'hyperion-default-browser zen'
+default_terminal_menu:
+  - prompt: ' Alacritty'
+    command: 'hyperion-default-terminal alacritty'
+  - prompt: ' Kitty'
+    command: 'hyperion-default-terminal kitty'

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if (($# == 0)); then
+  sed -n 's/^export editor=//p' ~/.config/uwsm/env | head -n 1
+  exit 0
+fi
+
+case "$1" in
+vim)
+  editor="vim"
+  name="Vim"
+  glyph=""
+  ;;
+nvim)
+  editor="nvim"
+  name="Neovim"
+  glyph=""
+  ;;
+*)
+  echo "Usage: omarchy-default-editor <vim|nvim>"
+  exit 1
+  ;;
+esac
+
+sed -i "s/^export EDITOR=.*/export EDITOR=$editor/" ~/.config/uwsm/env
+
+export EDITOR="$editor"
+notify-send -u low "$glyph    $name is now the default editor" "      Effective after logging out"

@@ -9,3 +9,4 @@ Terminal=false
 Type=Application
 Icon=google-chrome
 StartupNotify=true
+MimeType=x-scheme-handler/unknown;x-scheme-handler/about;x-scheme-handler/https;x-scheme-handler/http;text/html;

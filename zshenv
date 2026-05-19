@@ -25,8 +25,6 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 [ -f "$XDG_CONFIG_HOME/zsh/secrets.zsh" ] && source "$XDG_CONFIG_HOME/zsh/secrets.zsh"
 
 
-export EDITOR=$(command -v nvim)
-export BROWSER=/usr/bin/google-chrome-stable
 export PAGER=less
 export SHELL=/usr/bin/zsh
 

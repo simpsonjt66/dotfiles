@@ -7,6 +7,10 @@ require_relative 'menus/apps'
 require_relative 'menus/config'
 require_relative 'menus/system'
 require_relative 'menus/font'
+require_relative 'menus/default'
+require_relative 'menus/terminal'
+require_relative 'menus/browser'
+require_relative 'menus/editor'
 
 # Urtility functions for app launcher
 module Utilities
@@ -28,6 +32,7 @@ module Utilities
 
   def self.rofi_command(items, current_index)
     longest = items.max_by(&:length).length
+    puts longest
 
     [
       'rofi',
@@ -36,7 +41,7 @@ module Utilities
       '-selected-row', current_index.to_s,
       '-i', '-l', items.count.to_s,
       '-theme', '~/.config/rofi/themes/system-menu.rasi',
-      '-theme-str', "window { width: #{longest} em;}"
+      '-theme-str', "window { max-width: #{longest} ch;}"
     ]
   end
 end

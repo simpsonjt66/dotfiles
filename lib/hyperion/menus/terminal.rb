@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+module Menus
+  # Set the default terminal
+  class Terminal
+    def self.show
+      menu_options = OPTIONS[:default_terminal_menu]
+      prompts = menu_options.map { |item| item[:prompt] }
+      selected = Utilities.rofi_select(items: prompts)
+
+      launch_command = menu_options.find { |item| item[:prompt] == selected }&.dig(:command)
+      system(launch_command)
+    end
+  end
+end

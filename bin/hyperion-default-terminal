@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if (($# == 0)); then
+  desktop_id=$(grep -vE '^($|#)' ~/.config/xdg-terminals.list 2>/dev/null | head -n 1)
+  case "$desktop_id" in
+  Alacritty.desktop) echo "alacritty" ;;
+  kitty.desktop) echo "kitty" ;;
+  *) echo "$desktop_id" ;;
+  esac
+  exit 0
+fi
+
+case "$1" in
+alacritty)
+  desktop_id="Alacritty.desktop"
+  name="Alacritty"
+  glyph=""
+  ;;
+kitty)
+  desktop_id="kitty.desktop"
+  name="Kitty"
+  glyph=""
+  ;;
+*)
+  echo "Usage: hyperion-default-terminal <alacritty|kitty>"
+  exit 1
+  ;;
+esac
+
+cat >~/.config/xdg-terminals.list <<EOF
+# Terminal emulator preference order for xdg-terminal-exec
+$desktop_id
+EOF
+
+notify-send -u low "$glyph    $name is now the default terminal"

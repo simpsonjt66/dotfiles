@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if (($# == 0)); then
+  case "$(xdg-settings get default-web-browser)" in
+  google-chrome.desktop) echo "chrome" ;;
+  zen.desktop) echo "zen" ;;
+  *) xdg-settings get default-web-browser ;;
+  esac
+  exit 0
+fi
+
+case "$1" in
+chrome)
+  desktop_id="google-chrome.desktop"
+  name="Chrome"
+  glyph="󰊯"
+  ;;
+zen)
+  desktop_id="zen.desktop"
+  name="Zen"
+  glyph="󰖟"
+  ;;
+*)
+  echo "Usage: hyperion-default-browser <chrome|zen>"
+  exit 1
+  ;;
+esac
+
+xdg-settings set default-web-browser "$desktop_id"
+xdg-mime default "$desktop_id" x-scheme-handler/http
+xdg-mime default "$desktop_id" x-scheme-handler/https
+xdg-mime default "$desktop_id" text/html
+
+notify-send -u low "$glyph    $name is now the default browser"
