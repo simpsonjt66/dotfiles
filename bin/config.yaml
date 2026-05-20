@@ -13,6 +13,8 @@ main_menu:
     command: 'screenshot'
   - name: '󰔎 Toggle' 
     command: 'toggle'
+  - name: '󰭌 Packages'
+    command: 'package'
   - name: '󰱔 Default'
     command: 'default'
 system_menu:
@@ -47,6 +49,9 @@ config_menu:
     command: '/waybar/config.jsonc'
   - prompt: ' Zsh' 
     command: '/zsh/.zshrc'
+pkg_menu:
+  - prompt: 'Install package'
+    command: 'hyperion-pkg-install'
 default_menu:
   - prompt: ' Terminal'
     command: 'terminal'
@@ -69,3 +74,10 @@ default_terminal_menu:
     command: 'hyperion-default-terminal alacritty'
   - prompt: ' Kitty'
     command: 'hyperion-default-terminal kitty'
+package_menu:
+  - prompt: 'Install Package'
+    command: 'hyperion-pkg-install'
+  - prompt: 'Remove Package'
+    command: 'hyperion-pkg-remove'
+  - prompt: 'Install AUR Package'
+    command: 'hyperion-pkg-aur-install'

@@ -11,6 +11,7 @@ require_relative 'menus/default'
 require_relative 'menus/terminal'
 require_relative 'menus/browser'
 require_relative 'menus/editor'
+require_relative 'menus/package'
 
 # Urtility functions for app launcher
 module Utilities

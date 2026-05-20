@@ -18,6 +18,14 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	name = "floating-terminal",
+	tag = "+floating-window",
+	match = {
+		class = "org.hyperion.terminal",
+	},
+})
+
+hl.window_rule({
 	name = "window_rule-btop",
 	tag = "+floating-window",
 	match = {
