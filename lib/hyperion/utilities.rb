@@ -28,7 +28,7 @@ module Utilities
   end
 
   def self.confirm_dialog(message)
-    system('confirm-dialog', message)
+    system('confirm-dialog', '-m', message)
   end
 
   def self.rofi_command(items, current_index)

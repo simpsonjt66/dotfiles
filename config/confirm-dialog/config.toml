@@ -1,0 +1,16 @@
+message = "Do you want to proceed?"
+title = "Confirmation"
+yes_label = "Yes"
+no_label = "No"
+css = """
+button.no_label {
+font-size: 12px;
+padding-top: 0px;
+padding-bottom: 0px;
+}
+button {
+padding-top: 0px;
+padding-bottom: 0px;
+min-width: 100px;
+}
+"""
