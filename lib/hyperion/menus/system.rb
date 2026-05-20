@@ -8,7 +8,7 @@ module Menus
       prompts = menu_options.map { |item| item[:prompt] }
       selected = Utilities.rofi_select(items: prompts)
 
-      return unless selected
+      return { action: :back } if selected.nil?
 
       option = menu_options.find { |item| item[:prompt] == selected }
       system(option[:command]) if option[:confirm].nil? || Utilities.confirm_dialog(option[:confirm])

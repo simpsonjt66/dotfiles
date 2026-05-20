@@ -7,6 +7,9 @@ module Menus
       menu_options = Open3.capture3('font-list')[0].lines.map(&:chomp)
       current_font = Open3.capture3('font-current')[0].strip
       selected = Utilities.rofi_select(items: menu_options, current: current_font)
+
+      return { action: :back } if selected.nil?
+
       system('font-set', selected) if selected
     end
   end

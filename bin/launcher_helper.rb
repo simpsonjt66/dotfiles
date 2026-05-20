@@ -9,32 +9,38 @@ require_relative('../lib/hyperion/utilities')
 
 OPTIONS = YAML.load_file('/home/jsimpson/.local/bin/config.yaml', symbolize_names: true)
 
-# TODO: Design a new way to handle escape
-# def handle_escape
-#   if @menu_stack.length > 1
-#     @menu_stack.pop
-#     parent_menu = @menu_stack.last
-#     send("show_#{parent_menu}_menu")
-#   else
-#     exit(0)
-#   end
-# end
+# Method to manage menu navigation, should return
+# to parent menu when Esc is pressed.
+class Navigator
+  def initialize(start_menu_class)
+    @stack = [start_menu_class]
+  end
 
-# @menu_stack = []
+  def run
+    while @stack.any?
+      current_menu = @stack.last
 
-menu_main = ARGV[0] || 'main'
+      result = current_menu.show
 
-case menu_main
-when 'main'
-  Menus::Main.show
-when 'apps'
-  Menus::Apps.show
-when 'config'
-  Menus::Config.show
-when 'system'
-  Menus::System.show
-when 'font'
-  Menus::Font.show
-else
+      case result[:action]
+      when :push
+        @stack.push(result[:target])
+      when :back
+        @stack.pop
+      when :exit
+        @stack.clear
+      else
+        @stack.clear
+      end
+    end
+  end
+end
+
+initial_name = ARGV[0] || 'main'
+begin
+  start_class = Menus.const_get(initial_name.capitalize)
+  Navigator.new(start_class).run
+rescue NameError
+  puts "Menu #{initial_name} not found."
   exit 1
 end

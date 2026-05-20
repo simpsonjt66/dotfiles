@@ -8,9 +8,9 @@ module Menus
       prompts = menu_options.map { |item| item[:prompt] }
       selected = Utilities.rofi_select(items: prompts)
 
-      filepath = menu_options.find { |item| item[:prompt] == selected }&.dig(:command)
+      return { action: :back } if selected.nil?
 
-      return unless selected
+      filepath = menu_options.find { |item| item[:prompt] == selected }&.dig(:command)
 
       expanded = File.expand_path("#{ENV['XDG_CONFIG_HOME']}/" + filepath)
       system('notify-send', "Editing config file #{expanded}")

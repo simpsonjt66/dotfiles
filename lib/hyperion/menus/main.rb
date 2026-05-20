@@ -8,10 +8,11 @@ module Menus
       prompts = menu_options.map { |item| item[:name] }
       selected = Utilities.rofi_select(items: prompts)
 
-      return unless selected
+      return { action: :back } if selected.nil?
 
       launch_command = menu_options.find { |item| item[:name] == selected }&.dig(:command).to_s.capitalize
-      Menus.const_get(launch_command).show
+      target = Menus.const_get(launch_command)
+      { action: :push, target: target }
     end
   end
 end
