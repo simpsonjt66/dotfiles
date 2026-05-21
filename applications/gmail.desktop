@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
-Name=gmail
-Comment=gmail
+Name=Gmail
+Comment=Read and send email
 Exec=launch-webapp https://mail.google.com
 Terminal=false
 Type=Application
-Icon=/home/jsimpson/.local/share/applications/icons/gmail.png
+Icon=gmail
 StartupNotify=true
