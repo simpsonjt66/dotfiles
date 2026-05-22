@@ -8,8 +8,8 @@ module Menus
 
       return { action: :back } if selected.nil?
 
-      Utilities::ThemeSet.call(theme_list[selected])
       system('notify-send', "Theme set to #{selected}")
+      Utilities::ThemeSet.call(theme_list[selected])
     end
 
     class << self

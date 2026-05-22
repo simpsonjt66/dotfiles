@@ -7,6 +7,8 @@ module Utilities
       new_theme_path = File.join(THEME_PATH, new_current_theme)
       new_theme_files = File.join(new_theme_path, '/.')
       apply_theme(new_current_theme, new_theme_files)
+      Utilities::Restart.kitty
+      Utilities::Restart.waybar
     end
     class << self
       private
