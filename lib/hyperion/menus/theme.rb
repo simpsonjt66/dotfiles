@@ -4,15 +4,36 @@ module Menus
   # Menu to list and select current themes
   class Theme
     def self.show
-      lookup = Utilities::ThemeList.show
-      current_theme = Utilities::ThemeCurrent.show
-      default_selection = current_theme && lookup.key(current_theme) || nil
-      selected = Utilities.rofi_select(items: lookup.keys, current: default_selection)
+      selected = Utilities.rofi_select(**menu_options)
 
       return { action: :back } if selected.nil?
 
-      Utilities::ThemeSet.call(lookup[selected])
+      Utilities::ThemeSet.call(theme_list[selected])
       system('notify-send', "Theme set to #{selected}")
+    end
+
+    class << self
+      private
+
+      def theme_list
+        Utilities::ThemeList.get
+      end
+
+      def current_theme
+        Utilities::ThemeCurrent.get
+      end
+
+      def default_selection
+        current_theme && theme_list.key(current_theme) || nil
+      end
+
+      def menu_options
+        {
+          items: theme_list.keys,
+          current: default_selection,
+          prompt: 'Select'
+        }
+      end
     end
   end
 end

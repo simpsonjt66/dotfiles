@@ -1,9 +1,2 @@
-return {
-  { "EdenEast/nightfox.nvim" },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "nordfox",
-    },
-  },
-}
+-- colorscheme.lua
+return dofile(vim.fn.expand("~/.local/share/hyperion/current/theme/neovim.lua"))

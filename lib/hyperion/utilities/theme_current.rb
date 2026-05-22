@@ -3,10 +3,18 @@
 module Utilities
   # Returns the current theme
   class ThemeCurrent
-    def self.show
-      return unless File.exist?(File.join(CURRENT_THEME_PATH, 'theme.current'))
+    def self.get
+      return unless File.exist?(current_theme_file)
 
-      File.read(File.join(CURRENT_THEME_PATH, 'theme.current')).chomp
+      File.read(File.join(current_theme_file)).chomp
+    end
+
+    class << self
+      private
+
+      def current_theme_file
+        File.join(CURRENT_THEME_PATH, 'theme.current')
+      end
     end
   end
 end

@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-Dir.glob(File.join(__dir__, '{menus,utilities}', '*.rb')).sort.each { |f| require f }
+Dir.glob(File.join(__dir__, '{menus,utilities}', '*.rb'))
+   .sort.each { |f| require f }
 require 'fileutils'
 
 # Utility functions for app launcher
 module Utilities
-  data_path = ENV.fetch('XDG_DATA_HOME', File.join(Dir.home, '.local', 'share'))
-  THEME_PATH = File.join(data_path, 'hyperion', 'themes')
-  CURRENT_THEME_PATH = File.join(THEME_PATH, 'current')
+  data_path = ENV.fetch(
+    'XDG_DATA_HOME', File.join(Dir.home, '.local', 'share')
+  )
+  HYPERION_PATH = File.join(data_path, 'hyperion')
+  THEME_PATH = File.join(HYPERION_PATH, 'themes')
+  CURRENT_THEME_PATH = File.join(HYPERION_PATH, 'current', 'theme')
 
   def self.rofi_select(items:, current: nil, prompt: 'Launch')
     current_index = items.index(current) || 0

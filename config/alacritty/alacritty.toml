@@ -1,4 +1,4 @@
-general.import = [ "~/.local/state/current/theme/alacritty.toml", 
+general.import = [ "~/.local/share/hyperion/current/theme/alacritty.toml", 
   "~/.local/state/current/font/alacritty.toml"] 
 
 [env]
