@@ -5,3 +5,4 @@ nvim.bak
 # Secret API keys and tokens
 config/zsh/secrets.zsh
 GEMINI.md
+/themes/current

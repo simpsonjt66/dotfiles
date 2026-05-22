@@ -1,27 +1,21 @@
-# This folder is symlinked to ~/.local/lib/
-# This will contain the link all the other supporting files
-# and other utility functions.
+# frozen_string_literal: true
 
-require_relative 'menus/main'
-require_relative 'menus/apps'
-require_relative 'menus/config'
-require_relative 'menus/system'
-require_relative 'menus/font'
-require_relative 'menus/default'
-require_relative 'menus/terminal'
-require_relative 'menus/browser'
-require_relative 'menus/editor'
-require_relative 'menus/package'
+Dir.glob(File.join(__dir__, '{menus,utilities}', '*.rb')).sort.each { |f| require f }
+require 'fileutils'
 
-# Urtility functions for app launcher
+# Utility functions for app launcher
 module Utilities
-  def self.rofi_select(items:, current: nil)
-    current_index = current ? items.index(current) || 0 : 0
+  data_path = ENV.fetch('XDG_DATA_HOME', File.join(Dir.home, '.local', 'share'))
+  THEME_PATH = File.join(data_path, 'hyperion', 'themes')
+  CURRENT_THEME_PATH = File.join(THEME_PATH, 'current')
 
-    result = IO.popen(rofi_command(items, current_index), 'r+') do |io|
+  def self.rofi_select(items:, current: nil, prompt: 'Launch')
+    current_index = items.index(current) || 0
+
+    result = IO.popen(rofi_command(items, current_index, prompt), 'r+') do |io|
       io.puts items
       io.close_write
-      result = io.read.chomp
+      io.read.chomp
     end
 
     $CHILD_STATUS.success? && !result.empty? ? result : nil
@@ -31,18 +25,17 @@ module Utilities
     system('confirm-dialog', '-m', message)
   end
 
-  def self.rofi_command(items, current_index)
-    longest = items.max_by(&:length).length
-    puts longest
+  def self.rofi_command(items, current_index, prompt)
+    longest = items.max_by(&:length)&.length || 0
 
     [
       'rofi',
       '-dmenu',
-      '-p', 'Launch',
+      '-p', prompt,
       '-selected-row', current_index.to_s,
-      '-i', '-l', items.count.to_s,
+      '-i', '-l', items.size.to_s,
       '-theme', '~/.config/rofi/themes/system-menu.rasi',
-      '-theme-str', "window { max-width: #{longest} ch;}"
+      '-theme-str', "window { width: #{longest}em;}"
     ]
   end
 end
