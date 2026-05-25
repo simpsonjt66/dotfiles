@@ -12,6 +12,7 @@ module Menus
 
       launch_command = menu_options.find { |item| item[:prompt] == selected }&.dig(:command)
       system(launch_command)
+      { action: :exit }
     end
   end
 end

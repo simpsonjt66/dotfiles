@@ -9,6 +9,7 @@ module Menus
              'drun',
              '-run-command', app_launcher,
              '-theme', '~/.config/rofi/themes/app-launcher.rasi')
+      { action: :back }
     end
   end
 end

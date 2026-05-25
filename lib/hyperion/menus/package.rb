@@ -12,6 +12,7 @@ module Menus
 
       launch_command = menu_options.find { |item| item[:prompt] == selected }&.dig(:command).to_s
       system('xdg-terminal-exec', '--app-id=org.hyperion.terminal', launch_command)
+      { action: :exit }
     end
   end
 end

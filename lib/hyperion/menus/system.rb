@@ -12,6 +12,7 @@ module Menus
 
       option = menu_options.find { |item| item[:prompt] == selected }
       system(option[:command]) if option[:confirm].nil? || Utilities.confirm_dialog(option[:confirm])
+      { action: :exit }
     end
   end
 end

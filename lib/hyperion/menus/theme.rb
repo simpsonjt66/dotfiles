@@ -10,6 +10,7 @@ module Menus
 
       system('notify-send', "Theme set to #{selected}")
       Utilities::ThemeSet.call(theme_list[selected])
+      { action: :exit }
     end
 
     class << self

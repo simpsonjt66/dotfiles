@@ -11,6 +11,7 @@ module Menus
       return { action: :back } if selected.nil?
 
       system('font-set', selected) if selected
+      { action: :exit }
     end
   end
 end

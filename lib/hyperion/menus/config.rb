@@ -15,6 +15,7 @@ module Menus
       expanded = File.expand_path("#{ENV['XDG_CONFIG_HOME']}/" + filepath)
       system('notify-send', "Editing config file #{expanded}")
       system('launch-editor', expanded)
+      { action: :exit }
     end
   end
 end
