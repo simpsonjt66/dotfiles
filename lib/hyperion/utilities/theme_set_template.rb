@@ -43,8 +43,8 @@ module Utilities
 
       colors = TomlRB.load_file(@colors_file)
 
-      subs = Utilities::ColorTransformer.substitutions_for(colors)
-      renderer = Utilities::TemplateRenderer.new(subs)
+      subs = ColorTransformer.substitutions_for(colors)
+      renderer = TemplateRenderer.new(subs)
 
       Dir.glob(File.join(TEMPLATES_PATH, '*.tpl')).each do |tpl_path|
         output_path = File.join(NEXT_THEME_PATH, File.basename(tpl_path, '.tpl'))

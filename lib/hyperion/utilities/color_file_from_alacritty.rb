@@ -7,6 +7,7 @@ module Utilities
       @theme_source = theme_source
     end
 
+    # TODO: Fix this. If colors.toml exists use it. Else check for alacritty.
     def validate!
       raise 'File Exists' if File.exist?(colors_output)
       raise 'Alacritty.toml file missing' unless File.exist?(alacritty_file)

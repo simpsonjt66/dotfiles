@@ -13,7 +13,8 @@ module Utilities
       private
 
       def current_theme_file
-        File.join(CURRENT_THEME_PATH, 'theme.current')
+        current_path = File.join(HYPERION_PATH, 'current')
+        File.join(current_path, 'theme.current')
       end
     end
   end

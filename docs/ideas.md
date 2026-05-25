@@ -16,7 +16,15 @@ My implementation runs with `hyperion/themes/current`, on reviewing omarchy, the
 I also need to look at the relaunchers etc.
 
 Include `color_file_from_alacritty` in utilities. Logic will be something like if `colors.toml` does not exist create it. If other color files don't exist create them too.
-> 
+ 
+I think the Omarchy approach is the sensible way forward, make a `next_theme` folder and build the config files in there,then move the folder to `current/theme`. I think adding a new method to handle all the file movements would make sense.
+
+1. Delete `next_theme` folder if it exists.
+2. Create `next_theme` folder.
+3. Copy theme files from theme folder to `next_theme` folder.
+4. Build config files in `next_theme` folder.
+5. Delete `current_theme` folder if it exists.
+6. Move `next_theme` folder to `current_theme` folder.
 
 ## Maintenance Menu
 - [ ] Check for updates
