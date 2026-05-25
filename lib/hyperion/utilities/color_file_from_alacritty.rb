@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'toml-rb'
-
 module Utilities
   # Extracts a colorscheme file from existing Alacritty file
   class ColorFileFromAlacritty

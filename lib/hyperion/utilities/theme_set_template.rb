@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'toml-rb'
-
 module Utilities
   # Handles color string transformation (hex, stripped hex, rgb)
   class ColorTransformer
@@ -33,8 +31,8 @@ module Utilities
 
   # Orchestrates the building of the theme files
   class ThemeSetTemplate
-    TEMPLATES_DIR      = File.join('./templates/').freeze
-    NEXT_THEME_DIR     = File.join('./next_theme/').freeze
+    TEMPLATES_PATH = File.join(HYPERION_PATH, 'templates').freeze
+    NEXT_THEME_PATH = File.join(HYPERION_PATH, 'next_theme').freeze
 
     def initialize(theme_dir)
       @colors_file = File.join(theme_dir, 'colors.toml')
@@ -48,8 +46,8 @@ module Utilities
       subs = Utilities::ColorTransformer.substitutions_for(colors)
       renderer = Utilities::TemplateRenderer.new(subs)
 
-      Dir.glob(File.join(TEMPLATES_DIR, '*.tpl')).each do |tpl_path|
-        output_path = File.join(NEXT_THEME_DIR, File.basename(tpl_path, '.tpl'))
+      Dir.glob(File.join(TEMPLATES_PATH, '*.tpl')).each do |tpl_path|
+        output_path = File.join(NEXT_THEME_PATH, File.basename(tpl_path, '.tpl'))
 
         next if File.exist?(output_path)
 

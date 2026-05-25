@@ -3,6 +3,7 @@
 Dir.glob(File.join(__dir__, '{menus,utilities}', '*.rb'))
    .sort.each { |f| require f }
 require 'fileutils'
+require 'toml-rb'
 
 # Utility functions for app launcher
 module Utilities
