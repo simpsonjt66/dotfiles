@@ -7,7 +7,9 @@ require 'English'
 require 'yaml'
 require_relative('../lib/hyperion/utilities')
 
-OPTIONS = YAML.load_file('/home/jsimpson/.local/bin/config.yaml', symbolize_names: true)
+CONFIG_PATH = File.expand_path(ENV['XDG_CONFIG_HOME'])
+CONFIG_FILE = File.join(CONFIG_PATH, 'hyperion', 'config.yaml')
+OPTIONS = YAML.load_file(CONFIG_FILE, symbolize_names: true)
 
 # Method to manage menu navigation, should return
 # to parent menu when Esc is pressed.
