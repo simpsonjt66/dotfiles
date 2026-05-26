@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'shellwords'
 require 'open3'
 require 'English'
 require 'yaml'
