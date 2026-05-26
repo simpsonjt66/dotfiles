@@ -1,7 +1,5 @@
-@import url("../../.local/state/current/font/waybar.css");
-
-@define-color background rgb(0, 0, 0);
-@define-color color rgb(255, 255, 255);
+@import url("font.css");
+@import url("waybar.css");
 
 * {
   background-color: @background;
@@ -63,4 +61,3 @@ tooltip label {
 .hidden {
   opacity: 0;
 }
-

@@ -7,15 +7,6 @@ module Utilities
       @theme_source = theme_source
     end
 
-    # TODO: Fix this. If colors.toml exists use it. Else check for alacritty.
-    def validate!
-      raise 'File Exists' if File.exist?(colors_output)
-      raise 'Alacritty.toml file missing' unless File.exist?(alacritty_file)
-    rescue StandardError => e
-      system('notify-send', e.message)
-      exit 1
-    end
-
     def colors_output
       @colors_output ||= File.join(@theme_source, 'colors.toml')
     end
@@ -25,8 +16,6 @@ module Utilities
     end
 
     def extract
-      validate!
-
       raw_toml = TomlRB.load_file(alacritty_file, symbolize_keys: true)
       config = AlacrittyConfig.new(raw_toml)
 

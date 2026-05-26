@@ -31,8 +31,13 @@ module Utilities
       def apply_theme(new_current_theme, new_theme_files)
         recreate_next_theme_dir
         copy_theme_files(new_theme_files)
-        ColorFileFromAlacritty.new(NEXT_THEME_PATH).extract
+
+        unless File.exist?(File.join(NEXT_THEME_PATH, 'colors.toml'))
+          ColorFileFromAlacritty.new(NEXT_THEME_PATH).extract
+        end
+
         ThemeSetTemplate.new(NEXT_THEME_PATH).build_config_files
+
         remove_current_theme_dir
         move_next_to_current
         write_theme_marker(new_current_theme)
