@@ -6,5 +6,5 @@ nvim.bak
 config/zsh/secrets.zsh
 GEMINI.md
 /themes/current
-./config/waybar/font.css
-./config/waybar/waybar.css
+/config/waybar/font.css
+/config/waybar/waybar.css
