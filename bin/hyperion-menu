@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ruby ~/.local/bin/launcher_helper.rb "$@"
+ruby ~/Code/hyperion/bin/hyperion.rb "$@"

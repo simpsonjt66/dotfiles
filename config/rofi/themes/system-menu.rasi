@@ -48,6 +48,8 @@ textbox {
     text-color: @foreground;
 }
 listview {
+    dynamic: true;
+    lines: 10;
     fixed-height: 0;
     border-color: @separatorcolor;
     padding: 5px 5px 5px 5px;
@@ -61,10 +63,12 @@ element-text {
     background-color: inherit;
     text-color:       inherit;
     vertical-align: 0.5;
-    padding: 1px 20px 1px;
+    horizontal-align: 0;
+    padding: 1px 1px 10px 1px;
 }
 element-icon{
-    padding: 5 10px;
+    horizontal-align: 0;
+    padding: 5px 1px 10px 1px;
     size: 24px;
   }
 element.normal.normal {

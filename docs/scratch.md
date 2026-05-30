@@ -10,7 +10,8 @@
   - [ ] Create its own Github repository.
   - [ ] Write tests to cover the refactoring.
   - [ ] Use mini test instead of RSpec.
-  - [ ] Build and installer for it.
+  - [ ] Build an installer for it.
+  - [ ] Figure out how to change the GTK theme and the icon theme.
 
 ## 2026-05-22
 

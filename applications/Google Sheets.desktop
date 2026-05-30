@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Google Sheets
+Comment=Google Sheets
+Exec=launch-webapp https://docs.google.com/spreadsheets/u/0/
+Terminal=false
+Type=Application
+Icon=/home/jsimpson/.local/share/applications/icons/Google Sheets.png
+StartupNotify=true

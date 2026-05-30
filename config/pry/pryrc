@@ -1,0 +1,4 @@
+Pry.config.history_load = true
+Pry.config.history_save = true
+Pry.config.history_file = "~/.local/share/pry/pry_history"
+Pry.config.completer = Pry::InputCompleter
