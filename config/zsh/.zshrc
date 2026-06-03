@@ -24,3 +24,6 @@ path+=($HOME/.local/bin)
 path+=($HOME/.local/share/npm/bin/)
 path+=($CARGO_HOME/bin)
 
+
+# opencode
+export PATH=/home/jsimpson/.opencode/bin:$PATH
