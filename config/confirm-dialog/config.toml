@@ -1,16 +1,30 @@
-message = "Do you want to proceed?"
+message = "Do you want to continue?"
 title = "Confirmation"
 yes_label = "Yes"
 no_label = "No"
+# Or use:- css_path = "/path/to/current/style.css"
 css = """
-button.no_label {
-font-size: 12px;
-padding-top: 0px;
-padding-bottom: 0px;
+#main-window, #main-container, window, .background {
+  background-color: #FFFCF0;
+  background-image: none;
+  background: #FFFCF0;
 }
-button {
-padding-top: 0px;
-padding-bottom: 0px;
-min-width: 100px;
+window > contents {
+  background: #FFFCF0;
+}
+label {
+  color: black;
+}
+button.destructive-action {
+  background: #af3029;
+}
+button.suggested-action {
+  background: #66800b;
+}
+button.destructive-action:hover {
+  background: #d14d41;
+}
+button.suggested-action:hover {
+  background-color: #A3BE8C;
 }
 """
