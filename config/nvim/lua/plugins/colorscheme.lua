@@ -1,2 +1,20 @@
 -- colorscheme.lua
-return dofile(vim.fn.expand("~/.local/share/hyperion/current/theme/neovim.lua"))
+return {
+  { "EdenEast/nightfox.nvim", lazy = false, priority = 1000 },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "nordfox",
+    },
+  },
+  {
+    "kepano/flexoki-neovim",
+    priority = 1000,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "flexoki-light",
+    },
+  },
+}
