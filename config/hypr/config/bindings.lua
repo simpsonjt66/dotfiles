@@ -70,6 +70,7 @@ hl.bind("Menu", hl.dsp.exec_cmd("hyperion-menu"), { description = "System menu" 
 hl.bind("SUPER + space", hl.dsp.exec_cmd("hyperion-menu apps"), { description = "Apps menu" })
 hl.bind("XF86PowerOff", hl.dsp.exec_cmd("hyperion-menu system"), { description = "Power menu" })
 hl.bind("SUPER + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -display-comlumns 2 | cliphist decode | wl-copy"))
+hl.bind("SUPER + R", hl.dsp.exec_cmd("rofi-cmd-runner"), { description = "Command runner" })
 
 -- Session
 hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("uwsm stop"))
