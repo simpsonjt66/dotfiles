@@ -1,14 +1,11 @@
--- Floating windows
+-- Ignore maximize requests from applications (prevents apps from opening fullscreen)
 hl.window_rule({
-	name = "window_rule-1",
-	float = true,
-	center = true,
-	size = "800 600",
-	match = {
-		tag = "floating-window",
-	},
+	name = "suppress-maximize-events",
+	match = { class = ".*" },
+	suppress_event = "maximize",
 })
 
+-- Tag windows that should float
 hl.window_rule({
 	name = "window_rule-2",
 	tag = "+floating-window",
@@ -48,3 +45,15 @@ hl.window_rule({
 		title = "^Open Files?",
 	},
 })
+
+-- Apply floating rules to tagged windows (MUST be placed after tag assignment rules)
+hl.window_rule({
+	name = "window_rule-1",
+	float = true,
+	center = true,
+	size = "800 600",
+	match = {
+		tag = "floating-window",
+	},
+})
+
