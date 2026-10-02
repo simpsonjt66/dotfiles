@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Configuration
+HISTORY_FILE="$HOME/.local/state/rofi-command-history"
+HISTORY_LIMIT=100
+
+# Ensure the state directory and history file exist
+mkdir -p "$(dirname "$HISTORY_FILE")"
+touch "$HISTORY_FILE"
+
+# Prepare history: reverse to show recent items first and deduplicate
+command_list=$(tac "$HISTORY_FILE" | awk '!seen[$0]++')
+
+# Launch Rofi with a compact height
+chosen=$(echo "$command_list" | rofi -dmenu \
+    -p "Run Command" \
+    -theme-str 'listview {lines: 5;}' \
+    -theme-str 'window {width: 600px;}' \
+    "$@")
+
+# Exit if selection is empty (User pressed Escape)
+if [ -z "$chosen" ]; then
+    exit 0
+fi
+
+# Clean up any identical commands in history to move the latest run to the top
+if [ -f "$HISTORY_FILE" ]; then
+    grep -vxF "$chosen" "$HISTORY_FILE" > "${HISTORY_FILE}.tmp"
+    mv "${HISTORY_FILE}.tmp" "$HISTORY_FILE"
+fi
+
+# Append new command to history and trim file length
+echo "$chosen" >> "$HISTORY_FILE"
+tail -n "$HISTORY_LIMIT" "$HISTORY_FILE" > "${HISTORY_FILE}.tmp"
+mv "${HISTORY_FILE}.tmp" "$HISTORY_FILE"
+
+# Execute command in the background, detached via setsid
+# This ensures it survives if rofi or the parent process exits
+setsid "$SHELL" -c "$chosen" >/dev/null 2>&1 &
