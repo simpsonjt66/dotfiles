@@ -1,18 +1,15 @@
 pragma Singleton
 
-import Quickshell // for PanelWindow
-import Quickshell.Io
-import QtQuick // for Text
+import QtQuick
+import Quickshell
 
 Singleton {
-  id: root
-  readonly property string time: {
+    id: root
 
-    Qt.formatDateTime(clock.date, "ddd MMM d hh:mm")
-  }
+    readonly property string time: Qt.formatDateTime(clock.date, "ddd MMM d hh:mm")
 
-  SystemClock {
-    id: clock
-    precision: SystemClock.Minutes
-  }
+    SystemClock {
+        id: clock
+        precision: SystemClock.Minutes
+    }
 }
