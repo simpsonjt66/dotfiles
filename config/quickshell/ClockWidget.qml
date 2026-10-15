@@ -3,5 +3,6 @@ import QtQuick
 Text {
     id: root
     text: Time.time
-    font.pointSize: 10
+    font.family: "JetBrainsMono Nerd Font"
+    font.pixelSize: 12
 }
