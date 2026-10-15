@@ -1,0 +1,2 @@
+module qs.widgets.services
+singleton Time Time.qml
