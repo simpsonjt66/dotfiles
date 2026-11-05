@@ -3,6 +3,15 @@
 -- https://wiki.hypr.land/Configuring/Variables/#general
 
 hl.config({
+	-- Workaround for Hyprland 0.57 on older Intel GPUs (Gen6/Gen7, e.g. HD 3000):
+	-- with skip_non_kms_dmabuf_formats = true (the new default) the compositor
+	-- only advertises opaque dmabuf formats, so EGL clients such as kitty and
+	-- alacritty fail with "No EGLConfigs returned".
+	-- https://github.com/hyprwm/Hyprland/discussions/16702
+	quirks = {
+		skip_non_kms_dmabuf_formats = false,
+	},
+
 	general = {
 		gaps_in = 2,
 		gaps_out = 5,
